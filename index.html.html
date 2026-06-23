@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Campo Incorporadora - Gestão Integrada</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .sistema-container { display: flex; flex-direction: column; min-height: 100vh; }
+
+        .header {
+            background: linear-gradient(135deg, #094752 0%, #0a5c69 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header h1 { font-size: 26px; margin-bottom: 4px; font-weight: 600; }
+        .header-subtitle { font-size: 14px; opacity: 0.95; }
+
+        .tabs {
+            display: flex;
+            background: white;
+            border-bottom: 2px solid #e0e0e0;
+            padding: 0 1rem;
+            gap: 0;
+            overflow-x: auto;
+        }
+
+        .tab-button {
+            flex-shrink: 0;
+            padding: 14px 18px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+
+        .tab-button:hover:not(.active) { color: #333; background: #f9f9f9; }
+        .tab-button.active { color: #094752; border-bottom-color: #23B368; }
+
+        .content { flex: 1; padding: 1.5rem 2rem; max-width: 1400px; width: 100%; margin: 0 auto; }
+
+        .alert-box {
+            background: #fff3cd; border-left: 4px solid #ffc107;
+            padding: 12px 16px; border-radius: 4px; margin-bottom: 1rem; color: #856404;
+        }
+        .alert-box.danger { background: #f8d7da; border-left-color: #dc3545; color: #721c24; }
+        .alert-box.success { background: #d4edda; border-left-color: #28a745; color: #155724; }
+
+        .dashboard-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px; margin-bottom: 1.5rem;
+        }
+
+        .metric-card {
+            background: white; padding: 1.3rem; border-radius: 12px;
+            border: 1px solid #e0e0e0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .metric-label {
+            font-size: 11px; color: #888; text-transform: uppercase;
+            letter-spacing: 0.5px; margin-bottom: 10px; font-weight: 600;
+        }
+        .metric-value { font-size: 28px; font-weight: 600; color: #094752; }
+
+        .button-group { display: flex; gap: 10px; margin-bottom: 1.2rem; flex-wrap: wrap; }
+
+        button {
+            padding: 9px 16px; border-radius: 8px; border: 1px solid #ddd;
+            background: white; cursor: pointer; font-size: 13px; font-weight: 500;
+            transition: all 0.2s; color: #333;
+        }
+        button:hover { background: #f9f9f9; border-color: #bbb; }
+
+        .button-primary { background: #23B368; color: white; border-color: #23B368; }
+        .button-primary:hover { background: #1a8a50; border-color: #1a8a50; }
+
+        .section-title { font-size: 17px; font-weight: 600; color: #094752; margin: 1.5rem 0 0.8rem 0; }
+
+        .table-container {
+            background: white; border-radius: 12px; border: 1px solid #e0e0e0;
+            overflow-x: auto; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        thead { background: #f8f9fa; border-bottom: 1px solid #e0e0e0; }
+        th { padding: 12px 14px; text-align: left; font-weight: 600; color: #094752; font-size: 12px; white-space: nowrap; }
+        td { padding: 12px 14px; border-bottom: 1px solid #e0e0e0; color: #333; }
+        tr:hover { background: #f9f9f9; }
+
+        input, select, textarea {
+            padding: 9px 12px; border: 1px solid #ddd; border-radius: 8px;
+            font-size: 14px; font-family: inherit; width: 100%;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none; border-color: #23B368; box-shadow: 0 0 0 3px rgba(35, 179, 104, 0.1);
+        }
+
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #094752; }
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5); display: flex; align-items: center;
+            justify-content: center; z-index: 1000; padding: 20px;
+        }
+        .modal-overlay.hidden { display: none; }
+        .modal-content {
+            background: white; border-radius: 16px; padding: 2rem; max-width: 600px;
+            width: 100%; max-height: 85vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .modal-header { font-size: 18px; font-weight: 600; margin-bottom: 1.2rem; color: #094752; }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 1.5rem; }
+
+        .status-badge { display: inline-block; padding: 5px 12px; border-radius: 14px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+        .status-emdia { background: #d4edda; color: #155724; }
+        .status-alerta { background: #fff3cd; color: #856404; }
+        .status-critico { background: #f8d7da; color: #721c24; }
+        .status-aberto { background: #cce5ff; color: #004085; }
+        .status-andamento { background: #fff3cd; color: #856404; }
+        .status-concluido { background: #d4edda; color: #155724; }
+
+        .icon-action { cursor: pointer; font-size: 17px; transition: transform 0.2s; margin-right: 8px; }
+        .icon-action:hover { transform: scale(1.2); }
+
+        .toast {
+            position: fixed; bottom: 20px; right: 20px; background: #23B368; color: white;
+            padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 2000; animation: slideIn 0.3s ease; display: none;
+        }
+        @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        .filter-group { background: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border: 1px solid #e0e0e0; }
+        .filter-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+        .filter-row label { display: block; font-size: 11px; font-weight: 600; margin-bottom: 4px; color: #094752; text-transform: uppercase; }
+
+        .badge-tipo { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+        .badge-preventiva { background: #e8f4f8; color: #094752; }
+        .badge-corretiva { background: #fff0e0; color: #b35900; }
+
+        .empty-msg { text-align: center; padding: 2rem; color: #999; }
+
+        /* ===== Layout Manutenção estilo Optimus ===== */
+        .categoria-tabs {
+            display: flex; gap: 6px; background: #094752; border-radius: 10px;
+            padding: 6px; margin-bottom: 1.2rem; overflow-x: auto;
+        }
+        .categoria-tab-btn {
+            flex-shrink: 0; padding: 9px 16px; border-radius: 7px; border: none;
+            background: transparent; color: rgba(255,255,255,0.75); font-size: 13px;
+            font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;
+            transition: all 0.15s;
+        }
+        .categoria-tab-btn:hover { background: rgba(255,255,255,0.08); color: white; }
+        .categoria-tab-btn.active { background: #23B368; color: white; }
+        .categoria-tab-count {
+            background: rgba(255,255,255,0.2); padding: 1px 8px; border-radius: 10px; font-size: 11px;
+        }
+        .categoria-tab-btn.active .categoria-tab-count { background: rgba(255,255,255,0.3); }
+
+        .categoria-summary {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px; margin-bottom: 1.5rem;
+        }
+        .summary-card {
+            background: white; padding: 1rem 1.2rem; border-radius: 12px; border: 1px solid #e0e0e0;
+        }
+        .summary-card-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 6px; }
+        .summary-card-value { font-size: 24px; font-weight: 700; color: #094752; }
+        .summary-card-value.cor-verde { color: #23B368; }
+        .summary-card-value.cor-amarelo { color: #d4900a; }
+        .summary-card-value.cor-vermelho { color: #dc3545; }
+
+        .categoria-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 1rem; flex-wrap: wrap; gap: 10px;
+        }
+        .categoria-header-title { font-size: 17px; font-weight: 600; color: #094752; }
+
+        .unidade-filter-pills { display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap; }
+        .pill-btn {
+            padding: 7px 16px; border-radius: 20px; border: 1px solid #ddd; background: white;
+            font-size: 12px; font-weight: 600; cursor: pointer; color: #555; transition: all 0.15s;
+        }
+        .pill-btn:hover { border-color: #23B368; }
+        .pill-btn.active { background: #094752; color: white; border-color: #094752; }
+
+        .local-destaque-unidade {
+            display: inline-block; background: #e8f4f8; color: #094752; font-size: 10px;
+            font-weight: 700; padding: 2px 8px; border-radius: 8px; margin-bottom: 3px;
+            text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .local-destaque-ambiente { display: block; font-size: 14px; font-weight: 700; color: #1a1a1a; }
+
+        /* ===== Tela de Configuração/Conexão ===== */
+        .config-screen {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #094752 0%, #0a5c69 100%); padding: 20px;
+        }
+        .config-card {
+            background: white; border-radius: 16px; padding: 2.5rem; max-width: 440px; width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .config-logo { font-size: 42px; text-align: center; margin-bottom: 0.5rem; }
+        .config-title { font-size: 20px; font-weight: 700; color: #094752; text-align: center; margin-bottom: 6px; }
+        .config-subtitle { font-size: 13px; color: #777; text-align: center; margin-bottom: 1.8rem; line-height: 1.4; }
+        .config-btn { width: 100%; padding: 12px; font-size: 14px; margin-top: 0.5rem; }
+        .config-error { color: #dc3545; font-size: 13px; margin-top: 10px; text-align: center; }
+        .config-loading { color: #094752; font-size: 13px; margin-top: 10px; text-align: center; }
+        .config-hint { font-size: 11px; color: #999; text-align: center; margin-top: 1.2rem; line-height: 1.4; }
+
+        @media (max-width: 768px) {
+            .content { padding: 1rem; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            table { font-size: 11px; }
+            th, td { padding: 8px 10px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- TELA DE CONFIGURAÇÃO / CONEXÃO COM AIRTABLE -->
+    <div id="configScreen" class="config-screen">
+        <div class="config-card">
+            <div class="config-logo">🏢</div>
+            <h1 class="config-title">Sistema Campo Incorporadora</h1>
+            <p class="config-subtitle">Conecte sua conta para sincronizar os dados em nuvem com sua equipe</p>
+
+            <div class="form-group">
+                <label>Personal Access Token do Airtable</label>
+                <input type="password" id="cfgToken" placeholder="pat_XXXXXXXXXXXXXXXX...">
+            </div>
+            <div class="form-group">
+                <label>Base ID</label>
+                <input type="text" id="cfgBaseId" value="app6FRO94lCtpAfXW" placeholder="appXXXXXXXXXXXXXX">
+            </div>
+
+            <button class="button-primary config-btn" onclick="conectarAirtable()">🔗 Conectar e Entrar</button>
+            <div id="configError" class="config-error"></div>
+            <div id="configLoading" class="config-loading" style="display:none;">⏳ Conectando e carregando dados...</div>
+
+            <p class="config-hint">O token fica salvo apenas neste navegador. Cada pessoa da equipe deve inserir seu próprio token de acesso.</p>
+        </div>
+    </div>
+
+    <div class="sistema-container" id="appContainer" style="display:none;">
+        <div class="header">
+            <h1>🏢 Sistema de Gestão Integrada</h1>
+            <div class="header-subtitle">Campo Incorporadora · Unidades Buritis & Administrativa <span id="syncIndicator" style="font-size:11px;background:rgba(255,255,255,0.15);padding:3px 9px;border-radius:10px;margin-left:8px;">☁️ Airtable</span>
+                <span onclick="trocarConta()" style="cursor:pointer;font-size:11px;text-decoration:underline;margin-left:12px;opacity:0.85;">Trocar conta</span>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" data-tab="dashboard">📊 Dashboard</button>
+            <button class="tab-button" data-tab="locais">🏢 Locais</button>
+            <button class="tab-button" data-tab="manutencao">🔧 Manutenção</button>
+            <button class="tab-button" data-tab="chamados">📋 Chamados/OS</button>
+            <button class="tab-button" data-tab="prestadores">👷 Prestadores</button>
+            <button class="tab-button" data-tab="compras">📦 Compras</button>
+            <button class="tab-button" data-tab="despesas">💰 Despesas</button>
+            <button class="tab-button" data-tab="relatorios">📑 Relatórios</button>
+        </div>
+
+        <div class="content">
+
+            <!-- DASHBOARD -->
+            <div id="dashboard" class="tab-content">
+                <div id="alertasContainer"></div>
+
+                <div class="button-group">
+                    <button class="button-primary" onclick="exportarTudo()">📥 Exportar Tudo (Excel)</button>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Total de Ativos</div>
+                        <div class="metric-value" id="mTotalAtivos">0</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Manutenções Pendentes</div>
+                        <div class="metric-value" id="mManutPendentes">0</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Chamados Abertos</div>
+                        <div class="metric-value" id="mChamadosAbertos">0</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Despesas do Mês</div>
+                        <div class="metric-value" id="mDespesasMes">R$ 0</div>
+                    </div>
+                </div>
+
+                <h2 class="section-title">⚠️ Alertas de Manutenção (7 dias) — Itens Críticos</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Local - Ativo</th><th>Tipo</th><th>Próxima Manut.</th><th>Dias Restantes</th><th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashAlertasBody"></tbody>
+                    </table>
+                </div>
+
+                <h2 class="section-title">📋 Chamados em Aberto</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>Local</th><th>Descrição</th><th>Tipo</th><th>Solicitante</th><th>Abertura</th><th>Status</th></tr>
+                        </thead>
+                        <tbody id="dashChamadosBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- LOCAIS -->
+            <div id="locais" class="tab-content" style="display:none;">
+                <div class="button-group">
+                    <button class="button-primary" onclick="openModal('unidade')">➕ Nova Unidade</button>
+                    <button class="button-primary" onclick="openModal('andar')">➕ Novo Andar</button>
+                    <button class="button-primary" onclick="openModal('ambiente')">➕ Novo Ambiente</button>
+                </div>
+
+                <h2 class="section-title">🏢 Unidades</h2>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Nome</th><th>Ações</th></tr></thead>
+                        <tbody id="unidadesBody"></tbody>
+                    </table>
+                </div>
+
+                <h2 class="section-title">🏗️ Andares</h2>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Unidade</th><th>Andar</th><th>Ações</th></tr></thead>
+                        <tbody id="andaresBody"></tbody>
+                    </table>
+                </div>
+
+                <h2 class="section-title">🚪 Ambientes</h2>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Unidade</th><th>Andar</th><th>Ambiente</th><th>Ações</th></tr></thead>
+                        <tbody id="ambientesBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- MANUTENÇÃO -->
+            <div id="manutencao" class="tab-content" style="display:none;">
+
+                <div class="categoria-tabs" id="categoriaTabs"></div>
+
+                <div class="categoria-summary" id="categoriaSummary"></div>
+
+                <div class="categoria-header">
+                    <div class="categoria-header-title" id="categoriaTitulo">🔧 Equipamentos</div>
+                    <button class="button-primary" onclick="openModal('ativo')">➕ Novo Equipamento</button>
+                </div>
+
+                <div class="unidade-filter-pills" id="unidadeFilterPills"></div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>Ações</th><th>Local</th><th>Unidade</th><th>Marca/Modelo</th><th>Última Manut.</th><th>Próxima Manut.</th><th>Status</th></tr>
+                        </thead>
+                        <tbody id="manutencaoBody"></tbody>
+                    </table>
+                </div>
+
+                <h2 class="section-title" style="margin-top:2rem;">🗂️ Histórico Completo de Manutenções (Extrato)</h2>
+                <div class="filter-group">
+                    <div class="filter-row">
+                        <div>
+                            <label>Ver histórico do Equipamento</label>
+                            <select id="filtroHistoricoAtivo" onchange="renderHistoricoManutencao()">
+                                <option value="">Selecione um equipamento...</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>Data Realizada</th><th>Tipo</th><th>Prestador</th><th>Observações</th><th>Ações</th></tr>
+                        </thead>
+                        <tbody id="historicoManutencaoBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- MODAL NOVA/EDITAR MANUTENÇÃO (acionado por botão dentro da tabela) -->
+            <div id="manutencaoOculta" style="display:none;"></div>
+
+            <!-- CHAMADOS / OS -->
+            <div id="chamados" class="tab-content" style="display:none;">
+                <div class="button-group">
+                    <button class="button-primary" onclick="openModal('chamado')">➕ Novo Chamado</button>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-row">
+                        <div>
+                            <label>Filtrar por Status</label>
+                            <select id="filtroStatusChamado" onchange="renderChamados()">
+                                <option value="">Todos</option>
+                                <option value="Aberto">Aberto</option>
+                                <option value="Em andamento">Em andamento</option>
+                                <option value="Concluído">Concluído</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>Local</th><th>Descrição</th><th>Tipo</th><th>Solicitante</th><th>Prestador</th><th>Abertura</th><th>Conclusão</th><th>Status</th><th>Ações</th></tr>
+                        </thead>
+                        <tbody id="chamadosBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PRESTADORES -->
+            <div id="prestadores" class="tab-content" style="display:none;">
+                <div class="button-group">
+                    <button class="button-primary" onclick="openModal('prestador')">➕ Novo Prestador</button>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Nome</th><th>Especialidade</th><th>Contato</th><th>Ações</th></tr></thead>
+                        <tbody id="prestadoresBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- COMPRAS -->
+            <div id="compras" class="tab-content" style="display:none;">
+                <div class="button-group">
+                    <button class="button-primary" onclick="openModal('compra')">➕ Nova Compra</button>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>Item</th><th>Fornecedor</th><th>Qtd</th><th>Valor Unit.</th><th>Data Pedido</th><th>Data Entrega</th><th>Valor Total</th><th>Status</th><th>Obs.</th><th>Ações</th></tr>
+                        </thead>
+                        <tbody id="comprasBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- DESPESAS -->
+            <div id="despesas" class="tab-content" style="display:none;">
+                <div class="button-group">
+                    <button class="button-primary" onclick="openModal('despesa')">➕ Nova Despesa</button>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>Descrição</th><th>Categoria</th><th>Unidade</th><th>Data</th><th>Valor</th><th>Fornecedor/Prestador</th><th>Ações</th></tr>
+                        </thead>
+                        <tbody id="despesasBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- RELATÓRIOS -->
+            <div id="relatorios" class="tab-content" style="display:none;">
+                <div class="button-group">
+                    <button class="button-primary" onclick="relPendencias()">📄 Pendências de Manutenção</button>
+                    <button class="button-primary" onclick="relDespesasUnidade()">💰 Despesas por Unidade</button>
+                    <button class="button-primary" onclick="relChamadosPrestador()">👷 Chamados por Prestador</button>
+                    <button class="button-primary" onclick="relAtivosLocal()">🏢 Ativos por Local</button>
+                </div>
+                <div id="relatorioOutput"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div id="modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header" id="modalTitle">Modal</div>
+            <div id="modalBody"></div>
+            <div class="modal-actions">
+                <button onclick="closeModal()">Cancelar</button>
+                <button class="button-primary" onclick="salvarItem()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // ============ DADOS ============
+        let unidades = [];
+        let andares = [];
+        let ambientes = [];
+        let ativos = [];
+        let manutencoes = [];
+        let historicoManutencoes = [];
+        let chamados = [];
+        let prestadores = [];
+        let compras = [];
+        let despesas = [];
+        let modalType = '';
+        let editingId = null;
+        let categoriaAtiva = 'Todos';
+        let unidadeFiltroAtiva = 'Todos';
+
+        const CATEGORIAS = [
+            { id: 'Ar-Condicionado', label: 'Ar-Condicionado', icone: '❄️' },
+            { id: 'Nobreak', label: 'Nobreaks', icone: '🔋' },
+            { id: 'Extintor', label: 'Extintores', icone: '🧯' },
+            { id: 'Impressora', label: 'Impressoras', icone: '🖨️' },
+            { id: 'Periféricos/Informática', label: 'Periféricos/Informática', icone: '💻' },
+            { id: 'Predial', label: 'Predial', icone: '🏗️' },
+            { id: 'Outros', label: 'Outros', icone: '🔧' },
+        ];
+
+        // (dados agora vêm do Airtable, ver loadData)
+
+        // ============ CONFIGURAÇÃO AIRTABLE ============
+        const AIRTABLE_API = 'https://api.airtable.com/v0';
+
+        const TABELAS = {
+            unidades: 'tblQIiulLhGvSlc5j',
+            andares: 'tblnaqWSeDDKYQhcW',
+            ambientes: 'tbljTc0rmF8RiOJkr',
+            prestadores: 'tblvdtFg1SI2GXmGU',
+            ativos: 'tbl1SsWbJE3l5xutZ',
+            manutencoes: 'tblgjuSTgEqifxRwE',
+            historicoManutencoes: 'tblV9JbbgltZ50ygp',
+            chamados: 'tblNNI1ODUUncxPM1',
+            compras: 'tbl74SsHKMxTzQnkO',
+            despesas: 'tblrMDMW8DIqF1ntb',
+        };
+
+        // Mapa de campos: nomeJS -> nomeCampoAirtable (usando nomes, com typecast:true a API aceita pelo nome)
+        const CAMPOS = {
+            unidades: { nome: 'Nome' },
+            andares: { nome: 'Nome', unidadeId: 'Unidade' },
+            ambientes: { nome: 'Nome', andarId: 'Andar' },
+            prestadores: { nome: 'Nome', especialidade: 'Especialidade', contato: 'Contato' },
+            ativos: { nome: 'Nome', ambienteId: 'Ambiente', categoria: 'Categoria', marca: 'Marca/Modelo', dataCompra: 'Data Compra', critico: 'Crítico', status: 'Status' },
+            manutencoes: { titulo: 'Titulo', ativoId: 'Ativo', tipo: 'Tipo', ultimaData: 'Ultima Data', proximaData: 'Proxima Data', prestadorId: 'Prestador', critico: 'Critico', observacoes: 'Observacoes' },
+            historicoManutencoes: { titulo: 'Titulo', ativoId: 'Ativo', data: 'Data Realizada', tipo: 'Tipo', prestadorId: 'Prestador', observacoes: 'Observacoes' },
+            chamados: { descricao: 'Descricao', ambienteId: 'Ambiente', ativoId: 'Ativo', tipo: 'Tipo', solicitante: 'Solicitante', prestadorId: 'Prestador', status: 'Status', dataAbertura: 'Data Abertura', dataConclusao: 'Data Conclusao', observacoes: 'Observacoes' },
+            compras: { item: 'Item', fornecedor: 'Fornecedor', quantidade: 'Quantidade', valorUnitario: 'Valor Unitario', valor: 'Valor Total', dataPedido: 'Data Pedido', dataEntrega: 'Data Entrega', status: 'Status', observacoes: 'Observacoes' },
+            despesas: { descricao: 'Descricao', categoria: 'Categoria', unidadeId: 'Unidade', data: 'Data', valor: 'Valor', fornecedor: 'Fornecedor' },
+        };
+
+        // Campos do tipo "link" (array de record IDs) por entidade
+        const CAMPOS_LINK = {
+            andares: ['unidadeId'],
+            ambientes: ['andarId'],
+            ativos: ['ambienteId'],
+            manutencoes: ['ativoId', 'prestadorId'],
+            historicoManutencoes: ['ativoId', 'prestadorId'],
+            chamados: ['ambienteId', 'ativoId', 'prestadorId'],
+            despesas: ['unidadeId'],
+        };
+
+        let AIRTABLE_TOKEN = '';
+        let AIRTABLE_BASE_ID = '';
+
+        function airtableHeaders() {
+            return {
+                'Authorization': `Bearer ${AIRTABLE_TOKEN}`,
+                'Content-Type': 'application/json'
+            };
+        }
+
+        // Converte um registro do Airtable (formato {id, fields}) para o objeto JS usado pelo sistema
+        function airtableParaObjeto(entidade, record) {
+            const mapa = CAMPOS[entidade];
+            const linkFields = CAMPOS_LINK[entidade] || [];
+            const obj = { id: record.id, _airtableId: record.id };
+            for (const [jsKey, airtableKey] of Object.entries(mapa)) {
+                let valor = record.fields[airtableKey];
+                if (linkFields.includes(jsKey)) {
+                    obj[jsKey] = (valor && valor.length > 0) ? valor[0] : null; // pega o primeiro link
+                } else if (valor === undefined) {
+                    obj[jsKey] = '';
+                } else {
+                    obj[jsKey] = valor;
+                }
+            }
+            return obj;
+        }
+
+        // Converte um objeto JS para o formato de "fields" do Airtable
+        const CAMPOS_SOMENTE_LEITURA = {
+            compras: ['valor'],
+        };
+
+        function objetoParaAirtableFields(entidade, obj) {
+            const mapa = CAMPOS[entidade];
+            const linkFields = CAMPOS_LINK[entidade] || [];
+            const camposReadOnly = CAMPOS_SOMENTE_LEITURA[entidade] || [];
+            const fields = {};
+            for (const [jsKey, airtableKey] of Object.entries(mapa)) {
+                if (camposReadOnly.includes(jsKey)) continue; // campo calculado, nunca enviar
+                if (obj[jsKey] === undefined || obj[jsKey] === null || obj[jsKey] === '') {
+                    if (linkFields.includes(jsKey)) continue; // não envia link vazio
+                    if (typeof obj[jsKey] === 'boolean') { fields[airtableKey] = obj[jsKey]; continue; }
+                    continue;
+                }
+                if (linkFields.includes(jsKey)) {
+                    fields[airtableKey] = [obj[jsKey]];
+                } else {
+                    fields[airtableKey] = obj[jsKey];
+                }
+            }
+            return fields;
+        }
+
+        async function airtableListAll(entidade) {
+            const tableId = TABELAS[entidade];
+            let registros = [];
+            let offset = null;
+            do {
+                const url = `${AIRTABLE_API}/${AIRTABLE_BASE_ID}/${tableId}${offset ? '?offset=' + offset : ''}`;
+                const resp = await fetch(url, { headers: airtableHeaders() });
+                if (!resp.ok) {
+                    const err = await resp.json().catch(() => ({}));
+                    throw new Error(`Erro ao ler ${entidade}: ${resp.status} ${err.error?.message || resp.statusText}`);
+                }
+                const data = await resp.json();
+                registros = registros.concat(data.records);
+                offset = data.offset || null;
+            } while (offset);
+            return registros.map(r => airtableParaObjeto(entidade, r));
+        }
+
+        async function airtableCreate(entidade, obj) {
+            const tableId = TABELAS[entidade];
+            const fields = objetoParaAirtableFields(entidade, obj);
+            const resp = await fetch(`${AIRTABLE_API}/${AIRTABLE_BASE_ID}/${tableId}`, {
+                method: 'POST',
+                headers: airtableHeaders(),
+                body: JSON.stringify({ records: [{ fields }], typecast: true })
+            });
+            if (!resp.ok) {
+                const err = await resp.json().catch(() => ({}));
+                throw new Error(`Erro ao criar em ${entidade}: ${err.error?.message || resp.statusText}`);
+            }
+            const data = await resp.json();
+            return airtableParaObjeto(entidade, data.records[0]);
+        }
+
+        async function airtableUpdate(entidade, recordId, obj) {
+            const tableId = TABELAS[entidade];
+            const fields = objetoParaAirtableFields(entidade, obj);
+            const resp = await fetch(`${AIRTABLE_API}/${AIRTABLE_BASE_ID}/${tableId}`, {
+                method: 'PATCH',
+                headers: airtableHeaders(),
+                body: JSON.stringify({ records: [{ id: recordId, fields }], typecast: true })
+            });
+            if (!resp.ok) {
+                const err = await resp.json().catch(() => ({}));
+                throw new Error(`Erro ao atualizar em ${entidade}: ${err.error?.message || resp.statusText}`);
+            }
+            const data = await resp.json();
+            return airtableParaObjeto(entidade, data.records[0]);
+        }
+
+        async function airtableDelete(entidade, recordId) {
+            const tableId = TABELAS[entidade];
+            const resp = await fetch(`${AIRTABLE_API}/${AIRTABLE_BASE_ID}/${tableId}?records[]=${recordId}`, {
+                method: 'DELETE',
+                headers: airtableHeaders()
+            });
+            if (!resp.ok) {
+                const err = await resp.json().catch(() => ({}));
+                throw new Error(`Erro ao excluir em ${entidade}: ${err.error?.message || resp.statusText}`);
+            }
+        }
+
+        // ============ TELA DE CONFIGURAÇÃO ============
+        function carregarCredenciaisSalvas() {
+            const token = localStorage.getItem('campoAirtableToken');
+            const baseId = localStorage.getItem('campoAirtableBaseId');
+            if (token && baseId) {
+                document.getElementById('cfgToken').value = token;
+                document.getElementById('cfgBaseId').value = baseId;
+                return { token, baseId };
+            }
+            return null;
+        }
+
+        async function conectarAirtable() {
+            const token = document.getElementById('cfgToken').value.trim();
+            const baseId = document.getElementById('cfgBaseId').value.trim();
+            const errEl = document.getElementById('configError');
+            const loadingEl = document.getElementById('configLoading');
+            errEl.textContent = '';
+
+            if (!token || !baseId) {
+                errEl.textContent = '❌ Preencha o Token e o Base ID.';
+                return;
+            }
+
+            AIRTABLE_TOKEN = token;
+            AIRTABLE_BASE_ID = baseId;
+            loadingEl.style.display = 'block';
+
+            try {
+                await loadData();
+                localStorage.setItem('campoAirtableToken', token);
+                localStorage.setItem('campoAirtableBaseId', baseId);
+                document.getElementById('configScreen').style.display = 'none';
+                document.getElementById('appContainer').style.display = 'flex';
+            } catch (e) {
+                errEl.textContent = '❌ ' + e.message + ' — verifique o token e o Base ID.';
+            } finally {
+                loadingEl.style.display = 'none';
+            }
+        }
+
+        function trocarConta() {
+            localStorage.removeItem('campoAirtableToken');
+            localStorage.removeItem('campoAirtableBaseId');
+            location.reload();
+        }
+
+        // ============ PERSISTÊNCIA (AIRTABLE) ============
+        async function loadData() {
+            const [
+                u, an, am, ativosData, manutData, histData, chamData, prestData, comprData, despData
+            ] = await Promise.all([
+                airtableListAll('unidades'),
+                airtableListAll('andares'),
+                airtableListAll('ambientes'),
+                airtableListAll('ativos'),
+                airtableListAll('manutencoes'),
+                airtableListAll('historicoManutencoes'),
+                airtableListAll('chamados'),
+                airtableListAll('prestadores'),
+                airtableListAll('compras'),
+                airtableListAll('despesas'),
+            ]);
+            unidades = u;
+            andares = an;
+            ambientes = am;
+            ativos = ativosData;
+            manutencoes = manutData;
+            historicoManutencoes = histData;
+            chamados = chamData;
+            prestadores = prestData;
+            compras = comprData;
+            despesas = despData;
+            renderAll();
+        }
+
+        async function recarregarSilencioso() {
+            try {
+                await loadData();
+            } catch (e) {
+                console.error('Erro ao sincronizar:', e);
+            }
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.style.display = 'block';
+            setTimeout(() => t.style.display = 'none', 2500);
+        }
+
+        // ============ TABS ============
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const tabName = button.dataset.tab;
+                document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+                document.getElementById(tabName).style.display = 'block';
+                document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                button.classList.add('active');
+                renderAll();
+            });
+        });
+
+        // ============ HELPERS ============
+        function getUnidadeNome(id) { return unidades.find(u => u.id === id)?.nome || 'N/A'; }
+        function getAndar(id) { return andares.find(a => a.id === id); }
+        function getAmbiente(id) { return ambientes.find(a => a.id === id); }
+        function getAtivo(id) { return ativos.find(a => a.id === id); }
+        function getPrestadorNome(id) { return prestadores.find(p => p.id === id)?.nome || '-'; }
+
+        function getLocalCompleto(ambienteId) {
+            const amb = getAmbiente(ambienteId);
+            if (!amb) return 'N/A';
+            const andar = getAndar(amb.andarId);
+            if (!andar) return amb.nome;
+            const unidade = unidades.find(u => u.id === andar.unidadeId);
+            return `${unidade?.nome || ''} / ${andar.nome} / ${amb.nome}`;
+        }
+
+        function ambientesOrdenadosPorLocal() {
+            return [...ambientes].sort((a, b) => getLocalCompleto(a.id).localeCompare(getLocalCompleto(b.id), 'pt-BR'));
+        }
+
+        function getLocalAtivo(ativoId) {
+            const ativo = getAtivo(ativoId);
+            if (!ativo) return 'N/A';
+            return getLocalCompleto(ativo.ambienteId);
+        }
+
+        function getUnidadeAtivo(ativoId) {
+            const ativo = getAtivo(ativoId);
+            if (!ativo) return null;
+            const amb = getAmbiente(ativo.ambienteId);
+            if (!amb) return null;
+            const andar = getAndar(amb.andarId);
+            return andar ? andar.unidadeId : null;
+        }
+
+        function calcularDias(data) {
+            if (!data) return null;
+            const hoje = new Date();
+            hoje.setHours(0,0,0,0);
+            const prox = new Date(data);
+            return Math.ceil((prox - hoje) / (1000*60*60*24));
+        }
+
+        function statusPorDias(dias) {
+            if (dias === null) return 'Em dia';
+            if (dias < 0) return 'Vencido';
+            if (dias <= 7) return 'Alerta';
+            return 'Em dia';
+        }
+
+        function statusClass(status) {
+            if (status === 'Vencido' || status === 'Crítico') return 'status-critico';
+            if (status === 'Alerta' || status === 'Pendente') return 'status-alerta';
+            return 'status-emdia';
+        }
+
+        // ============ MODAL ============
+        function openModal(type, id = null) {
+            modalType = type;
+            editingId = id;
+            let html = '';
+
+            if (type === 'unidade') {
+                const item = id ? unidades.find(u => u.id === id) : {};
+                document.getElementById('modalTitle').textContent = id ? 'Editar Unidade' : 'Nova Unidade';
+                html = `<div class="form-group"><label>Nome da Unidade</label><input type="text" id="f_nome" value="${item.nome || ''}"></div>`;
+            }
+
+            else if (type === 'andar') {
+                const item = id ? andares.find(a => a.id === id) : {};
+                document.getElementById('modalTitle').textContent = id ? 'Editar Andar' : 'Novo Andar';
+                const opts = unidades.map(u => `<option value="${u.id}" ${item.unidadeId===u.id?'selected':''}>${u.nome}</option>`).join('');
+                html = `
+                    <div class="form-group"><label>Unidade</label><select id="f_unidadeId"><option value="">Selecione...</option>${opts}</select></div>
+                    <div class="form-group"><label>Nome do Andar</label><input type="text" id="f_nome" value="${item.nome || ''}" placeholder="Ex: Térreo, 1º Piso"></div>
+                `;
+            }
+
+            else if (type === 'ambiente') {
+                const item = id ? ambientes.find(a => a.id === id) : {};
+                document.getElementById('modalTitle').textContent = id ? 'Editar Ambiente' : 'Novo Ambiente';
+                const opts = andares.map(a => `<option value="${a.id}" ${item.andarId===a.id?'selected':''}>${getUnidadeNome(a.unidadeId)} - ${a.nome}</option>`).join('');
+                html = `
+                    <div class="form-group"><label>Andar</label><select id="f_andarId"><option value="">Selecione...</option>${opts}</select></div>
+                    <div class="form-group"><label>Nome do Ambiente</label><input type="text" id="f_nome" value="${item.nome || ''}" placeholder="Ex: Recepção, Sala de Reuniões"></div>
+                `;
+            }
+
+            else if (type === 'ativo') {
+                const item = id ? ativos.find(a => a.id === id) : {};
+                document.getElementById('modalTitle').textContent = id ? 'Editar Equipamento' : 'Novo Equipamento';
+                const opts = ambientesOrdenadosPorLocal().map(a => `<option value="${a.id}" ${item.ambienteId===a.id?'selected':''}>${getLocalCompleto(a.id)}</option>`).join('');
+                const categoriaPre = item.categoria || (categoriaAtiva !== 'Todos' ? categoriaAtiva : 'Ar-Condicionado');
+                const optsCategoria = CATEGORIAS.map(c => `<option value="${c.id}" ${categoriaPre===c.id?'selected':''}>${c.icone} ${c.label}</option>`).join('');
+
+                // Busca manutenção vinculada (se existir) para já trazer no mesmo form
+                const manutVinculada = id ? manutencoes.find(m => m.ativoId === id) : null;
+
+                html = `
+                    <div class="form-group"><label>Nome/Identificação do Equipamento</label><input type="text" id="f_nome" value="${item.nome || ''}" placeholder="Ex: Ar-condicionado Split 9000 BTUs"></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Categoria</label><select id="f_categoria">${optsCategoria}</select></div>
+                        <div class="form-group"><label>Local (Ambiente)</label><select id="f_ambienteId"><option value="">Selecione...</option>${opts}</select></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Marca/Modelo</label><input type="text" id="f_marca" value="${item.marca || ''}" placeholder="Ex: Samsung 9-BTUs"></div>
+                        <div class="form-group"><label>Data da Compra</label><input type="date" id="f_dataCompra" value="${item.dataCompra || ''}"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Item Crítico?</label>
+                            <select id="f_critico">
+                                <option value="false" ${item.critico===false?'selected':''}>Não</option>
+                                <option value="true" ${item.critico===true||item.critico===undefined?'selected':''}>Sim</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Status</label>
+                            <select id="f_status">
+                                <option value="Ativo" ${item.status==='Ativo'||!item.status?'selected':''}>Ativo</option>
+                                <option value="Inativo" ${item.status==='Inativo'?'selected':''}>Inativo</option>
+                                <option value="Em Manutenção" ${item.status==='Em Manutenção'?'selected':''}>Em Manutenção</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr style="margin:1.2rem 0;border:none;border-top:1px solid #eee;">
+                    <div style="font-size:13px;font-weight:600;color:#094752;margin-bottom:0.8rem;">📅 Controle de Manutenção</div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Última Manutenção</label><input type="date" id="f_ultimaData" value="${manutVinculada?.ultimaData || ''}"></div>
+                        <div class="form-group"><label>Próxima Manutenção</label><input type="date" id="f_proximaData" value="${manutVinculada?.proximaData || ''}"></div>
+                    </div>
+                    <div class="form-group"><label>Prestador Responsável</label>
+                        <select id="f_prestadorId">
+                            <option value="">Não definido</option>
+                            ${prestadores.map(p => `<option value="${p.id}" ${manutVinculada?.prestadorId===p.id?'selected':''}>${p.nome}</option>`).join('')}
+                        </select>
+                    </div>
+                    <input type="hidden" id="f_manutencaoId" value="${manutVinculada?.id || ''}">
+                `;
+            }
+
+            else if (type === 'manutencao') {
+                const item = id ? manutencoes.find(m => m.id === id) : {};
+                document.getElementById('modalTitle').textContent = id ? 'Editar Manutenção' : 'Nova Manutenção';
+                const optsAtivo = ativos.map(a => `<option value="${a.id}" ${item.ativoId===a.id?'selected':''}>${a.nome} (${getLocalAtivo(a.id)})</option>`).join('');
+                const optsPrest = prestadores.map(p => `<option value="${p.id}" ${item.prestadorId===p.id?'selected':''}>${p.nome}</option>`).join('');
+                html = `
+                    <div class="form-group"><label>Ativo</label><select id="f_ativoId"><option value="">Selecione...</option>${optsAtivo}</select></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Tipo</label>
+                            <select id="f_tipo">
+                                <option value="Preventiva" ${item.tipo==='Preventiva'?'selected':''}>Preventiva</option>
+                                <option value="Corretiva" ${item.tipo==='Corretiva'?'selected':''}>Corretiva</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Prestador</label><select id="f_prestadorId"><option value="">Selecione...</option>${optsPrest}</select></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Última Manutenção</label><input type="date" id="f_ultimaData" value="${item.ultimaData || ''}"></div>
+                        <div class="form-group"><label>Próxima Manutenção</label><input type="date" id="f_proximaData" value="${item.proximaData || ''}"></div>
+                    </div>
+                    <div class="form-group"><label>Item Crítico (para alertas)?</label>
+                        <select id="f_critico">
+                            <option value="false" ${item.critico===false?'selected':''}>Não</option>
+                            <option value="true" ${item.critico===true?'selected':''}>Sim</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Observações</label><textarea id="f_observacoes" rows="3">${item.observacoes || ''}</textarea></div>
+                `;
+            }
+
+            else if (type === 'chamado') {
+                const item = id ? chamados.find(c => c.id === id) : {};
+                document.getElementById('modalTitle').textContent = id ? 'Editar Chamado' : 'Novo Chamado/OS';
+                const optsAmb = ambientesOrdenadosPorLocal().map(a => `<option value="${a.id}" ${item.ambienteId===a.id?'selected':''}>${getLocalCompleto(a.id)}</option>`).join('');
+                const optsAtivo = '<option value="">Nenhum (ambiente geral)</option>' + ativos.map(a => `<option value="${a.id}" ${item.ativoId===a.id?'selected':''}>${a.nome}</option>`).join('');
+                const optsPrest = '<option value="">Não definido</option>' + prestadores.map(p => `<option value="${p.id}" ${item.prestadorId===p.id?'selected':''}>${p.nome}</option>`).join('');
+                html = `
+                    <div class="form-group"><label>Local (Ambiente)</label><select id="f_ambienteId"><option value="">Selecione...</option>${optsAmb}</select></div>
+                    <div class="form-group"><label>Ativo Relacionado (opcional)</label><select id="f_ativoId">${optsAtivo}</select></div>
+                    <div class="form-group"><label>Descrição do Problema/Solicitação</label><textarea id="f_descricao" rows="3">${item.descricao || ''}</textarea></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Tipo</label>
+                            <select id="f_tipo">
+                                <option value="Corretiva" ${item.tipo==='Corretiva'?'selected':''}>Corretiva</option>
+                                <option value="Preventiva" ${item.tipo==='Preventiva'?'selected':''}>Preventiva</option>
+                                <option value="Solicitação" ${item.tipo==='Solicitação'?'selected':''}>Solicitação</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Solicitante</label><input type="text" id="f_solicitante" value="${item.solicitante || ''}"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Prestador Responsável</label><select id="f_prestadorId">${optsPrest}</select></div>
+                        <div class="form-group"><label>Status</label>
+                            <select id="f_status">
+                                <option value="Aberto" ${item.status==='Aberto'?'selected':''}>Aberto</option>
+                                <option value="Em andamento" ${item.status==='Em andamento'?'selected':''}>Em andamento</option>
+                                <option value="Concluído" ${item.status==='Concluído'?'selected':''}>Concluído</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Data de Abertura</label><input type="date" id="f_dataAbertura" value="${item.dataAbertura || ''}"></div>
+                        <div class="form-group"><label>Data de Conclusão</label><input type="date" id="f_dataConclusao" value="${item.dataConclusao || ''}"></div>
+                    </div>
+                    <div class="form-group"><label>Observações</label><textarea id="f_observacoes" rows="2">${item.observacoes || ''}</textarea></div>
+                `;
+            }
+
+            else if (type === 'prestador') {
+                const item = id ? prestadores.find(p => p.id === id) : {};
+                document.getElementById('modalTitle').textContent = id ? 'Editar Prestador' : 'Novo Prestador';
+                html = `
+                    <div class="form-group"><label>Nome</label><input type="text" id="f_nome" value="${item.nome || ''}"></div>
+                    <div class="form-group"><label>Especialidade</label><input type="text" id="f_especialidade" value="${item.especialidade || ''}" placeholder="Ex: Elétrica, TI, Dedetização"></div>
+                    <div class="form-group"><label>Contato</label><input type="text" id="f_contato" value="${item.contato || ''}" placeholder="Telefone ou e-mail"></div>
+                `;
+            }
+
+            else if (type === 'compra') {
+                const item = id ? compras.find(c => c.id === id) : {};
+                document.getElementById('modalTitle').textContent = id ? 'Editar Compra' : 'Nova Compra';
+                html = `
+                    <div class="form-group"><label>Item</label><input type="text" id="f_item" value="${item.item || ''}"></div>
+                    <div class="form-group"><label>Fornecedor</label><input type="text" id="f_fornecedor" value="${item.fornecedor || ''}"></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Data Pedido</label><input type="date" id="f_dataPedido" value="${item.dataPedido || ''}"></div>
+                        <div class="form-group"><label>Data Entrega</label><input type="date" id="f_dataEntrega" value="${item.dataEntrega || ''}"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Quantidade</label><input type="number" id="f_quantidade" step="1" min="1" value="${item.quantidade || 1}" onInput="atualizarValorTotalCompra()"></div>
+                        <div class="form-group"><label>Valor Unitário (R$)</label><input type="number" id="f_valorUnitario" step="0.01" value="${item.valorUnitario || ''}" onInput="atualizarValorTotalCompra()"></div>
+                        <div class="form-group"><label>Valor Total (R$)</label><input type="number" id="f_valor" step="0.01" value="${item.valor || ''}" readonly style="background:#f5f5f5;"></div>
+                    </div>
+                    <div class="form-group"><label>Status</label>
+                        <select id="f_status">
+                            <option value="Pendente" ${item.status==='Pendente'?'selected':''}>Pendente</option>
+                            <option value="Entregue" ${item.status==='Entregue'?'selected':''}>Entregue</option>
+                            <option value="Cancelado" ${item.status==='Cancelado'?'selected':''}>Cancelado</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Observações</label><textarea id="f_observacoes" rows="3" placeholder="Detalhes adicionais sobre a compra...">${item.observacoes || ''}</textarea></div>
+                `;
+            }
+
+            else if (type === 'despesa') {
+                const item = id ? despesas.find(d => d.id === id) : {};
+                document.getElementById('modalTitle').textContent = id ? 'Editar Despesa' : 'Nova Despesa';
+                const optsUnidade = unidades.map(u => `<option value="${u.id}" ${item.unidadeId===u.id?'selected':''}>${u.nome}</option>`).join('');
+                html = `
+                    <div class="form-group"><label>Descrição</label><input type="text" id="f_descricao" value="${item.descricao || ''}"></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Categoria</label>
+                            <select id="f_categoria">
+                                <option value="Manutenção" ${item.categoria==='Manutenção'?'selected':''}>Manutenção</option>
+                                <option value="Segurança" ${item.categoria==='Segurança'?'selected':''}>Segurança</option>
+                                <option value="Limpeza" ${item.categoria==='Limpeza'?'selected':''}>Limpeza</option>
+                                <option value="TI" ${item.categoria==='TI'?'selected':''}>TI</option>
+                                <option value="Outros" ${item.categoria==='Outros'?'selected':''}>Outros</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Unidade</label><select id="f_unidadeId"><option value="">Geral</option>${optsUnidade}</select></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Data</label><input type="date" id="f_data" value="${item.data || ''}"></div>
+                        <div class="form-group"><label>Valor (R$)</label><input type="number" id="f_valor" step="0.01" value="${item.valor || ''}"></div>
+                    </div>
+                    <div class="form-group"><label>Fornecedor/Prestador</label><input type="text" id="f_fornecedor" value="${item.fornecedor || ''}"></div>
+                `;
+            }
+
+            else if (type === 'historico') {
+                const item = id ? historicoManutencoes.find(h => h.id === id) : {};
+                document.getElementById('modalTitle').textContent = id ? 'Editar Registro do Histórico' : 'Nova Manutenção Realizada (Histórico)';
+                const ativoPreSelecionado = window._historicoAtivoAtual || item.ativoId || '';
+                const optsAtivo = ativos.map(a => `<option value="${a.id}" ${(ativoPreSelecionado==a.id)?'selected':''}>${a.nome} (${getLocalAtivo(a.id)})</option>`).join('');
+                const optsPrest = prestadores.map(p => `<option value="${p.id}" ${item.prestadorId===p.id?'selected':''}>${p.nome}</option>`).join('');
+                html = `
+                    <div class="form-group"><label>Ativo</label><select id="f_ativoId"><option value="">Selecione...</option>${optsAtivo}</select></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Data Realizada</label><input type="date" id="f_data" value="${item.data || ''}"></div>
+                        <div class="form-group"><label>Tipo</label>
+                            <select id="f_tipo">
+                                <option value="Preventiva" ${item.tipo==='Preventiva'?'selected':''}>Preventiva</option>
+                                <option value="Corretiva" ${item.tipo==='Corretiva'?'selected':''}>Corretiva</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group"><label>Prestador</label><select id="f_prestadorId"><option value="">Selecione...</option>${optsPrest}</select></div>
+                    <div class="form-group"><label>Observações / Serviço Realizado</label><textarea id="f_observacoes" rows="3">${item.observacoes || ''}</textarea></div>
+                `;
+            }
+
+            document.getElementById('modalBody').innerHTML = html;
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+            window._historicoAtivoAtual = null;
+        }
+
+        function abrirHistoricoParaAtivo(ativoId) {
+            window._historicoAtivoAtual = ativoId;
+            openModal('historico');
+        }
+
+        function val(id) { const el = document.getElementById(id); return el ? el.value : ''; }
+
+        function atualizarValorTotalCompra() {
+            const qtd = parseFloat(val('f_quantidade')) || 0;
+            const valorUnit = parseFloat(val('f_valorUnitario')) || 0;
+            const total = qtd * valorUnit;
+            const elTotal = document.getElementById('f_valor');
+            if (elTotal) elTotal.value = total.toFixed(2);
+        }
+
+        async function salvarItem() {
+            const btnSalvar = document.querySelector('.modal-actions .button-primary');
+            const textoOriginal = btnSalvar.textContent;
+            btnSalvar.textContent = '⏳ Salvando...';
+            btnSalvar.disabled = true;
+
+            try {
+                if (modalType === 'unidade') {
+                    const item = { nome: val('f_nome') };
+                    if (!item.nome) { showToast('❌ Informe o nome!'); return; }
+                    if (editingId) await airtableUpdate('unidades', editingId, item);
+                    else await airtableCreate('unidades', item);
+                }
+                else if (modalType === 'andar') {
+                    const item = { unidadeId: val('f_unidadeId'), nome: val('f_nome') };
+                    if (!item.unidadeId || !item.nome) { showToast('❌ Preencha todos os campos!'); return; }
+                    if (editingId) await airtableUpdate('andares', editingId, item);
+                    else await airtableCreate('andares', item);
+                }
+                else if (modalType === 'ambiente') {
+                    const item = { andarId: val('f_andarId'), nome: val('f_nome') };
+                    if (!item.andarId || !item.nome) { showToast('❌ Preencha todos os campos!'); return; }
+                    if (editingId) await airtableUpdate('ambientes', editingId, item);
+                    else await airtableCreate('ambientes', item);
+                }
+                else if (modalType === 'ativo') {
+                    const item = {
+                        nome: val('f_nome'), ambienteId: val('f_ambienteId'),
+                        categoria: val('f_categoria'), marca: val('f_marca'),
+                        dataCompra: val('f_dataCompra'), critico: val('f_critico')==='true', status: val('f_status')
+                    };
+                    if (!item.nome || !item.ambienteId) { showToast('❌ Preencha nome e local!'); return; }
+
+                    let ativoId = editingId;
+                    if (editingId) await airtableUpdate('ativos', editingId, item);
+                    else {
+                        const novo = await airtableCreate('ativos', item);
+                        ativoId = novo.id;
+                    }
+
+                    // Cria ou atualiza o registro de manutenção vinculado automaticamente
+                    const proximaData = val('f_proximaData');
+                    const ultimaData = val('f_ultimaData');
+                    const manutencaoIdExistente = val('f_manutencaoId') || null;
+                    if (proximaData || ultimaData) {
+                        const manutItem = {
+                            titulo: `${item.nome} - ${item.categoria}`,
+                            ativoId: ativoId, tipo: 'Preventiva',
+                            ultimaData: ultimaData, proximaData: proximaData,
+                            prestadorId: val('f_prestadorId') || null,
+                            critico: item.critico, observacoes: ''
+                        };
+                        if (manutencaoIdExistente) await airtableUpdate('manutencoes', manutencaoIdExistente, manutItem);
+                        else await airtableCreate('manutencoes', manutItem);
+                    }
+                }
+                else if (modalType === 'manutencao') {
+                    const item = {
+                        titulo: 'Manutenção', ativoId: val('f_ativoId'), tipo: val('f_tipo'),
+                        ultimaData: val('f_ultimaData'), proximaData: val('f_proximaData'),
+                        prestadorId: val('f_prestadorId') || null,
+                        critico: val('f_critico')==='true', observacoes: val('f_observacoes')
+                    };
+                    if (!item.ativoId) { showToast('❌ Selecione o ativo!'); return; }
+                    if (editingId) await airtableUpdate('manutencoes', editingId, item);
+                    else await airtableCreate('manutencoes', item);
+                }
+                else if (modalType === 'chamado') {
+                    const item = {
+                        ambienteId: val('f_ambienteId'),
+                        ativoId: val('f_ativoId') || null,
+                        descricao: val('f_descricao'), tipo: val('f_tipo'), solicitante: val('f_solicitante'),
+                        prestadorId: val('f_prestadorId') || null,
+                        status: val('f_status'), dataAbertura: val('f_dataAbertura'),
+                        dataConclusao: val('f_dataConclusao'), observacoes: val('f_observacoes')
+                    };
+                    if (!item.ambienteId || !item.descricao) { showToast('❌ Preencha local e descrição!'); return; }
+                    if (editingId) await airtableUpdate('chamados', editingId, item);
+                    else await airtableCreate('chamados', item);
+                }
+                else if (modalType === 'prestador') {
+                    const item = { nome: val('f_nome'), especialidade: val('f_especialidade'), contato: val('f_contato') };
+                    if (!item.nome) { showToast('❌ Informe o nome!'); return; }
+                    if (editingId) await airtableUpdate('prestadores', editingId, item);
+                    else await airtableCreate('prestadores', item);
+                }
+                else if (modalType === 'compra') {
+                    const item = {
+                        item: val('f_item'), fornecedor: val('f_fornecedor'),
+                        dataPedido: val('f_dataPedido'), dataEntrega: val('f_dataEntrega'),
+                        quantidade: parseFloat(val('f_quantidade')) || 1,
+                        valorUnitario: parseFloat(val('f_valorUnitario')) || 0,
+                        status: val('f_status'),
+                        observacoes: val('f_observacoes')
+                    };
+                    if (!item.item) { showToast('❌ Informe o item!'); return; }
+                    if (editingId) await airtableUpdate('compras', editingId, item);
+                    else await airtableCreate('compras', item);
+                }
+                else if (modalType === 'despesa') {
+                    const item = {
+                        descricao: val('f_descricao'), categoria: val('f_categoria'),
+                        unidadeId: val('f_unidadeId') || null,
+                        data: val('f_data'), valor: parseFloat(val('f_valor')) || 0, fornecedor: val('f_fornecedor')
+                    };
+                    if (!item.descricao) { showToast('❌ Informe a descrição!'); return; }
+                    if (editingId) await airtableUpdate('despesas', editingId, item);
+                    else await airtableCreate('despesas', item);
+                }
+                else if (modalType === 'historico') {
+                    const ativoSel = getAtivo(val('f_ativoId'));
+                    const item = {
+                        titulo: `Manutenção - ${val('f_data')}`,
+                        ativoId: val('f_ativoId'), data: val('f_data'), tipo: val('f_tipo'),
+                        prestadorId: val('f_prestadorId') || null,
+                        observacoes: val('f_observacoes')
+                    };
+                    if (!item.ativoId || !item.data) { showToast('❌ Selecione o ativo e a data!'); return; }
+                    if (editingId) await airtableUpdate('historicoManutencoes', editingId, item);
+                    else await airtableCreate('historicoManutencoes', item);
+                }
+
+                showToast('✅ Salvo na nuvem!');
+                closeModal();
+                await loadData();
+            } catch (e) {
+                showToast('❌ ' + e.message);
+            } finally {
+                btnSalvar.textContent = textoOriginal;
+                btnSalvar.disabled = false;
+            }
+        }
+
+        async function deleteItem(type, id) {
+            if (!confirm('Tem certeza que deseja deletar este registro?')) return;
+            const mapaTabelas = {
+                unidade: 'unidades', andar: 'andares', ambiente: 'ambientes', ativo: 'ativos',
+                manutencao: 'manutencoes', chamado: 'chamados', prestador: 'prestadores',
+                compra: 'compras', despesa: 'despesas', historico: 'historicoManutencoes'
+            };
+            const entidade = mapaTabelas[type];
+            if (!entidade) return;
+
+            try {
+                await airtableDelete(entidade, id);
+                showToast('✅ Excluído da nuvem!');
+                await loadData();
+            } catch (e) {
+                showToast('❌ ' + e.message);
+            }
+        }
+
+        // ============ RENDERS ============
+        function renderDashboard() {
+            document.getElementById('mTotalAtivos').textContent = ativos.length;
+            document.getElementById('mManutPendentes').textContent = manutencoes.filter(m => {
+                const d = calcularDias(m.proximaData);
+                return statusPorDias(d) !== 'Em dia';
+            }).length;
+            document.getElementById('mChamadosAbertos').textContent = chamados.filter(c => c.status !== 'Concluído').length;
+
+            const hoje = new Date();
+            const despesasMes = despesas.filter(d => {
+                if (!d.data) return false;
+                const dt = new Date(d.data);
+                return dt.getMonth() === hoje.getMonth() && dt.getFullYear() === hoje.getFullYear();
+            }).reduce((s,d) => s + (d.valor || 0), 0);
+            document.getElementById('mDespesasMes').textContent = 'R$ ' + despesasMes.toFixed(2).replace('.', ',');
+
+            // Alertas críticos 7 dias
+            const alertasCriticos = manutencoes.filter(m => {
+                const dias = calcularDias(m.proximaData);
+                return m.critico && dias !== null && dias <= 7;
+            });
+
+            let alertHtml = '';
+            if (alertasCriticos.length > 0) {
+                const vencidos = alertasCriticos.filter(m => calcularDias(m.proximaData) < 0).length;
+                if (vencidos > 0) {
+                    alertHtml = `<div class="alert-box danger">🚨 ${vencidos} item(ns) crítico(s) com manutenção VENCIDA! E ${alertasCriticos.length - vencidos} vencendo em até 7 dias.</div>`;
+                } else {
+                    alertHtml = `<div class="alert-box">⚠️ ${alertasCriticos.length} item(ns) crítico(s) com manutenção vencendo em até 7 dias!</div>`;
+                }
+            } else {
+                alertHtml = `<div class="alert-box success">✅ Nenhum alerta crítico no momento.</div>`;
+            }
+            document.getElementById('alertasContainer').innerHTML = alertHtml;
+
+            // Tabela de alertas
+            let html = '';
+            alertasCriticos.sort((a,b) => calcularDias(a.proximaData) - calcularDias(b.proximaData)).forEach(m => {
+                const dias = calcularDias(m.proximaData);
+                const ativo = getAtivo(m.ativoId);
+                const st = statusPorDias(dias);
+                html += `<tr>
+                    <td><strong>${getLocalAtivo(m.ativoId)} - ${ativo?.nome || 'N/A'}</strong></td>
+                    <td><span class="badge-tipo badge-${m.tipo==='Preventiva'?'preventiva':'corretiva'}">${m.tipo}</span></td>
+                    <td>${m.proximaData}</td>
+                    <td><strong>${dias}</strong> dias</td>
+                    <td><span class="status-badge ${statusClass(st)}">${st}</span></td>
+                </tr>`;
+            });
+            document.getElementById('dashAlertasBody').innerHTML = html || '<tr><td colspan="5" class="empty-msg">Nenhum alerta no momento</td></tr>';
+
+            // Chamados abertos no dashboard
+            let chHtml = '';
+            chamados.filter(c => c.status !== 'Concluído').forEach(c => {
+                chHtml += `<tr>
+                    <td>${getLocalCompleto(c.ambienteId)}</td>
+                    <td>${c.descricao}</td>
+                    <td><span class="badge-tipo badge-${c.tipo==='Preventiva'?'preventiva':'corretiva'}">${c.tipo}</span></td>
+                    <td>${c.solicitante || '-'}</td>
+                    <td>${c.dataAbertura || '-'}</td>
+                    <td><span class="status-badge status-${c.status==='Aberto'?'aberto':'andamento'}">${c.status}</span></td>
+                </tr>`;
+            });
+            document.getElementById('dashChamadosBody').innerHTML = chHtml || '<tr><td colspan="6" class="empty-msg">Nenhum chamado em aberto</td></tr>';
+        }
+
+        function renderLocais() {
+            // Unidades
+            let html = '';
+            unidades.forEach(u => {
+                html += `<tr><td><strong>${u.nome}</strong></td><td>
+                    <span class="icon-action" onclick="openModal('unidade', '${u.id}')">✏️</span>
+                    <span class="icon-action" onclick="deleteItem('unidade', '${u.id}')">🗑️</span>
+                </td></tr>`;
+            });
+            document.getElementById('unidadesBody').innerHTML = html || '<tr><td colspan="2" class="empty-msg">Nenhuma unidade</td></tr>';
+
+            // Andares
+            html = '';
+            andares.forEach(a => {
+                html += `<tr><td>${getUnidadeNome(a.unidadeId)}</td><td>${a.nome}</td><td>
+                    <span class="icon-action" onclick="openModal('andar', '${a.id}')">✏️</span>
+                    <span class="icon-action" onclick="deleteItem('andar', '${a.id}')">🗑️</span>
+                </td></tr>`;
+            });
+            document.getElementById('andaresBody').innerHTML = html || '<tr><td colspan="3" class="empty-msg">Nenhum andar</td></tr>';
+
+            // Ambientes (ordenados alfabeticamente por Unidade, depois por nome do Ambiente)
+            html = '';
+            const ambientesOrdenados = [...ambientes].sort((a, b) => {
+                const andarA = getAndar(a.andarId);
+                const andarB = getAndar(b.andarId);
+                const unidadeA = andarA ? getUnidadeNome(andarA.unidadeId) : '';
+                const unidadeB = andarB ? getUnidadeNome(andarB.unidadeId) : '';
+                if (unidadeA !== unidadeB) return unidadeA.localeCompare(unidadeB, 'pt-BR');
+                return a.nome.localeCompare(b.nome, 'pt-BR');
+            });
+            ambientesOrdenados.forEach(a => {
+                const andar = getAndar(a.andarId);
+                html += `<tr>
+                    <td>${andar ? getUnidadeNome(andar.unidadeId) : '-'}</td>
+                    <td>${andar?.nome || '-'}</td>
+                    <td>${a.nome}</td>
+                    <td>
+                        <span class="icon-action" onclick="openModal('ambiente', '${a.id}')">✏️</span>
+                        <span class="icon-action" onclick="deleteItem('ambiente', '${a.id}')">🗑️</span>
+                    </td>
+                </tr>`;
+            });
+            document.getElementById('ambientesBody').innerHTML = html || '<tr><td colspan="4" class="empty-msg">Nenhum ambiente</td></tr>';
+        }
+
+        function renderCategoriaTabs() {
+            const container = document.getElementById('categoriaTabs');
+            if (!container) return;
+
+            const countTodos = ativos.length;
+            let html = `<button class="categoria-tab-btn ${categoriaAtiva==='Todos'?'active':''}" onclick="selecionarCategoria('Todos')">
+                📋 Todos <span class="categoria-tab-count">${countTodos}</span>
+            </button>`;
+
+            CATEGORIAS.forEach(cat => {
+                const count = ativos.filter(a => a.categoria === cat.id).length;
+                html += `<button class="categoria-tab-btn ${categoriaAtiva===cat.id?'active':''}" onclick="selecionarCategoria('${cat.id}')">
+                    ${cat.icone} ${cat.label} <span class="categoria-tab-count">${count}</span>
+                </button>`;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function selecionarCategoria(cat) {
+            categoriaAtiva = cat;
+            renderManutencoes();
+        }
+
+        function selecionarUnidadeFiltro(unidadeId) {
+            unidadeFiltroAtiva = unidadeId;
+            renderManutencoes();
+        }
+
+        function renderUnidadePills() {
+            const container = document.getElementById('unidadeFilterPills');
+            if (!container) return;
+            let html = `<button class="pill-btn ${unidadeFiltroAtiva==='Todos'?'active':''}" onclick="selecionarUnidadeFiltro('Todos')">Todos</button>`;
+            unidades.forEach(u => {
+                html += `<button class="pill-btn ${unidadeFiltroAtiva===u.id?'active':''}" onclick="selecionarUnidadeFiltro('${u.id}')">${u.nome}</button>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderCategoriaSummary(listaFiltrada) {
+            const container = document.getElementById('categoriaSummary');
+            if (!container) return;
+
+            const total = listaFiltrada.length;
+            let emDia = 0, aVencer = 0, vencidos = 0;
+
+            listaFiltrada.forEach(a => {
+                const manut = manutencoes.find(m => m.ativoId === a.id);
+                if (!manut || !manut.proximaData) { emDia++; return; }
+                const dias = calcularDias(manut.proximaData);
+                const st = statusPorDias(dias);
+                if (st === 'Vencido') vencidos++;
+                else if (st === 'Alerta') aVencer++;
+                else emDia++;
+            });
+
+            const catLabel = categoriaAtiva === 'Todos' ? 'Todos os Equipamentos' : (CATEGORIAS.find(c => c.id === categoriaAtiva)?.label || categoriaAtiva);
+            document.getElementById('categoriaTitulo').textContent = `🔧 ${catLabel}`;
+
+            container.innerHTML = `
+                <div class="summary-card"><div class="summary-card-label">Total</div><div class="summary-card-value">${total}</div></div>
+                <div class="summary-card"><div class="summary-card-label">Em dia</div><div class="summary-card-value cor-verde">${emDia}</div></div>
+                <div class="summary-card"><div class="summary-card-label">A vencer (≤7d)</div><div class="summary-card-value cor-amarelo">${aVencer}</div></div>
+                <div class="summary-card"><div class="summary-card-label">Vencidos</div><div class="summary-card-value cor-vermelho">${vencidos}</div></div>
+            `;
+        }
+
+        function renderManutencoes() {
+            renderCategoriaTabs();
+            renderUnidadePills();
+
+            const listaFiltrada = ativos.filter(a => {
+                if (categoriaAtiva !== 'Todos' && a.categoria !== categoriaAtiva) return false;
+                if (unidadeFiltroAtiva !== 'Todos' && getUnidadeAtivo(a.id) !== unidadeFiltroAtiva) return false;
+                return true;
+            }).sort((a, b) => {
+                const localA = getLocalAtivo(a.id);
+                const localB = getLocalAtivo(b.id);
+                return localA.localeCompare(localB, 'pt-BR');
+            });
+
+            renderCategoriaSummary(listaFiltrada);
+
+            let html = '';
+            listaFiltrada.forEach(a => {
+                const manut = manutencoes.find(m => m.ativoId === a.id);
+                const dias = manut ? calcularDias(manut.proximaData) : null;
+                const st = manut ? statusPorDias(dias) : 'Em dia';
+                const amb = getAmbiente(a.ambienteId);
+                const andar = amb ? getAndar(amb.andarId) : null;
+                const unidadeNome = andar ? getUnidadeNome(andar.unidadeId) : '';
+
+                html += `<tr>
+                    <td style="white-space:nowrap;">
+                        <span class="icon-action" title="Editar" onclick="openModal('ativo', '${a.id}')">✏️</span>
+                        <span class="icon-action" title="Excluir" onclick="deleteItem('ativo', '${a.id}')">🗑️</span>
+                        <span class="icon-action" title="Registrar manutenção realizada" onclick="abrirHistoricoParaAtivo('${a.id}')">📝</span>
+                    </td>
+                    <td>
+                        <span class="local-destaque-unidade">${unidadeNome}</span>
+                        <span class="local-destaque-ambiente">${amb?.nome || '-'} — ${a.nome}</span>
+                    </td>
+                    <td>${unidadeNome}</td>
+                    <td>${a.marca || '-'}</td>
+                    <td>${(manut?.ultimaData && !manut.ultimaData.startsWith('0001')) ? manut.ultimaData : '-'}</td>
+                    <td>${(manut?.proximaData && !manut.proximaData.startsWith('0001')) ? manut.proximaData : '-'}</td>
+                    <td><span class="status-badge ${statusClass(st)}">${st}</span></td>
+                </tr>`;
+            });
+            document.getElementById('manutencaoBody').innerHTML = html || '<tr><td colspan="7" class="empty-msg">Nenhum equipamento cadastrado nesta categoria</td></tr>';
+
+            // Atualizar select do histórico (Local - Ativo)
+            const fHistSel = document.getElementById('filtroHistoricoAtivo');
+            if (fHistSel) {
+                const valorAtual = fHistSel.value;
+                let opts = '<option value="">Selecione um equipamento...</option>';
+                ativos.forEach(a => opts += `<option value="${a.id}">${getLocalAtivo(a.id)} - ${a.nome}</option>`);
+                fHistSel.innerHTML = opts;
+                fHistSel.value = valorAtual;
+            }
+        }
+
+        function renderHistoricoManutencao() {
+            const ativoId = document.getElementById('filtroHistoricoAtivo')?.value;
+            let html = '';
+
+            if (!ativoId) {
+                document.getElementById('historicoManutencaoBody').innerHTML = '<tr><td colspan="5" class="empty-msg">Selecione um equipamento acima para ver o histórico completo de manutenções</td></tr>';
+                return;
+            }
+
+            const registros = historicoManutencoes
+                .filter(h => h.ativoId === ativoId)
+                .sort((a, b) => new Date(b.data) - new Date(a.data));
+
+            registros.forEach(h => {
+                html += `<tr>
+                    <td><strong>${h.data || '-'}</strong></td>
+                    <td><span class="badge-tipo badge-${h.tipo==='Preventiva'?'preventiva':'corretiva'}">${h.tipo}</span></td>
+                    <td>${getPrestadorNome(h.prestadorId)}</td>
+                    <td>${h.observacoes || '-'}</td>
+                    <td>
+                        <span class="icon-action" onclick="openModal('historico', '${h.id}')">✏️</span>
+                        <span class="icon-action" onclick="deleteItem('historico', '${h.id}')">🗑️</span>
+                    </td>
+                </tr>`;
+            });
+
+            document.getElementById('historicoManutencaoBody').innerHTML = html || '<tr><td colspan="5" class="empty-msg">Nenhum registro de manutenção realizada para este equipamento ainda</td></tr>';
+        }
+
+        function renderChamados() {
+            const fStatus = document.getElementById('filtroStatusChamado')?.value;
+            let html = '';
+            chamados.filter(c => !fStatus || c.status === fStatus).forEach(c => {
+                const statusCls = c.status === 'Aberto' ? 'status-aberto' : c.status === 'Em andamento' ? 'status-andamento' : 'status-concluido';
+                html += `<tr>
+                    <td>${getLocalCompleto(c.ambienteId)}</td>
+                    <td>${c.descricao}</td>
+                    <td><span class="badge-tipo badge-${c.tipo==='Preventiva'?'preventiva':'corretiva'}">${c.tipo}</span></td>
+                    <td>${c.solicitante || '-'}</td>
+                    <td>${getPrestadorNome(c.prestadorId)}</td>
+                    <td>${c.dataAbertura || '-'}</td>
+                    <td>${c.dataConclusao || '-'}</td>
+                    <td><span class="status-badge ${statusCls}">${c.status}</span></td>
+                    <td>
+                        <span class="icon-action" onclick="openModal('chamado', '${c.id}')">✏️</span>
+                        <span class="icon-action" onclick="deleteItem('chamado', '${c.id}')">🗑️</span>
+                    </td>
+                </tr>`;
+            });
+            document.getElementById('chamadosBody').innerHTML = html || '<tr><td colspan="9" class="empty-msg">Nenhum chamado cadastrado</td></tr>';
+        }
+
+        function renderPrestadores() {
+            let html = '';
+            const prestadoresOrdenados = [...prestadores].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+            prestadoresOrdenados.forEach(p => {
+                html += `<tr>
+                    <td><strong>${p.nome}</strong></td>
+                    <td>${p.especialidade || '-'}</td>
+                    <td>${p.contato || '-'}</td>
+                    <td>
+                        <span class="icon-action" onclick="openModal('prestador', '${p.id}')">✏️</span>
+                        <span class="icon-action" onclick="deleteItem('prestador', '${p.id}')">🗑️</span>
+                    </td>
+                </tr>`;
+            });
+            document.getElementById('prestadoresBody').innerHTML = html || '<tr><td colspan="4" class="empty-msg">Nenhum prestador cadastrado</td></tr>';
+        }
+
+        function renderCompras() {
+            let html = '';
+            compras.forEach(c => {
+                const statusColors = { Entregue: ['#d4edda','#155724'], Pendente: ['#fff3cd','#856404'], Cancelado: ['#f8d7da','#721c24'] };
+                const col = statusColors[c.status] || ['#eee','#333'];
+                const obsResumo = c.observacoes ? (c.observacoes.length > 30 ? c.observacoes.substring(0,30) + '...' : c.observacoes) : '-';
+                html += `<tr>
+                    <td>${c.item}</td>
+                    <td>${c.fornecedor}</td>
+                    <td>${c.quantidade || 1}</td>
+                    <td>R$ ${(c.valorUnitario || 0).toFixed(2)}</td>
+                    <td>${c.dataPedido || '-'}</td>
+                    <td>${c.dataEntrega || '-'}</td>
+                    <td><strong>R$ ${(c.valor || 0).toFixed(2)}</strong></td>
+                    <td><span class="status-badge" style="background:${col[0]};color:${col[1]}">${c.status}</span></td>
+                    <td title="${c.observacoes || ''}">${obsResumo}</td>
+                    <td>
+                        <span class="icon-action" onclick="openModal('compra', '${c.id}')">✏️</span>
+                        <span class="icon-action" onclick="deleteItem('compra', '${c.id}')">🗑️</span>
+                    </td>
+                </tr>`;
+            });
+            document.getElementById('comprasBody').innerHTML = html || '<tr><td colspan="10" class="empty-msg">Nenhuma compra cadastrada</td></tr>';
+        }
+
+        function renderDespesas() {
+            let html = '';
+            despesas.forEach(d => {
+                html += `<tr>
+                    <td>${d.descricao}</td>
+                    <td>${d.categoria}</td>
+                    <td>${d.unidadeId ? getUnidadeNome(d.unidadeId) : 'Geral'}</td>
+                    <td>${d.data || '-'}</td>
+                    <td>R$ ${(d.valor || 0).toFixed(2)}</td>
+                    <td>${d.fornecedor || '-'}</td>
+                    <td>
+                        <span class="icon-action" onclick="openModal('despesa', '${d.id}')">✏️</span>
+                        <span class="icon-action" onclick="deleteItem('despesa', '${d.id}')">🗑️</span>
+                    </td>
+                </tr>`;
+            });
+            document.getElementById('despesasBody').innerHTML = html || '<tr><td colspan="7" class="empty-msg">Nenhuma despesa cadastrada</td></tr>';
+        }
+
+        function renderAll() {
+            renderLocais();
+            renderManutencoes();
+            renderHistoricoManutencao();
+            renderChamados();
+            renderPrestadores();
+            renderCompras();
+            renderDespesas();
+            renderDashboard();
+        }
+
+        // ============ RELATÓRIOS ============
+        function tabelaHTML(headers, rows) {
+            let html = '<div class="table-container" style="margin-top:1rem;"><table><thead><tr>';
+            headers.forEach(h => html += `<th>${h}</th>`);
+            html += '</tr></thead><tbody>';
+            rows.forEach(r => {
+                html += '<tr>';
+                r.forEach(c => html += `<td>${c}</td>`);
+                html += '</tr>';
+            });
+            html += '</tbody></table></div>';
+            return html;
+        }
+
+        function relPendencias() {
+            const rows = manutencoes.filter(m => {
+                const d = calcularDias(m.proximaData);
+                return statusPorDias(d) !== 'Em dia';
+            }).map(m => {
+                const dias = calcularDias(m.proximaData);
+                const ativo = getAtivo(m.ativoId);
+                return [ativo?.nome || 'N/A', getLocalAtivo(m.ativoId), m.tipo, m.proximaData, dias + ' dias', statusPorDias(dias), m.critico ? '⚠️ Sim' : 'Não'];
+            });
+            document.getElementById('relatorioOutput').innerHTML = '<h2 class="section-title">📄 Pendências de Manutenção</h2>' +
+                tabelaHTML(['Ativo','Local','Tipo','Próxima','Dias','Status','Crítico'], rows);
+            showToast('✅ Relatório gerado!');
+        }
+
+        function relDespesasUnidade() {
+            const totais = {};
+            unidades.forEach(u => totais[u.id] = 0);
+            let geral = 0;
+            despesas.forEach(d => {
+                if (d.unidadeId) totais[d.unidadeId] = (totais[d.unidadeId] || 0) + (d.valor || 0);
+                else geral += (d.valor || 0);
+            });
+            const rows = unidades.map(u => [u.nome, 'R$ ' + (totais[u.id]||0).toFixed(2)]);
+            rows.push(['Geral (sem unidade)', 'R$ ' + geral.toFixed(2)]);
+            const total = despesas.reduce((s,d)=>s+(d.valor || 0),0);
+            rows.push(['<strong>TOTAL</strong>', '<strong>R$ ' + total.toFixed(2) + '</strong>']);
+            document.getElementById('relatorioOutput').innerHTML = '<h2 class="section-title">💰 Despesas por Unidade</h2>' +
+                tabelaHTML(['Unidade','Total Gasto'], rows);
+            showToast('✅ Relatório gerado!');
+        }
+
+        function relChamadosPrestador() {
+            const contagem = {};
+            chamados.forEach(c => {
+                const nome = getPrestadorNome(c.prestadorId);
+                if (!contagem[nome]) contagem[nome] = { total: 0, abertos: 0, concluidos: 0 };
+                contagem[nome].total++;
+                if (c.status === 'Concluído') contagem[nome].concluidos++;
+                else contagem[nome].abertos++;
+            });
+            const rows = Object.entries(contagem).map(([nome, c]) => [nome, c.total, c.abertos, c.concluidos]);
+            document.getElementById('relatorioOutput').innerHTML = '<h2 class="section-title">👷 Chamados por Prestador</h2>' +
+                tabelaHTML(['Prestador','Total','Abertos/Andamento','Concluídos'], rows.length ? rows : [['Nenhum chamado registrado','-','-','-']]);
+            showToast('✅ Relatório gerado!');
+        }
+
+        function relAtivosLocal() {
+            const rows = ativos.map(a => [a.nome, getLocalAtivo(a.id), a.categoria, a.critico ? '⚠️ Sim' : 'Não', a.status]);
+            document.getElementById('relatorioOutput').innerHTML = '<h2 class="section-title">🏢 Ativos por Local</h2>' +
+                tabelaHTML(['Equipamento','Local Completo','Categoria','Crítico','Status'], rows);
+            showToast('✅ Relatório gerado!');
+        }
+
+        // ============ EXPORTAÇÃO ============
+        function exportarTudo() {
+            const wb = XLSX.utils.book_new();
+
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(unidades.map(u => ({ID:u.id, Unidade:u.nome}))), 'Unidades');
+
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(ambientes.map(a => {
+                const andar = getAndar(a.andarId);
+                return { Unidade: andar ? getUnidadeNome(andar.unidadeId) : '', Andar: andar?.nome || '', Ambiente: a.nome };
+            })), 'Locais');
+
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(ativos.map(a => ({
+                Equipamento: a.nome, Local: getLocalAtivo(a.id), Categoria: a.categoria,
+                'Marca/Modelo': a.marca, 'Data Compra': a.dataCompra, Crítico: a.critico ? 'Sim' : 'Não', Status: a.status
+            }))), 'Ativos');
+
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(manutencoes.map(m => {
+                const dias = calcularDias(m.proximaData);
+                return {
+                    Ativo: getAtivo(m.ativoId)?.nome || '', Local: getLocalAtivo(m.ativoId), Tipo: m.tipo,
+                    'Última Manutenção': m.ultimaData, 'Próxima Manutenção': m.proximaData,
+                    'Dias Restantes': dias, Status: statusPorDias(dias), Prestador: getPrestadorNome(m.prestadorId),
+                    Crítico: m.critico ? 'Sim' : 'Não', Observações: m.observacoes
+                };
+            })), 'Manutencoes');
+
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(historicoManutencoes.map(h => ({
+                Ativo: getAtivo(h.ativoId)?.nome || '', Local: getLocalAtivo(h.ativoId), 'Data Realizada': h.data,
+                Tipo: h.tipo, Prestador: getPrestadorNome(h.prestadorId), Observações: h.observacoes
+            }))), 'Historico_Manutencoes');
+
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(chamados.map(c => ({
+                Local: getLocalCompleto(c.ambienteId), Ativo: c.ativoId ? getAtivo(c.ativoId)?.nome : '',
+                Descrição: c.descricao, Tipo: c.tipo, Solicitante: c.solicitante, Prestador: getPrestadorNome(c.prestadorId),
+                'Data Abertura': c.dataAbertura, 'Data Conclusão': c.dataConclusao, Status: c.status
+            }))), 'Chamados');
+
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(prestadores.map(p => ({
+                Nome: p.nome, Especialidade: p.especialidade, Contato: p.contato
+            }))), 'Prestadores');
+
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(compras.map(c => ({
+                Item: c.item, Fornecedor: c.fornecedor, Quantidade: c.quantidade || 1,
+                'Valor Unitário': c.valorUnitario || 0, 'Data Pedido': c.dataPedido,
+                'Data Entrega': c.dataEntrega, 'Valor Total': c.valor, Status: c.status, Observações: c.observacoes || ''
+            }))), 'Compras');
+
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(despesas.map(d => ({
+                Descrição: d.descricao, Categoria: d.categoria, Unidade: d.unidadeId ? getUnidadeNome(d.unidadeId) : 'Geral',
+                Data: d.data, Valor: d.valor, Fornecedor: d.fornecedor
+            }))), 'Despesas');
+
+            XLSX.writeFile(wb, `Sistema_Campo_Incorporadora_${new Date().toISOString().split('T')[0]}.xlsx`);
+            showToast('✅ Relatório completo exportado!');
+        }
+
+        // ============ INIT ============
+        (function iniciarSistema() {
+            const creds = carregarCredenciaisSalvas();
+            if (creds) {
+                AIRTABLE_TOKEN = creds.token;
+                AIRTABLE_BASE_ID = creds.baseId;
+                document.getElementById('configLoading').style.display = 'block';
+                loadData().then(() => {
+                    document.getElementById('configScreen').style.display = 'none';
+                    document.getElementById('appContainer').style.display = 'flex';
+                }).catch(e => {
+                    document.getElementById('configLoading').style.display = 'none';
+                    document.getElementById('configError').textContent = '❌ ' + e.message + ' — verifique suas credenciais.';
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
