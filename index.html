@@ -15,24 +15,24 @@
   --r:8px;--sw:240px;--th:54px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--txt);height:100vh;overflow:hidden;font-size:13px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--txt);height:100vh;overflow:hidden;font-size:14px}
 
 /* ── LOGIN ── */
-#login-screen{position:fixed;inset:0;background:var(--teal);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:0}
-.login-box{background:#fff;border-radius:14px;padding:36px 40px;width:420px;max-width:92vw;box-shadow:0 24px 60px rgba(0,0,0,.2)}
+#login-screen{position:fixed;inset:0;background:var(--teal);display:flex;align-items:center;justify-content:center;z-index:999}
+.login-box{background:#fff;border-radius:14px;padding:36px 40px;width:440px;max-width:92vw;box-shadow:0 24px 60px rgba(0,0,0,.2)}
 .login-logo{display:flex;justify-content:center;margin-bottom:24px}
-.login-logo img{height:40px}
-.login-logo-fallback{font-size:22px;font-weight:800;color:var(--teal);letter-spacing:-.5px;display:none}
-.login-title{font-size:16px;font-weight:600;color:var(--teal);text-align:center;margin-bottom:4px}
-.login-sub{font-size:12px;color:var(--txt3);text-align:center;margin-bottom:24px}
-.login-label{font-size:11px;font-weight:500;color:var(--txt2);margin-bottom:4px;display:block}
-.login-input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:7px;font-size:13px;outline:none;margin-bottom:14px;font-family:inherit;transition:border-color .15s}
+.login-logo img{height:44px}
+.login-logo-fb{font-size:22px;font-weight:800;color:var(--teal);letter-spacing:-.5px;display:none}
+.login-title{font-size:17px;font-weight:600;color:var(--teal);text-align:center;margin-bottom:4px}
+.login-sub{font-size:13px;color:var(--txt3);text-align:center;margin-bottom:24px}
+.login-label{font-size:12px;font-weight:500;color:var(--txt2);margin-bottom:4px;display:block}
+.login-input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:7px;font-size:14px;outline:none;margin-bottom:14px;font-family:inherit;transition:border-color .15s}
 .login-input:focus{border-color:var(--green)}
 .login-btn{width:100%;padding:11px;background:var(--green);color:#fff;border:none;border-radius:7px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .15s}
 .login-btn:hover{background:var(--green-d)}
 .login-btn:disabled{opacity:.6;cursor:not-allowed}
-.login-info{font-size:10.5px;color:var(--txt3);text-align:center;margin-top:12px;line-height:1.5}
-.login-error{background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:8px 12px;font-size:11px;color:#b91c1c;margin-bottom:12px;display:none}
+.login-info{font-size:11px;color:var(--txt3);text-align:center;margin-top:12px;line-height:1.5}
+.login-error{background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:8px 12px;font-size:12px;color:#b91c1c;margin-bottom:12px;display:none}
 
 /* ── APP ── */
 #app{display:none;height:100vh;overflow:hidden}
@@ -54,7 +54,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .sb-nav::-webkit-scrollbar{width:3px}
 .sb-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:2px}
 .sb-sec{padding:10px 16px 4px;font-size:9px;color:#4da8b8;font-weight:600;letter-spacing:1.2px;text-transform:uppercase}
-.nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;color:#9fc8d2;font-size:12.5px;cursor:pointer;border-left:3px solid transparent;transition:all .15s;user-select:none}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;color:#9fc8d2;font-size:13px;cursor:pointer;border-left:3px solid transparent;transition:all .15s;user-select:none}
 .nav-item i{font-size:17px;width:18px;text-align:center;flex-shrink:0}
 .nav-item:hover{background:rgba(255,255,255,.05);color:#fff}
 .nav-item.on{background:rgba(35,179,104,.13);border-left-color:var(--green);color:var(--green);font-weight:500}
@@ -63,8 +63,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .nbadge.a{background:var(--amber)}.nbadge.g{background:var(--green)}
 .sb-foot{padding:12px 13px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
 .sb-av{width:30px;height:30px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
-.sb-nm{color:#cde8ee;font-size:11.5px;font-weight:500}
-.sb-rl{color:#4da8b8;font-size:9.5px;margin-top:1px}
+.sb-nm{color:#cde8ee;font-size:12px;font-weight:500}
+.sb-rl{color:#4da8b8;font-size:10px;margin-top:1px}
 .sb-logout{margin-left:auto;color:#4da8b8;cursor:pointer;opacity:.7;font-size:17px}
 .sb-logout:hover{opacity:1}
 
@@ -72,12 +72,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .topbar{background:var(--white);border-bottom:1px solid var(--border);padding:0 22px;height:var(--th);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .topbar-l{display:flex;flex-direction:column}
-.topbar-title{font-size:15px;font-weight:600;color:var(--teal)}
-.topbar-sub{font-size:10.5px;color:var(--txt3);margin-top:2px}
+.topbar-title{font-size:16px;font-weight:600;color:var(--teal)}
+.topbar-sub{font-size:11px;color:var(--txt3);margin-top:2px}
 .topbar-r{display:flex;align-items:center;gap:8px}
 .sw{position:relative}
 .sw i{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--txt3);font-size:15px;pointer-events:none}
-.search{padding:7px 12px 7px 30px;border:1px solid var(--border);border-radius:7px;font-size:12px;width:200px;background:#f9fafb;color:var(--txt);outline:none;transition:border-color .15s;font-family:inherit}
+.search{padding:7px 12px 7px 30px;border:1px solid var(--border);border-radius:7px;font-size:13px;width:210px;background:#f9fafb;color:var(--txt);outline:none;transition:border-color .15s;font-family:inherit}
 .search:focus{border-color:var(--green);background:#fff}
 .tbtn{width:34px;height:34px;border:1px solid var(--border);border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--white);color:var(--txt2);position:relative}
 .tbtn i{font-size:17px}
@@ -92,84 +92,91 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .tab.on{display:block}
 
 /* ── COMPONENTS ── */
-.alert-bar{background:#fff;border:1px solid #fbbf24;border-left:4px solid var(--amber);border-radius:var(--r);padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;font-size:11.5px;color:#92400e}
+.alert-bar{background:#fff;border:1px solid #fbbf24;border-left:4px solid var(--amber);border-radius:var(--r);padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;font-size:13px;color:#92400e}
 .alert-bar i{color:var(--amber);font-size:17px;flex-shrink:0}
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
 .kpi{background:var(--white);border-radius:var(--r);padding:14px;border:1px solid var(--border)}
 .kpi-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.kpi-ic{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center}
-.kpi-ic i{font-size:17px}
+.kpi-ic{width:34px;height:34px;border-radius:7px;display:flex;align-items:center;justify-content:center}
+.kpi-ic i{font-size:18px}
 .kpi-ic.red{background:#fef2f2}.kpi-ic.red i{color:var(--red)}
 .kpi-ic.amb{background:#fffbeb}.kpi-ic.amb i{color:var(--amber)}
 .kpi-ic.grn{background:#f0fdf4}.kpi-ic.grn i{color:var(--green)}
 .kpi-ic.tel{background:#f0f9fa}.kpi-ic.tel i{color:var(--teal)}
-.kpi-val{font-size:22px;font-weight:700;color:var(--txt);line-height:1}
+.kpi-val{font-size:24px;font-weight:700;color:var(--txt);line-height:1}
 .kpi-val.red{color:var(--red)}.kpi-val.amb{color:var(--amber)}.kpi-val.grn{color:var(--green)}
-.kpi-lbl{font-size:10px;color:var(--txt3);margin-top:3px}
-.kpi-hint{font-size:9.5px;color:#d1d5db;margin-top:2px}
+.kpi-lbl{font-size:11px;color:var(--txt3);margin-top:3px}
+.kpi-hint{font-size:10px;color:#d1d5db;margin-top:2px}
 .g2{display:grid;grid-template-columns:3fr 2fr;gap:10px;margin-bottom:10px}
 .g2e{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
 .card{background:var(--white);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;margin-bottom:10px}
-.ch{padding:11px 14px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;justify-content:space-between}
-.ct{font-size:12px;font-weight:600;color:var(--txt)}
-.ca{font-size:10.5px;color:var(--green);cursor:pointer;font-weight:500}
+.ch{padding:12px 14px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.ct{font-size:13px;font-weight:600;color:var(--txt)}
+.ca{font-size:11px;color:var(--green);cursor:pointer;font-weight:500}
 .ca:hover{text-decoration:underline}
 table{width:100%;border-collapse:collapse}
-th{font-size:9px;color:var(--txt3);padding:7px 14px;text-align:left;background:#fafafa;border-bottom:1px solid #f3f4f6;font-weight:600;letter-spacing:.6px;text-transform:uppercase;white-space:nowrap}
-td{font-size:11px;color:var(--txt2);padding:8px 14px;border-bottom:1px solid #f9fafb;vertical-align:middle}
+th{font-size:10px;color:var(--txt3);padding:8px 14px;text-align:left;background:#fafafa;border-bottom:1px solid #f3f4f6;font-weight:600;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap}
+td{font-size:13px;color:var(--txt2);padding:9px 14px;border-bottom:1px solid #f9fafb;vertical-align:middle}
 tr:last-child td{border-bottom:none}
 tbody tr:hover td{background:#fafafa}
-.chip{display:inline-block;padding:2px 9px;border-radius:20px;font-size:9px;font-weight:600;white-space:nowrap}
+.chip{display:inline-block;padding:2px 10px;border-radius:20px;font-size:10px;font-weight:600;white-space:nowrap}
 .chip.red{background:#fef2f2;color:#b91c1c}
 .chip.grn{background:#f0fdf4;color:#166534}
 .chip.amb{background:#fffbeb;color:#92400e}
 .chip.blu{background:#eff6ff;color:#1d4ed8}
 .chip.gry{background:#f9fafb;color:#374151}
-.li{padding:9px 14px;border-bottom:1px solid #f9fafb;display:flex;align-items:center;gap:10px}
+.li{padding:10px 14px;border-bottom:1px solid #f9fafb;display:flex;align-items:center;gap:10px}
 .li:last-child{border-bottom:none}
-.lav{width:30px;height:30px;border-radius:7px;background:#e0f2fe;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--teal);flex-shrink:0}
-.ln{font-size:11px;font-weight:500;color:var(--txt)}
-.ls{font-size:10px;color:var(--txt3);margin-top:1px}
-.la{margin-left:auto;width:26px;height:26px;background:var(--green-l);border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;text-decoration:none}
-.la i{font-size:13px;color:var(--green)}
+.lav{width:32px;height:32px;border-radius:7px;background:#e0f2fe;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--teal);flex-shrink:0}
+.ln{font-size:13px;font-weight:500;color:var(--txt)}
+.ls{font-size:11px;color:var(--txt3);margin-top:1px}
+.la{margin-left:auto;width:28px;height:28px;background:var(--green-l);border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;text-decoration:none}
+.la i{font-size:14px;color:var(--green)}
 .ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
-.ph h2{font-size:16px;font-weight:600;color:var(--txt)}
-.ph p{font-size:11px;color:var(--txt3);margin-top:2px}
-.btn{padding:8px 14px;border-radius:7px;border:none;font-size:12px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s;font-family:inherit}
+.ph h2{font-size:17px;font-weight:600;color:var(--txt)}
+.ph p{font-size:12px;color:var(--txt3);margin-top:2px}
+.btn{padding:8px 14px;border-radius:7px;border:none;font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s;font-family:inherit}
 .btn-p{background:var(--green);color:#fff}.btn-p:hover{background:var(--green-d)}
 .btn-s{background:var(--white);color:var(--txt);border:1px solid var(--border)}.btn-s:hover{background:#f9fafb}
-.btn-d{background:#fef2f2;color:var(--red);border:1px solid #fca5a5}.btn-d:hover{background:#fee2e2}
-.loading{display:flex;align-items:center;justify-content:center;padding:40px;color:var(--txt3);font-size:12px;gap:10px}
+
+/* ── EDIT BTN ── */
+.edit-btn{width:28px;height:28px;border-radius:6px;background:#f0f9fa;border:1px solid #d1e9ed;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;flex-shrink:0}
+.edit-btn:hover{background:var(--teal);border-color:var(--teal)}
+.edit-btn:hover i{color:#fff}
+.edit-btn i{font-size:13px;color:var(--teal)}
+
+/* ── LOADING / EMPTY ── */
+.loading{display:flex;align-items:center;justify-content:center;padding:40px;color:var(--txt3);font-size:13px;gap:10px}
 .spin{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
 .empty{text-align:center;padding:40px 20px;color:var(--txt3)}
 .empty i{font-size:36px;margin-bottom:10px;display:block;opacity:.35}
-.empty p{font-size:12px}
+.empty p{font-size:13px}
 .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.bar-lbl{font-size:10px;color:var(--txt3);width:40px;text-align:right;flex-shrink:0}
+.bar-lbl{font-size:11px;color:var(--txt3);width:40px;text-align:right;flex-shrink:0}
 .bar-track{flex:1;background:#f0f0f0;border-radius:4px;height:8px}
 .bar-fill{height:8px;border-radius:4px;transition:width .4s}
-.bar-val{font-size:11px;font-weight:600;color:var(--txt);min-width:90px;text-align:right;flex-shrink:0}
+.bar-val{font-size:12px;font-weight:600;color:var(--txt);min-width:90px;text-align:right;flex-shrink:0}
 
 /* ── TOAST ── */
-#toast{position:fixed;bottom:20px;right:20px;background:var(--teal);color:#fff;padding:10px 16px;border-radius:8px;font-size:12px;font-weight:500;z-index:1000;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
+#toast{position:fixed;bottom:20px;right:20px;background:var(--teal);color:#fff;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:500;z-index:1000;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
 #toast.on{opacity:1;transform:translateY(0)}
 #toast.err{background:#b91c1c}
 
 /* ── MODAL ── */
 .mo{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:none;align-items:center;justify-content:center}
 .mo.on{display:flex}
-.mb{background:var(--white);border-radius:10px;width:520px;max-width:92vw;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.mb{background:var(--white);border-radius:10px;width:530px;max-width:92vw;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.15)}
 .mh{padding:15px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--white);z-index:1}
-.mt{font-size:14px;font-weight:600;color:var(--txt)}
+.mt{font-size:15px;font-weight:600;color:var(--txt)}
 .mx{cursor:pointer;color:var(--txt3);font-size:22px;line-height:1}
 .mbd{padding:16px 20px}
 .mf{padding:12px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;position:sticky;bottom:0;background:var(--white)}
 .fg{margin-bottom:12px}
-.fl{font-size:11px;font-weight:500;color:var(--txt2);margin-bottom:4px;display:block}
-.fi,.fs,.ft{width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--txt);background:var(--white);outline:none;transition:border-color .15s;font-family:inherit}
+.fl{font-size:12px;font-weight:500;color:var(--txt2);margin-bottom:4px;display:block}
+.fi,.fs,.ft{width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:6px;font-size:13px;color:var(--txt);background:var(--white);outline:none;transition:border-color .15s;font-family:inherit}
 .fi:focus,.fs:focus,.ft:focus{border-color:var(--green)}
-.ft{resize:vertical;min-height:68px}
+.ft{resize:vertical;min-height:72px}
 .fr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .cb-row{display:flex;align-items:center;gap:8px}
 .cb-row input[type=checkbox]{width:15px;height:15px;accent-color:var(--green)}
@@ -177,36 +184,32 @@ tbody tr:hover td{background:#fafafa}
 </head>
 <body>
 
-<!-- ═══════ LOGIN ═══════ -->
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">
-      <img src="https://campoincorporadora.com.br/wp-content/uploads/2026/03/logo_white.svg"
-        id="logo-login" alt="Campo" style="filter:invert(1) sepia(1) saturate(0)"
-        onerror="this.style.display='none';document.getElementById('logo-login-fb').style.display='block'">
-      <div class="login-logo-fallback" id="logo-login-fb">Campo Incorporadora</div>
+      <img src="https://campoincorporadora.com.br/wp-content/uploads/2026/03/logo_white.svg" id="logo-l" alt="Campo"
+        style="filter:invert(1) sepia(1) saturate(0)" onerror="this.style.display='none';document.getElementById('logo-l-fb').style.display='block'">
+      <div class="login-logo-fb" id="logo-l-fb">Campo Incorporadora</div>
     </div>
     <div class="login-title">Sistema de Gestão Integrada</div>
-    <div class="login-sub">Insira seu Personal Access Token do Airtable para acessar</div>
+    <div class="login-sub">Insira seu Personal Access Token do Airtable</div>
     <div class="login-error" id="login-err"></div>
     <label class="login-label">Personal Access Token *</label>
     <input class="login-input" id="pat-input" type="password" placeholder="pat-na-...">
-    <button class="login-btn" id="login-btn" onclick="doLogin()">
-      <span id="login-btn-txt">Conectar e Entrar</span>
-    </button>
-    <div class="login-info">O token fica salvo apenas neste navegador.<br>Cada pessoa insere seu próprio token de acesso.</div>
+    <button class="login-btn" id="login-btn" onclick="doLogin()"><span id="login-txt">Conectar e Entrar</span></button>
+    <div class="login-info">O token fica salvo apenas neste navegador.<br>Cada colaborador usa seu próprio token de acesso.</div>
   </div>
 </div>
 
-<!-- ═══════ APP ═══════ -->
+<!-- APP -->
 <div id="app">
 <div class="layout">
 
   <!-- SIDEBAR -->
   <aside class="sb">
     <div class="sb-logo">
-      <img src="https://campoincorporadora.com.br/wp-content/uploads/2026/03/logo_white.svg"
-        alt="Campo Incorporadora" id="sb-logo-img"
+      <img src="https://campoincorporadora.com.br/wp-content/uploads/2026/03/logo_white.svg" alt="Campo Incorporadora" id="sb-logo"
         onerror="this.style.display='none';document.getElementById('sb-logo-fb').style.display='block'">
       <div class="sb-logo-fb" id="sb-logo-fb">campo</div>
       <div class="sb-tag">Sistema de Gestão</div>
@@ -223,13 +226,11 @@ tbody tr:hover td{background:#fafafa}
       <div class="sb-sec">Principal</div>
       <div class="nav-item on" data-tab="dashboard" onclick="goTab('dashboard',this)"><i class="ti ti-layout-dashboard"></i>Dashboard</div>
       <div class="nav-item" data-tab="locais" onclick="goTab('locais',this)"><i class="ti ti-map-pin"></i>Locais</div>
-      <div class="nav-item" data-tab="ativos" onclick="goTab('ativos',this)"><i class="ti ti-device-desktop"></i>Ativos<span class="nbadge g" id="nb-ativos" style="display:none"></span></div>
+      <div class="nav-item" data-tab="ativos" onclick="goTab('ativos',this)"><i class="ti ti-device-desktop"></i>Ativos</div>
       <div class="nav-item" data-tab="manutencao" onclick="goTab('manutencao',this)"><i class="ti ti-tool"></i>Manutenção<span class="nbadge" id="nb-man"></span></div>
       <div class="sb-sec">Operacional</div>
       <div class="nav-item" data-tab="chamados" onclick="goTab('chamados',this)"><i class="ti ti-clipboard-list"></i>Chamados / OS<span class="nbadge a" id="nb-cham"></span></div>
       <div class="nav-item" data-tab="prestadores" onclick="goTab('prestadores',this)"><i class="ti ti-users"></i>Prestadores</div>
-      <div class="nav-item" data-tab="compras" onclick="goTab('compras',this)"><i class="ti ti-shopping-cart"></i>Compras</div>
-      <div class="nav-item" data-tab="despesas" onclick="goTab('despesas',this)"><i class="ti ti-cash"></i>Despesas</div>
       <div class="sb-sec">Análise</div>
       <div class="nav-item" data-tab="relatorios" onclick="goTab('relatorios',this)"><i class="ti ti-chart-bar"></i>Relatórios</div>
       <div class="nav-item" data-tab="mobiliario" onclick="goTab('mobiliario',this)"><i class="ti ti-armchair"></i>Mobiliário<span class="nbadge g">Novo</span></div>
@@ -246,7 +247,7 @@ tbody tr:hover td{background:#fafafa}
     <header class="topbar">
       <div class="topbar-l">
         <div class="topbar-title" id="ttitle">Dashboard</div>
-        <div class="topbar-sub" id="tsub">Visão geral · <span id="ulabel">Buritis</span></div>
+        <div class="topbar-sub">Visão geral · <span id="ulabel">Buritis</span></div>
       </div>
       <div class="topbar-r">
         <div class="sw"><i class="ti ti-search"></i><input class="search" id="srch" placeholder="Buscar..."></div>
@@ -266,13 +267,10 @@ tbody tr:hover td{background:#fafafa}
           <div class="kpi"><div class="loading"><div class="spin"></div></div></div>
         </div>
         <div class="g2">
-          <div class="card"><div class="ch"><span class="ct">Alertas de Manutenção (7 dias)</span><span class="ca" onclick="goTab('manutencao',document.querySelector('[data-tab=manutencao]'))">Ver todas →</span></div><div id="dash-man"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
-          <div class="card"><div class="ch"><span class="ct">Prestadores</span><span class="ca" onclick="goTab('prestadores',document.querySelector('[data-tab=prestadores]'))">Ver todos →</span></div><div id="dash-prest"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+          <div class="card"><div class="ch"><span class="ct">Alertas de Manutenção (7 dias)</span><span class="ca" onclick="navTo('manutencao')">Ver todas →</span></div><div id="dash-man"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+          <div class="card"><div class="ch"><span class="ct">Prestadores</span><span class="ca" onclick="navTo('prestadores')">Ver todos →</span></div><div id="dash-prest"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
         </div>
-        <div class="g2e">
-          <div class="card"><div class="ch"><span class="ct">Chamados Abertos</span><span class="ca" onclick="goTab('chamados',document.querySelector('[data-tab=chamados]'))">Ver todos →</span></div><div id="dash-cham"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
-          <div class="card"><div class="ch"><span class="ct">Últimas Despesas</span><span class="ca" onclick="goTab('despesas',document.querySelector('[data-tab=despesas]'))">Ver todas →</span></div><div id="dash-desp"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
-        </div>
+        <div class="card"><div class="ch"><span class="ct">Chamados Abertos</span><span class="ca" onclick="navTo('chamados')">Ver todos →</span></div><div id="dash-cham"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
       </div>
 
       <!-- LOCAIS -->
@@ -293,10 +291,10 @@ tbody tr:hover td{background:#fafafa}
       <!-- ATIVOS -->
       <div class="tab" id="tab-ativos">
         <div class="ph"><div><h2>Ativos / Equipamentos</h2><p>Equipamentos vinculados a ambientes</p></div>
-          <button class="btn btn-p" onclick="openM('m-ativo')"><i class="ti ti-plus"></i>Novo Ativo</button>
+          <button class="btn btn-p" onclick="openNew('m-ativo')"><i class="ti ti-plus"></i>Novo Ativo</button>
         </div>
         <div class="card"><div class="ch"><span class="ct">Todos os Ativos</span>
-          <div style="display:flex;gap:5px;flex-wrap:wrap" id="cat-filtros">
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
             <span class="chip grn" style="cursor:pointer" onclick="filtroAtivos('')">Todos</span>
             <span class="chip blu" style="cursor:pointer;opacity:.65" onclick="filtroAtivos('Ar Condicionado')">Ar-cond.</span>
             <span class="chip amb" style="cursor:pointer;opacity:.65" onclick="filtroAtivos('Nobreak')">Nobreak</span>
@@ -309,24 +307,22 @@ tbody tr:hover td{background:#fafafa}
       <!-- MANUTENÇÃO -->
       <div class="tab" id="tab-manutencao">
         <div class="ph"><div><h2>Manutenção</h2><p>Cronograma preventivo por equipamento</p></div>
-          <button class="btn btn-p" onclick="openM('m-man')"><i class="ti ti-plus"></i>Nova Manutenção</button>
+          <button class="btn btn-p" onclick="openNew('m-man')"><i class="ti ti-plus"></i>Nova Manutenção</button>
         </div>
         <div class="card"><div class="ch"><span class="ct">Cronograma</span>
-          <div style="display:flex;gap:5px">
-            <span class="chip red">Vencida</span><span class="chip amb">Próxima</span><span class="chip grn">Em dia</span>
-          </div>
+          <div style="display:flex;gap:5px"><span class="chip red">Vencida</span><span class="chip amb">Próxima</span><span class="chip grn">Em dia</span></div>
         </div><div id="tbl-man"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
-        <div class="card"><div class="ch"><span class="ct">Histórico de Manutenções Realizadas</span><span class="ca" onclick="openM('m-hist')"><i class="ti ti-plus" style="font-size:11px"></i> Registrar</span></div><div id="tbl-hist"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+        <div class="card"><div class="ch"><span class="ct">Histórico de Manutenções Realizadas</span><span class="ca" onclick="openNew('m-hist')"><i class="ti ti-plus" style="font-size:11px"></i> Registrar</span></div><div id="tbl-hist"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
       </div>
 
       <!-- CHAMADOS -->
       <div class="tab" id="tab-chamados">
         <div class="ph"><div><h2>Chamados / OS</h2><p>Ordens de serviço e ocorrências</p></div>
-          <button class="btn btn-p" onclick="openM('m-cham')"><i class="ti ti-plus"></i>Novo Chamado</button>
+          <button class="btn btn-p" onclick="openNew('m-cham')"><i class="ti ti-plus"></i>Novo Chamado</button>
         </div>
         <div class="card">
           <div class="ch"><span class="ct">Todos os Chamados</span>
-            <select class="fs" style="width:auto;padding:4px 8px;font-size:11px" id="cham-filter" onchange="loadChamados()">
+            <select class="fs" style="width:auto;padding:4px 8px;font-size:12px" id="cham-filter" onchange="loadChamados()">
               <option value="">Todos os Status</option>
               <option value="Aberto">Aberto</option>
               <option value="Em andamento">Em andamento</option>
@@ -340,35 +336,19 @@ tbody tr:hover td{background:#fafafa}
       <!-- PRESTADORES -->
       <div class="tab" id="tab-prestadores">
         <div class="ph"><div><h2>Prestadores</h2><p>Empresas e técnicos parceiros</p></div>
-          <button class="btn btn-p" onclick="openM('m-prest')"><i class="ti ti-plus"></i>Novo Prestador</button>
+          <button class="btn btn-p" onclick="openNew('m-prest')"><i class="ti ti-plus"></i>Novo Prestador</button>
         </div>
         <div class="card"><div class="ch"><span class="ct">Todos os Prestadores</span></div><div id="tbl-prest"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
-      </div>
-
-      <!-- COMPRAS -->
-      <div class="tab" id="tab-compras">
-        <div class="ph"><div><h2>Compras</h2><p>Registro de materiais e equipamentos adquiridos</p></div>
-          <button class="btn btn-p" onclick="openM('m-comp')"><i class="ti ti-plus"></i>Nova Compra</button>
-        </div>
-        <div class="card"><div class="ch"><span class="ct">Histórico de Compras</span></div><div id="tbl-comp"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
-      </div>
-
-      <!-- DESPESAS -->
-      <div class="tab" id="tab-despesas">
-        <div class="ph"><div><h2>Despesas</h2><p>Controle financeiro de manutenção</p></div>
-          <button class="btn btn-p" onclick="openM('m-desp')"><i class="ti ti-plus"></i>Nova Despesa</button>
-        </div>
-        <div class="card"><div class="ch"><span class="ct">Lançamentos</span></div><div id="tbl-desp"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
       </div>
 
       <!-- RELATÓRIOS -->
       <div class="tab" id="tab-relatorios">
         <div class="ph"><div><h2>Relatórios</h2><p>Análises e indicadores de desempenho</p></div>
-          <button class="btn btn-s" onclick="exportExcel()"><i class="ti ti-file-spreadsheet"></i>Exportar Excel</button>
+          <button class="btn btn-s" onclick="exportCSV()"><i class="ti ti-file-spreadsheet"></i>Exportar CSV</button>
         </div>
         <div class="g2e">
           <div class="card"><div class="ch"><span class="ct">Manutenções por Status</span></div><div id="rel-man" style="padding:14px"><div class="loading"><div class="spin"></div></div></div></div>
-          <div class="card"><div class="ch"><span class="ct">Despesas por Mês</span></div><div id="rel-desp" style="padding:14px"><div class="loading"><div class="spin"></div></div></div></div>
+          <div class="card"><div class="ch"><span class="ct">Chamados por Status</span></div><div id="rel-cham" style="padding:14px"><div class="loading"><div class="spin"></div></div></div></div>
         </div>
         <div class="card"><div class="ch"><span class="ct">Resumo Geral</span></div><div id="rel-resumo" style="padding:14px"><div class="loading"><div class="spin"></div></div></div></div>
         <div class="card"><div class="ch"><span class="ct">Ativos por Local</span></div><div id="rel-ativos" style="padding:14px"><div class="loading"><div class="spin"></div></div></div></div>
@@ -377,11 +357,16 @@ tbody tr:hover td{background:#fafafa}
       <!-- MOBILIÁRIO -->
       <div class="tab" id="tab-mobiliario">
         <div class="ph"><div><h2>Mobiliário / Infraestrutura</h2><p>Inventário completo de ativos por local e categoria</p></div>
-          <button class="btn btn-p" onclick="openM('m-ativo')"><i class="ti ti-plus"></i>Novo Item</button>
+          <button class="btn btn-p" onclick="openNew('m-ativo')"><i class="ti ti-plus"></i>Novo Item</button>
         </div>
-        <div class="kpi-grid" id="mob-kpi"><div class="kpi"><div class="loading"><div class="spin"></div></div></div><div class="kpi"><div class="loading"><div class="spin"></div></div></div><div class="kpi"><div class="loading"><div class="spin"></div></div></div><div class="kpi"><div class="loading"><div class="spin"></div></div></div></div>
+        <div class="kpi-grid" id="mob-kpi">
+          <div class="kpi"><div class="loading"><div class="spin"></div></div></div>
+          <div class="kpi"><div class="loading"><div class="spin"></div></div></div>
+          <div class="kpi"><div class="loading"><div class="spin"></div></div></div>
+          <div class="kpi"><div class="loading"><div class="spin"></div></div></div>
+        </div>
         <div class="card">
-          <div class="ch"><span class="ct">Inventário Completo</span>
+          <div class="ch"><span class="ct">Inventário</span>
             <div style="display:flex;gap:5px;flex-wrap:wrap">
               <span class="chip grn" style="cursor:pointer" onclick="filtroMob('')">Todos</span>
               <span class="chip blu" style="cursor:pointer;opacity:.65" onclick="filtroMob('Ar Condicionado')">Ar-cond.</span>
@@ -395,19 +380,18 @@ tbody tr:hover td{background:#fafafa}
         </div>
       </div>
 
-    </div><!-- /cw -->
-  </div><!-- /main -->
+    </div>
+  </div>
 </div>
-</div><!-- /app -->
+</div>
 
-<!-- TOAST -->
 <div id="toast"></div>
 
-<!-- ═══════ MODAIS ═══════ -->
+<!-- MODAIS -->
 
 <!-- Andar -->
 <div class="mo" id="m-andar"><div class="mb">
-  <div class="mh"><span class="mt">Novo Andar</span><span class="mx" onclick="closeM('m-andar')">×</span></div>
+  <div class="mh"><span class="mt" id="m-andar-titulo">Novo Andar</span><span class="mx" onclick="closeM('m-andar')">×</span></div>
   <div class="mbd">
     <div class="fr">
       <div class="fg"><label class="fl">Unidade *</label><select class="fs" id="f-and-uni"></select></div>
@@ -419,7 +403,7 @@ tbody tr:hover td{background:#fafafa}
 
 <!-- Ambiente -->
 <div class="mo" id="m-ambiente"><div class="mb">
-  <div class="mh"><span class="mt">Novo Ambiente</span><span class="mx" onclick="closeM('m-ambiente')">×</span></div>
+  <div class="mh"><span class="mt" id="m-ambiente-titulo">Novo Ambiente</span><span class="mx" onclick="closeM('m-ambiente')">×</span></div>
   <div class="mbd">
     <div class="fr">
       <div class="fg"><label class="fl">Andar *</label><select class="fs" id="f-amb-andar"></select></div>
@@ -431,7 +415,7 @@ tbody tr:hover td{background:#fafafa}
 
 <!-- Ativo -->
 <div class="mo" id="m-ativo"><div class="mb">
-  <div class="mh"><span class="mt">Novo Ativo / Equipamento</span><span class="mx" onclick="closeM('m-ativo')">×</span></div>
+  <div class="mh"><span class="mt" id="m-ativo-titulo">Novo Ativo / Equipamento</span><span class="mx" onclick="closeM('m-ativo')">×</span></div>
   <div class="mbd">
     <div class="fg"><label class="fl">Nome do Equipamento *</label><input class="fi" id="f-at-nome" placeholder="ex: AC Split 12.000 BTU Electrolux"></div>
     <div class="fr">
@@ -440,8 +424,7 @@ tbody tr:hover td{background:#fafafa}
           <option>Ar Condicionado</option><option>Nobreak</option><option>Extintor</option>
           <option>Impressora</option><option>Câmera</option><option>Mobiliário</option>
           <option>Elétrico</option><option>Hidráulico</option><option>Outros</option>
-        </select>
-      </div>
+        </select></div>
       <div class="fg"><label class="fl">Ambiente</label><select class="fs" id="f-at-amb"></select></div>
     </div>
     <div class="fr">
@@ -450,28 +433,24 @@ tbody tr:hover td{background:#fafafa}
     </div>
     <div class="fr">
       <div class="fg"><label class="fl">Status</label>
-        <select class="fs" id="f-at-status">
-          <option>Ativo</option><option>Inativo</option><option>Em manutenção</option>
-        </select>
-      </div>
+        <select class="fs" id="f-at-status"><option>Ativo</option><option>Inativo</option><option>Em manutenção</option></select></div>
       <div class="fg" style="display:flex;align-items:flex-end;padding-bottom:2px">
         <div class="cb-row"><input type="checkbox" id="f-at-crit"><label class="fl" for="f-at-crit" style="margin:0;cursor:pointer">Equipamento Crítico</label></div>
       </div>
     </div>
   </div>
-  <div class="mf"><button class="btn btn-s" onclick="closeM('m-ativo')">Cancelar</button><button class="btn btn-p" onclick="saveAtivo()"><i class="ti ti-check"></i>Cadastrar</button></div>
+  <div class="mf"><button class="btn btn-s" onclick="closeM('m-ativo')">Cancelar</button><button class="btn btn-p" onclick="saveAtivo()"><i class="ti ti-check"></i>Salvar</button></div>
 </div></div>
 
 <!-- Manutenção -->
 <div class="mo" id="m-man"><div class="mb">
-  <div class="mh"><span class="mt">Nova Manutenção Programada</span><span class="mx" onclick="closeM('m-man')">×</span></div>
+  <div class="mh"><span class="mt" id="m-man-titulo">Nova Manutenção Programada</span><span class="mx" onclick="closeM('m-man')">×</span></div>
   <div class="mbd">
     <div class="fg"><label class="fl">Título *</label><input class="fi" id="f-man-tit" placeholder="ex: Limpeza filtros AC Split"></div>
     <div class="fr">
       <div class="fg"><label class="fl">Ativo *</label><select class="fs" id="f-man-at"></select></div>
       <div class="fg"><label class="fl">Tipo</label>
-        <select class="fs" id="f-man-tipo"><option>Preventiva</option><option>Corretiva</option><option>Preditiva</option></select>
-      </div>
+        <select class="fs" id="f-man-tipo"><option>Preventiva</option><option>Corretiva</option><option>Preditiva</option></select></div>
     </div>
     <div class="fr">
       <div class="fg"><label class="fl">Última Manutenção</label><input class="fi" id="f-man-ult" type="date"></div>
@@ -490,7 +469,7 @@ tbody tr:hover td{background:#fafafa}
 
 <!-- Histórico -->
 <div class="mo" id="m-hist"><div class="mb">
-  <div class="mh"><span class="mt">Registrar Manutenção Realizada</span><span class="mx" onclick="closeM('m-hist')">×</span></div>
+  <div class="mh"><span class="mt" id="m-hist-titulo">Registrar Manutenção Realizada</span><span class="mx" onclick="closeM('m-hist')">×</span></div>
   <div class="mbd">
     <div class="fg"><label class="fl">Título *</label><input class="fi" id="f-hist-tit" placeholder="ex: Limpeza e revisão AC"></div>
     <div class="fr">
@@ -499,8 +478,7 @@ tbody tr:hover td{background:#fafafa}
     </div>
     <div class="fr">
       <div class="fg"><label class="fl">Tipo</label>
-        <select class="fs" id="f-hist-tipo"><option>Preventiva</option><option>Corretiva</option><option>Preditiva</option></select>
-      </div>
+        <select class="fs" id="f-hist-tipo"><option>Preventiva</option><option>Corretiva</option><option>Preditiva</option></select></div>
       <div class="fg"><label class="fl">Prestador</label><select class="fs" id="f-hist-prest"></select></div>
     </div>
     <div class="fg"><label class="fl">Observações</label><textarea class="ft" id="f-hist-obs"></textarea></div>
@@ -510,7 +488,7 @@ tbody tr:hover td{background:#fafafa}
 
 <!-- Chamado -->
 <div class="mo" id="m-cham"><div class="mb">
-  <div class="mh"><span class="mt">Novo Chamado / OS</span><span class="mx" onclick="closeM('m-cham')">×</span></div>
+  <div class="mh"><span class="mt" id="m-cham-titulo">Novo Chamado / OS</span><span class="mx" onclick="closeM('m-cham')">×</span></div>
   <div class="mbd">
     <div class="fg"><label class="fl">Descrição *</label><input class="fi" id="f-ch-desc" placeholder="ex: Vazamento na torneira da copa"></div>
     <div class="fr">
@@ -519,11 +497,9 @@ tbody tr:hover td{background:#fafafa}
     </div>
     <div class="fr">
       <div class="fg"><label class="fl">Tipo</label>
-        <select class="fs" id="f-ch-tipo"><option>Corretiva</option><option>Preventiva</option><option>Melhoria</option><option>Urgência</option></select>
-      </div>
+        <select class="fs" id="f-ch-tipo"><option>Corretiva</option><option>Preventiva</option><option>Melhoria</option><option>Urgência</option></select></div>
       <div class="fg"><label class="fl">Status</label>
-        <select class="fs" id="f-ch-status"><option>Aberto</option><option>Em andamento</option><option>Concluído</option></select>
-      </div>
+        <select class="fs" id="f-ch-status"><option>Aberto</option><option>Em andamento</option><option>Concluído</option></select></div>
     </div>
     <div class="fr">
       <div class="fg"><label class="fl">Solicitante</label><input class="fi" id="f-ch-sol" placeholder="Nome de quem abriu"></div>
@@ -531,12 +507,12 @@ tbody tr:hover td{background:#fafafa}
     </div>
     <div class="fg"><label class="fl">Observações</label><textarea class="ft" id="f-ch-obs"></textarea></div>
   </div>
-  <div class="mf"><button class="btn btn-s" onclick="closeM('m-cham')">Cancelar</button><button class="btn btn-p" onclick="saveCham()"><i class="ti ti-check"></i>Abrir Chamado</button></div>
+  <div class="mf"><button class="btn btn-s" onclick="closeM('m-cham')">Cancelar</button><button class="btn btn-p" onclick="saveCham()"><i class="ti ti-check"></i>Salvar</button></div>
 </div></div>
 
 <!-- Prestador -->
 <div class="mo" id="m-prest"><div class="mb">
-  <div class="mh"><span class="mt">Novo Prestador</span><span class="mx" onclick="closeM('m-prest')">×</span></div>
+  <div class="mh"><span class="mt" id="m-prest-titulo">Novo Prestador</span><span class="mx" onclick="closeM('m-prest')">×</span></div>
   <div class="mbd">
     <div class="fg"><label class="fl">Nome / Empresa *</label><input class="fi" id="f-pr-nome" placeholder="ex: Refrigeração Pinguim"></div>
     <div class="fr">
@@ -547,358 +523,231 @@ tbody tr:hover td{background:#fafafa}
   <div class="mf"><button class="btn btn-s" onclick="closeM('m-prest')">Cancelar</button><button class="btn btn-p" onclick="savePrest()"><i class="ti ti-check"></i>Salvar</button></div>
 </div></div>
 
-<!-- Compra -->
-<div class="mo" id="m-comp"><div class="mb">
-  <div class="mh"><span class="mt">Nova Compra / Requisição</span><span class="mx" onclick="closeM('m-comp')">×</span></div>
-  <div class="mbd">
-    <div class="fg"><label class="fl">Item *</label><input class="fi" id="f-cp-item" placeholder="ex: Filtro AC 12.000 BTU"></div>
-    <div class="fr">
-      <div class="fg"><label class="fl">Fornecedor</label><input class="fi" id="f-cp-forn"></div>
-      <div class="fg"><label class="fl">Status</label>
-        <select class="fs" id="f-cp-status"><option>Solicitado</option><option>Aprovado</option><option>Em trânsito</option><option>Recebido</option></select>
-      </div>
-    </div>
-    <div class="fr">
-      <div class="fg"><label class="fl">Qtd</label><input class="fi" id="f-cp-qtd" type="number" min="1" value="1"></div>
-      <div class="fg"><label class="fl">Valor Unitário (R$)</label><input class="fi" id="f-cp-vl" type="number" step="0.01" placeholder="0,00"></div>
-    </div>
-    <div class="fr">
-      <div class="fg"><label class="fl">Data Pedido</label><input class="fi" id="f-cp-dp" type="date"></div>
-      <div class="fg"><label class="fl">Data Entrega Prevista</label><input class="fi" id="f-cp-de" type="date"></div>
-    </div>
-    <div class="fg"><label class="fl">Observações</label><textarea class="ft" id="f-cp-obs"></textarea></div>
-  </div>
-  <div class="mf"><button class="btn btn-s" onclick="closeM('m-comp')">Cancelar</button><button class="btn btn-p" onclick="saveComp()"><i class="ti ti-check"></i>Salvar</button></div>
-</div></div>
-
-<!-- Despesa -->
-<div class="mo" id="m-desp"><div class="mb">
-  <div class="mh"><span class="mt">Nova Despesa</span><span class="mx" onclick="closeM('m-desp')">×</span></div>
-  <div class="mbd">
-    <div class="fg"><label class="fl">Descrição *</label><input class="fi" id="f-dp-desc" placeholder="ex: Manutenção AC - Refrigeração Pinguim"></div>
-    <div class="fr">
-      <div class="fg"><label class="fl">Valor (R$) *</label><input class="fi" id="f-dp-vl" type="number" step="0.01" placeholder="0,00"></div>
-      <div class="fg"><label class="fl">Data *</label><input class="fi" id="f-dp-data" type="date"></div>
-    </div>
-    <div class="fr">
-      <div class="fg"><label class="fl">Categoria</label>
-        <select class="fs" id="f-dp-cat"><option>Manutenção</option><option>Material</option><option>Serviço</option><option>Compra</option><option>Outros</option></select>
-      </div>
-      <div class="fg"><label class="fl">Unidade</label><select class="fs" id="f-dp-uni"></select></div>
-    </div>
-    <div class="fg"><label class="fl">Fornecedor / Prestador</label><input class="fi" id="f-dp-forn"></div>
-  </div>
-  <div class="mf"><button class="btn btn-s" onclick="closeM('m-desp')">Cancelar</button><button class="btn btn-p" onclick="saveDesp()"><i class="ti ti-check"></i>Lançar</button></div>
-</div></div>
-
 <script>
-// ══════════════════════════════════════════
-//  CONFIG
-// ══════════════════════════════════════════
-const BASE_ID = 'app6FRO94lCtpAfXW';
-const TBL = {
-  unidades:'tblQIiulLhGvSlc5j',
-  prestadores:'tblvdtFg1SI2GXmGU',
-  andares:'tblnaqWSeDDKYQhcW',
-  ambientes:'tbljTc0rmF8RiOJkr',
-  ativos:'tbl1SsWbJE3l5xutZ',
-  manutencoes:'tblgjuSTgEqifxRwE',
-  historico:'tblV9JbbgltZ50ygp',
-  chamados:'tblNNI1ODUUncxPM1',
-  compras:'tbl74SsHKMxTzQnkO',
-  despesas:'tblrMDMW8DIqF1ntb',
+// ══ CONFIG ══
+const BASE_ID='app6FRO94lCtpAfXW';
+const TBL={
+  unidades:'tblQIiulLhGvSlc5j',prestadores:'tblvdtFg1SI2GXmGU',
+  andares:'tblnaqWSeDDKYQhcW',ambientes:'tbljTc0rmF8RiOJkr',
+  ativos:'tbl1SsWbJE3l5xutZ',manutencoes:'tblgjuSTgEqifxRwE',
+  historico:'tblV9JbbgltZ50ygp',chamados:'tblNNI1ODUUncxPM1',
 };
+let PAT='',currentUnit='Buritis',currentTab='dashboard';
+let editId=null,editModal=null;
+const C={unidades:{},andares:{},ambientes:{},prestadores:{},ativos:{}};
+const DC={};
 
-let PAT = '';
-let currentUnit = 'Buritis';
-let currentTab  = 'dashboard';
+function hdrs(){return{'Authorization':'Bearer '+PAT,'Content-Type':'application/json'};}
+function atURL(t,qs=''){return`https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(t)}${qs}`;}
 
-// Caches
-const C = { unidades:{}, andares:{}, ambientes:{}, prestadores:{}, ativos:{} };
-const dataCache = {};
-
-function hdrs(){ return { 'Authorization':'Bearer '+PAT, 'Content-Type':'application/json' }; }
-function atURL(tbl,qs=''){ return `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(tbl)}${qs}`; }
-
-// ══════════════════════════════════════════
-//  LOGIN
-// ══════════════════════════════════════════
+// ══ LOGIN ══
 window.addEventListener('DOMContentLoaded',()=>{
-  const saved = localStorage.getItem('campo_pat');
-  if(saved){ PAT=saved; showApp(); }
-  document.getElementById('pat-input').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
+  const s=localStorage.getItem('campo_pat');
+  if(s){PAT=s;showApp();}
+  document.getElementById('pat-input').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 });
-
 async function doLogin(){
-  const pat = document.getElementById('pat-input').value.trim();
-  if(!pat){ showErr('Insira o Personal Access Token.'); return; }
-  PAT = pat;
-  const btn = document.getElementById('login-btn');
-  btn.disabled=true;
-  document.getElementById('login-btn-txt').textContent='Conectando...';
+  const pat=document.getElementById('pat-input').value.trim();
+  if(!pat){showErr('Insira o Personal Access Token.');return;}
+  PAT=pat;
+  const btn=document.getElementById('login-btn');
+  btn.disabled=true;document.getElementById('login-txt').textContent='Conectando...';
   document.getElementById('login-err').style.display='none';
   try{
-    const res = await fetch(atURL(TBL.unidades,'?maxRecords=1'),{headers:hdrs()});
-    if(!res.ok) throw new Error('Token inválido ('+res.status+')');
-    localStorage.setItem('campo_pat',PAT);
-    showApp();
-  } catch(e){
-    showErr(e.message||'Erro de conexão. Verifique o token.');
-    PAT='';
-    btn.disabled=false;
-    document.getElementById('login-btn-txt').textContent='Conectar e Entrar';
-  }
+    const res=await fetch(atURL(TBL.unidades,'?maxRecords=1'),{headers:hdrs()});
+    if(!res.ok)throw new Error('Token inválido ('+res.status+')');
+    localStorage.setItem('campo_pat',PAT);showApp();
+  }catch(e){showErr(e.message||'Erro de conexão.');PAT='';btn.disabled=false;document.getElementById('login-txt').textContent='Conectar e Entrar';}
 }
-
-function showErr(msg){ const el=document.getElementById('login-err'); el.textContent=msg; el.style.display='block'; }
-
+function showErr(m){const e=document.getElementById('login-err');e.textContent=m;e.style.display='block';}
 async function showApp(){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('app').style.display='block';
-  await buildCache();
-  populateSelects();
-  loadTab('dashboard');
+  await buildCache();populateSelects();loadTab('dashboard');
 }
-
 function doLogout(){
-  localStorage.removeItem('campo_pat');
-  PAT='';
-  dataCache && Object.keys(dataCache).forEach(k=>delete dataCache[k]);
+  localStorage.removeItem('campo_pat');PAT='';
+  Object.keys(DC).forEach(k=>delete DC[k]);
   document.getElementById('login-screen').style.display='flex';
   document.getElementById('app').style.display='none';
   document.getElementById('pat-input').value='';
 }
 
-// ══════════════════════════════════════════
-//  CACHE
-// ══════════════════════════════════════════
+// ══ CACHE ══
 async function buildCache(){
-  const [unis, ands, ambs, prest, atv] = await Promise.all([
-    fetchAll(TBL.unidades), fetchAll(TBL.andares),
-    fetchAll(TBL.ambientes), fetchAll(TBL.prestadores), fetchAll(TBL.ativos),
+  const[unis,ands,ambs,prest,atv]=await Promise.all([
+    fetchAll(TBL.unidades),fetchAll(TBL.andares),
+    fetchAll(TBL.ambientes),fetchAll(TBL.prestadores),fetchAll(TBL.ativos),
   ]);
-  unis.forEach(r=>{ C.unidades[r.id]={name:r.fields.Nome||'—'}; });
-  ands.forEach(r=>{ C.andares[r.id]={name:r.fields.Nome||'—', uni:(r.fields.Unidade||[])[0]||''}; });
-  ambs.forEach(r=>{ C.ambientes[r.id]={name:r.fields.Nome||'—', andar:(r.fields.Andar||[])[0]||''}; });
-  prest.forEach(r=>{ C.prestadores[r.id]={name:r.fields.Nome||'—', esp:r.fields.Especialidade||'—', cont:r.fields.Contato||'—'}; });
-  atv.forEach(r=>{ C.ativos[r.id]={name:r.fields.Nome||'—', cat:r.fields.Categoria||'—', amb:(r.fields.Ambiente||[])[0]||''}; });
+  unis.forEach(r=>{C.unidades[r.id]={name:r.fields.Nome||'—'};});
+  ands.forEach(r=>{C.andares[r.id]={name:r.fields.Nome||'—',uni:(r.fields.Unidade||[])[0]||''};});
+  ambs.forEach(r=>{C.ambientes[r.id]={name:cleanName(r.fields.Nome||'—'),andar:(r.fields.Andar||[])[0]||''};});
+  prest.forEach(r=>{C.prestadores[r.id]={name:r.fields.Nome||'—',esp:r.fields.Especialidade||'—',cont:r.fields.Contato||'—'};});
+  atv.forEach(r=>{C.ativos[r.id]={name:r.fields.Nome||'—',cat:r.fields.Categoria||'—',amb:(r.fields.Ambiente||[])[0]||''};});
 }
 
-function rName(cache,id){ return cache[id]?.name||'—'; }
-function ambLocal(ambId){
-  const a = C.ambientes[ambId]; if(!a) return '—';
-  const and = C.andares[a.andar]; if(!and) return a.name;
-  const uni = C.unidades[and.uni]; if(!uni) return and.name+' / '+a.name;
+// ══ CLEAN NAME ── remove prefixos [Interno], [Externo], [Estrutural] etc.
+function cleanName(n){return(n||'').replace(/^\[(interno|externo|estrutural|predial|externo)\]\s*/i,'').trim();}
+
+function rName(c,id){return c[id]?.name||'—';}
+function ambLocal(aid){
+  const a=C.ambientes[aid];if(!a)return'—';
+  const and=C.andares[a.andar];if(!and)return a.name;
+  const uni=C.unidades[and.uni];if(!uni)return and.name+' / '+a.name;
   return uni.name+' · '+and.name+' · '+a.name;
 }
-function ambUnit(ambId){
-  const a=C.ambientes[ambId]; if(!a) return '';
-  const and=C.andares[a.andar]; if(!and) return '';
+function ambUnit(aid){
+  const a=C.ambientes[aid];if(!a)return'';
+  const and=C.andares[a.andar];if(!and)return'';
   return C.unidades[and.uni]?.name||'';
 }
 
-// ══════════════════════════════════════════
-//  SELECTS
-// ══════════════════════════════════════════
+// ══ SELECTS ══
 function populateSelects(){
-  const unis = Object.entries(C.unidades);
-  const ands = Object.entries(C.andares);
-  const ambs = Object.entries(C.ambientes);
-  const prests = Object.entries(C.prestadores);
-  const atvs = Object.entries(C.ativos);
-
-  sel('f-and-uni', unis.map(([id,v])=>({id,name:v.name})));
-  sel('f-amb-andar', ands.map(([id,v])=>({id,name:rName(C.unidades,v.uni)+' / '+v.name})));
-  sel('f-at-amb', ambs.map(([id,v])=>({id,name:ambLocal(id)})));
-  sel('f-man-at', atvs.map(([id,v])=>({id,name:v.name+' ('+v.cat+')'})));
-  selOpt('f-man-prest', prests.map(([id,v])=>({id,name:v.name})));
-  sel('f-hist-at', atvs.map(([id,v])=>({id,name:v.name+' ('+v.cat+')'})));
-  selOpt('f-hist-prest', prests.map(([id,v])=>({id,name:v.name})));
-  sel('f-ch-amb', ambs.map(([id,v])=>({id,name:ambLocal(id)})));
-  selOpt('f-ch-at', [null,...atvs.map(([id,v])=>({id,name:v.name}))]);
-  selOpt('f-ch-prest', prests.map(([id,v])=>({id,name:v.name})));
-  sel('f-dp-uni', unis.map(([id,v])=>({id,name:v.name})));
+  const unis=Object.entries(C.unidades);
+  const ands=Object.entries(C.andares).sort((a,b)=>a[1].name.localeCompare(b[1].name,'pt-BR'));
+  const ambs=Object.entries(C.ambientes).sort((a,b)=>a[1].name.localeCompare(b[1].name,'pt-BR'));
+  const prests=Object.entries(C.prestadores).sort((a,b)=>a[1].name.localeCompare(b[1].name,'pt-BR'));
+  const atvs=Object.entries(C.ativos).sort((a,b)=>a[1].name.localeCompare(b[1].name,'pt-BR'));
+  sel('f-and-uni',unis.map(([id,v])=>({id,name:v.name})));
+  sel('f-amb-andar',ands.map(([id,v])=>({id,name:rName(C.unidades,v.uni)+' / '+v.name})));
+  sel('f-at-amb',ambs.map(([id,v])=>({id,name:ambLocal(id)})));
+  sel('f-man-at',atvs.map(([id,v])=>({id,name:v.name+' ('+v.cat+')'})));
+  selOpt('f-man-prest',prests.map(([id,v])=>({id,name:v.name})));
+  sel('f-hist-at',atvs.map(([id,v])=>({id,name:v.name+' ('+v.cat+')'})));
+  selOpt('f-hist-prest',prests.map(([id,v])=>({id,name:v.name})));
+  sel('f-ch-amb',ambs.map(([id,v])=>({id,name:ambLocal(id)})));
+  selOpt('f-ch-at',[null,...atvs.map(([id,v])=>({id,name:v.name}))]);
+  selOpt('f-ch-prest',prests.map(([id,v])=>({id,name:v.name})));
 }
+function sel(id,items){const e=document.getElementById(id);if(!e)return;e.innerHTML=items.map(x=>`<option value="${x.id}">${x.name}</option>`).join('');}
+function selOpt(id,items){const e=document.getElementById(id);if(!e)return;e.innerHTML=items.map(x=>x?`<option value="${x.id}">${x.name}</option>`:`<option value="">— nenhum —</option>`).join('');}
 
-function sel(id,items){
-  const el=document.getElementById(id); if(!el) return;
-  el.innerHTML=items.map(x=>x?`<option value="${x.id}">${x.name}</option>`:`<option value="">— nenhum —</option>`).join('');
-}
-function selOpt(id,items){ sel(id,items); }
-
-// ══════════════════════════════════════════
-//  FETCH
-// ══════════════════════════════════════════
-async function fetchAll(tbl, filter=''){
+// ══ FETCH ══
+async function fetchAll(tbl,filter=''){
   const key=tbl+filter+currentUnit;
-  if(dataCache[key]&&Date.now()-dataCache[key].ts<60000) return dataCache[key].d;
+  if(DC[key]&&Date.now()-DC[key].ts<60000)return DC[key].d;
   let all=[],off='';
   try{
     do{
       let qs='?pageSize=100'+(filter?'&filterByFormula='+encodeURIComponent(filter):'')+(off?'&offset='+off:'');
       const res=await fetch(atURL(tbl,qs),{headers:hdrs()});
-      const j=await res.json();
-      all=[...all,...(j.records||[])];
-      off=j.offset||'';
-    } while(off);
-    dataCache[key]={d:all,ts:Date.now()};
-  } catch(e){console.error(tbl,e);}
+      const j=await res.json();all=[...all,...(j.records||[])];off=j.offset||'';
+    }while(off);
+    DC[key]={d:all,ts:Date.now()};
+  }catch(e){console.error(tbl,e);}
   return all;
 }
-
 async function create(tbl,fields){
   const res=await fetch(atURL(tbl),{method:'POST',headers:hdrs(),body:JSON.stringify({records:[{fields}]})});
-  if(!res.ok){ const j=await res.json(); throw new Error(j.error?.message||'Erro '+res.status); }
-  Object.keys(dataCache).forEach(k=>{if(k.startsWith(tbl)) delete dataCache[k];});
-  await buildCache(); populateSelects();
-  return res.json();
+  if(!res.ok){const j=await res.json();throw new Error(j.error?.message||'Erro '+res.status);}
+  clearCache(tbl);await buildCache();populateSelects();return res.json();
 }
+async function update(tbl,id,fields){
+  const res=await fetch(atURL(tbl,'/'+id),{method:'PATCH',headers:hdrs(),body:JSON.stringify({fields})});
+  if(!res.ok){const j=await res.json();throw new Error(j.error?.message||'Erro '+res.status);}
+  clearCache(tbl);await buildCache();populateSelects();return res.json();
+}
+function clearCache(tbl){Object.keys(DC).forEach(k=>{if(k.startsWith(tbl))delete DC[k];});}
 
-// ══════════════════════════════════════════
-//  UTILS
-// ══════════════════════════════════════════
+// ══ UTILS ══
 function filterUnit(recs){
-  if(currentUnit==='Ambas') return recs;
+  if(currentUnit==='Ambas')return recs;
   return recs.filter(r=>{
-    const ids=(r.fields.Ambiente||r.fields.Unidade||[]);
-    if(!ids.length) return true;
-    if(r.fields.Unidade){
-      const names=ids.map(id=>C.unidades[id]?.name||'');
-      return names.includes(currentUnit);
-    }
+    const ids=r.fields.Unidade||r.fields.Ambiente||[];
+    if(!ids.length)return true;
+    if(r.fields.Unidade)return ids.some(id=>C.unidades[id]?.name===currentUnit);
     return ids.some(aid=>ambUnit(aid)===currentUnit);
   });
 }
-
-function chip(s,extra=''){
-  const m={
-    'Vencida':'red','Aberto':'red','Urgência':'red','Corretiva':'red',
-    'Pendente':'amb','Em andamento':'blu','Em manutenção':'amb','Próxima':'amb',
-    'Concluída':'grn','Concluído':'grn','Ativo':'grn','Em dia':'grn',
-    'Alta':'red','Média':'amb','Baixa':'grn',
-  };
-  return `<span class="chip ${m[s]||'gry'}">${s||'—'}</span>`;
+function chip(s){
+  const m={'Vencida':'red','Aberto':'red','Urgência':'red','Corretiva':'red','Pendente':'amb','Em andamento':'blu','Em manutenção':'amb','Próxima':'amb','Concluída':'grn','Concluído':'grn','Ativo':'grn','Em dia':'grn','Alta':'red','Média':'amb','Baixa':'grn','Bom':'grn','Regular':'amb','Ruim':'red','Inativo':'gry','Preventiva':'blu','Preditiva':'gry'};
+  return`<span class="chip ${m[s]||'gry'}">${s||'—'}</span>`;
 }
+function fDate(d){if(!d)return'—';return new Date(d+'T12:00:00').toLocaleDateString('pt-BR');}
+function fCur(v){if(!v&&v!==0)return'—';return'R$ '+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2});}
+function inits(n){if(!n)return'?';return n.trim().split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase();}
+function today(){return new Date().toISOString().split('T')[0];}
+function daysDiff(d){return Math.ceil((new Date(d+'T12:00:00')-new Date())/(864e5));}
+function editBtn(onclick){return`<td style="width:40px;text-align:center"><div class="edit-btn" onclick="${onclick}" title="Editar"><i class="ti ti-pencil"></i></div></td>`;}
 
-function fDate(d){ if(!d) return '—'; return new Date(d+'T12:00:00').toLocaleDateString('pt-BR'); }
-function fCur(v){ if(!v&&v!==0) return '—'; return 'R$ '+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2}); }
-function inits(n){ if(!n) return '?'; return n.trim().split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase(); }
-function today(){ return new Date().toISOString().split('T')[0]; }
-function daysDiff(d){ const dt=new Date(d+'T12:00:00'); return Math.ceil((dt-new Date())/(1000*60*60*24)); }
+const TITLES={dashboard:'Dashboard',locais:'Locais',ativos:'Ativos',manutencao:'Manutenção',chamados:'Chamados / OS',prestadores:'Prestadores',relatorios:'Relatórios',mobiliario:'Mobiliário / Infraestrutura'};
 
-const TITLES={dashboard:'Dashboard',locais:'Locais',ativos:'Ativos',manutencao:'Manutenção',
-  chamados:'Chamados / OS',prestadores:'Prestadores',compras:'Compras',
-  despesas:'Despesas',relatorios:'Relatórios',mobiliario:'Mobiliário / Infraestrutura'};
-
+// ══ NAV ══
 function goTab(tab,el){
   document.querySelectorAll('.tab').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('on'));
   document.getElementById('tab-'+tab).classList.add('on');
-  if(el) el.classList.add('on');
+  if(el)el.classList.add('on');
   document.getElementById('ttitle').textContent=TITLES[tab]||tab;
-  document.getElementById('tsub').innerHTML=TITLES[tab]+' · <span id="ulabel">'+currentUnit+'</span>';
-  currentTab=tab;
-  loadTab(tab);
+  document.getElementById('topbar-sub'||'tsub') && (document.querySelector('.topbar-sub').innerHTML=TITLES[tab]+' · <span id="ulabel">'+currentUnit+'</span>');
+  currentTab=tab;loadTab(tab);
 }
-
+function navTo(tab){goTab(tab,document.querySelector(`[data-tab="${tab}"]`));}
 function setUnit(u,el){
   currentUnit=u;
-  document.querySelectorAll('.uBtn').forEach(b=>b.classList.remove('on'));
-  el.classList.add('on');
-  const ul=document.getElementById('ulabel'); if(ul) ul.textContent=u;
-  Object.keys(dataCache).forEach(k=>delete dataCache[k]);
-  loadTab(currentTab);
+  document.querySelectorAll('.uBtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');
+  const ul=document.getElementById('ulabel');if(ul)ul.textContent=u;
+  Object.keys(DC).forEach(k=>delete DC[k]);loadTab(currentTab);
 }
 
-// ══════════════════════════════════════════
-//  LOADERS
-// ══════════════════════════════════════════
+// ══ LOADERS ══
 async function loadTab(tab){
-  const m={dashboard:loadDash,locais:loadLocais,ativos:loadAtivos,manutencao:loadMan,
-    chamados:loadChamados,prestadores:loadPrest,compras:loadComp,despesas:loadDesp,
-    relatorios:loadRel,mobiliario:loadMob};
-  if(m[tab]) await m[tab]();
+  const m={dashboard:loadDash,locais:loadLocais,ativos:loadAtivos,manutencao:loadMan,chamados:loadChamados,prestadores:loadPrest,relatorios:loadRel,mobiliario:loadMob};
+  if(m[tab])await m[tab]();
 }
 
 // Dashboard
 async function loadDash(){
-  const [man,cham,desp,prest,hist] = await Promise.all([
-    fetchAll(TBL.manutencoes), fetchAll(TBL.chamados), fetchAll(TBL.despesas),
-    fetchAll(TBL.prestadores), fetchAll(TBL.historico),
-  ]);
-  const mF=filterUnit(man), cF=filterUnit(cham), dF=filterUnit(desp);
-
-  // Alertas — proxima data nos próximos 7 dias ou já passou
-  const alertas=mF.filter(r=>{
-    const d=r.fields['Proxima Data']; if(!d) return false;
-    const diff=daysDiff(d); return diff<=7;
-  }).sort((a,b)=>daysDiff(a.fields['Proxima Data'])-daysDiff(b.fields['Proxima Data']));
-
+  const[man,cham,prest]=await Promise.all([fetchAll(TBL.manutencoes),fetchAll(TBL.chamados),fetchAll(TBL.prestadores)]);
+  const mF=filterUnit(man),cF=filterUnit(cham);
+  const alertas=mF.filter(r=>{const d=r.fields['Proxima Data'];return d&&daysDiff(d)<=7;}).sort((a,b)=>daysDiff(a.fields['Proxima Data'])-daysDiff(b.fields['Proxima Data']));
   const venc=alertas.filter(r=>daysDiff(r.fields['Proxima Data'])<=0).length;
   const abr=cF.filter(r=>['Aberto','Em andamento'].includes(r.fields.Status)).length;
-  const now=new Date();
-  const despMes=dF.filter(r=>{
-    const d=r.fields.Data; if(!d) return false;
-    const dt=new Date(d); return dt.getMonth()===now.getMonth()&&dt.getFullYear()===now.getFullYear();
-  }).reduce((s,r)=>s+(Number(r.fields.Valor)||0),0);
-
   document.getElementById('nb-man').textContent=venc||'✓';
   document.getElementById('nb-cham').textContent=abr||'0';
-  const rd=document.getElementById('rdot'); rd.style.display=venc>0?'block':'none';
-
+  document.getElementById('rdot').style.display=venc>0?'block':'none';
   const aw=document.getElementById('dash-alert');
   if(venc>0){
-    const ns=alertas.filter(r=>daysDiff(r.fields['Proxima Data'])<=0).slice(0,3).map(r=>{
-      const aid=(r.fields.Ativo||[])[0]; return C.ativos[aid]?.name||r.fields.Titulo||'—';
-    }).join(', ');
+    const ns=alertas.filter(r=>daysDiff(r.fields['Proxima Data'])<=0).slice(0,3).map(r=>C.ativos[(r.fields.Ativo||[])[0]]?.name||r.fields.Titulo||'—').join(', ');
     aw.innerHTML=`<div class="alert-bar"><i class="ti ti-alert-triangle"></i><span><strong>${venc} manutenção${venc>1?'ões':''} vencida${venc>1?'s':''}</strong> — ${ns}</span></div>`;
-  } else aw.innerHTML='';
-
+  }else aw.innerHTML='';
+  const now=new Date();
   document.getElementById('dash-kpi').innerHTML=`
     <div class="kpi"><div class="kpi-top"><div class="kpi-ic red"><i class="ti ti-tool"></i></div></div><div class="kpi-val red">${venc}</div><div class="kpi-lbl">Manutenções Vencidas</div><div class="kpi-hint">${venc>0?'⚠ Ação necessária':'✓ Tudo em dia'}</div></div>
     <div class="kpi"><div class="kpi-top"><div class="kpi-ic amb"><i class="ti ti-clipboard-list"></i></div></div><div class="kpi-val amb">${abr}</div><div class="kpi-lbl">Chamados Abertos</div><div class="kpi-hint">${abr} pendente${abr!==1?'s':''}</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-ic grn"><i class="ti ti-cash"></i></div></div><div class="kpi-val grn">${fCur(despMes)}</div><div class="kpi-lbl">Despesas do Mês</div><div class="kpi-hint">${now.toLocaleString('pt-BR',{month:'long'})}/${now.getFullYear()}</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-ic tel"><i class="ti ti-device-desktop"></i></div></div><div class="kpi-val">${Object.keys(C.ativos).length}</div><div class="kpi-lbl">Ativos Cadastrados</div><div class="kpi-hint">${prest.length} prestadores</div></div>`;
-
-  document.getElementById('dash-man').innerHTML = alertas.length
-    ? `<table><thead><tr><th>Equipamento</th><th>Local</th><th>Próxima Manut.</th><th>Dias</th><th>Status</th></tr></thead><tbody>${alertas.slice(0,6).map(r=>{
-        const aid=(r.fields.Ativo||[])[0]; const atv=C.ativos[aid];
-        const local=atv?ambLocal(atv.amb):'—';
+    <div class="kpi"><div class="kpi-top"><div class="kpi-ic tel"><i class="ti ti-device-desktop"></i></div></div><div class="kpi-val">${Object.keys(C.ativos).length}</div><div class="kpi-lbl">Ativos Cadastrados</div><div class="kpi-hint">2 unidades</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-ic grn"><i class="ti ti-users"></i></div></div><div class="kpi-val grn">${prest.length}</div><div class="kpi-lbl">Prestadores</div><div class="kpi-hint">Cadastrados</div></div>`;
+  document.getElementById('dash-man').innerHTML=alertas.length
+    ?`<table><thead><tr><th>Equipamento</th><th>Local</th><th>Próxima Manut.</th><th>Dias</th><th>Status</th></tr></thead><tbody>${alertas.slice(0,6).map(r=>{
+        const aid=(r.fields.Ativo||[])[0];const atv=C.ativos[aid];
         const diff=daysDiff(r.fields['Proxima Data']);
         const st=diff<=0?'Vencida':diff<=3?'Crítica':'Próxima';
-        return `<tr><td><strong>${atv?.name||r.fields.Titulo||'—'}</strong></td><td style="font-size:10px">${local}</td><td>${fDate(r.fields['Proxima Data'])}</td><td style="font-weight:600;color:${diff<=0?'var(--red)':diff<=3?'var(--amber)':'var(--green)'}"><span>${diff<=0?Math.abs(diff)+' dias atrás':diff+' dias'}</span></td><td>${chip(st)}</td></tr>`;
+        return`<tr><td><strong>${atv?.name||r.fields.Titulo||'—'}</strong></td><td style="font-size:11px">${ambLocal(atv?.amb)}</td><td>${fDate(r.fields['Proxima Data'])}</td><td style="font-weight:600;color:${diff<=0?'var(--red)':diff<=3?'var(--amber)':'var(--green)'}"><span>${diff<=0?Math.abs(diff)+'d atrás':diff+'d'}</span></td><td>${chip(st)}</td></tr>`;
       }).join('')}</tbody></table>`
-    : '<div class="empty"><i class="ti ti-circle-check"></i><p>Nenhuma manutenção próxima</p></div>';
-
-  document.getElementById('dash-prest').innerHTML = prest.length
-    ? prest.slice(0,5).map(r=>`<div class="li"><div class="lav">${inits(r.fields.Nome)}</div><div><div class="ln">${r.fields.Nome||'—'}</div><div class="ls">${r.fields.Especialidade||'—'}</div></div>${r.fields.Contato?`<a class="la" href="tel:${r.fields.Contato}"><i class="ti ti-phone"></i></a>`:''}</div>`).join('')
-    : '<div class="empty"><i class="ti ti-users"></i><p>Nenhum prestador cadastrado</p></div>';
-
-  const abrCham=cF.filter(r=>['Aberto','Em andamento'].includes(r.fields.Status)).slice(0,5);
-  document.getElementById('dash-cham').innerHTML = abrCham.length
-    ? `<table><thead><tr><th>Descrição</th><th>Local</th><th>Tipo</th><th>Status</th></tr></thead><tbody>${abrCham.map(r=>{
-        const aid=(r.fields.Ambiente||[])[0];
-        return `<tr><td><strong>${r.fields.Descricao||'—'}</strong></td><td style="font-size:10px">${aid?ambLocal(aid):'—'}</td><td>${r.fields.Tipo||'—'}</td><td>${chip(r.fields.Status)}</td></tr>`;
-      }).join('')}</tbody></table>`
-    : '<div class="empty"><i class="ti ti-circle-check"></i><p>Nenhum chamado aberto</p></div>';
-
-  const ult=[...dF].reverse().slice(0,5);
-  document.getElementById('dash-desp').innerHTML = ult.length
-    ? `<table><thead><tr><th>Descrição</th><th>Valor</th><th>Data</th></tr></thead><tbody>${ult.map(r=>`<tr><td>${r.fields.Descricao||'—'}</td><td style="color:var(--green);font-weight:600">${fCur(r.fields.Valor)}</td><td>${fDate(r.fields.Data)}</td></tr>`).join('')}</tbody></table>`
-    : '<div class="empty"><i class="ti ti-cash"></i><p>Nenhuma despesa registrada</p></div>';
+    :'<div class="empty"><i class="ti ti-circle-check"></i><p>Nenhuma manutenção próxima</p></div>';
+  document.getElementById('dash-prest').innerHTML=prest.length
+    ?prest.slice(0,5).map(r=>`<div class="li"><div class="lav">${inits(r.fields.Nome)}</div><div><div class="ln">${r.fields.Nome||'—'}</div><div class="ls">${r.fields.Especialidade||'—'}</div></div>${r.fields.Contato?`<a class="la" href="tel:${r.fields.Contato}"><i class="ti ti-phone"></i></a>`:''}</div>`).join('')
+    :'<div class="empty"><i class="ti ti-users"></i><p>Nenhum prestador cadastrado</p></div>';
+  const abrCham=cF.filter(r=>['Aberto','Em andamento'].includes(r.fields.Status)).slice(0,6);
+  document.getElementById('dash-cham').innerHTML=abrCham.length
+    ?`<table><thead><tr><th>Descrição</th><th>Local</th><th>Tipo</th><th>Status</th></tr></thead><tbody>${abrCham.map(r=>{const aid=(r.fields.Ambiente||[])[0];return`<tr><td><strong>${r.fields.Descricao||'—'}</strong></td><td style="font-size:11px">${ambLocal(aid)}</td><td>${r.fields.Tipo||'—'}</td><td>${chip(r.fields.Status)}</td></tr>`;}).join('')}</tbody></table>`
+    :'<div class="empty"><i class="ti ti-circle-check"></i><p>Nenhum chamado aberto</p></div>';
 }
 
 // Locais
 async function loadLocais(){
-  const [unis,ands,ambs]=await Promise.all([fetchAll(TBL.unidades),fetchAll(TBL.andares),fetchAll(TBL.ambientes)]);
+  const[unis,ands,ambs]=await Promise.all([fetchAll(TBL.unidades),fetchAll(TBL.andares),fetchAll(TBL.ambientes)]);
+  const andsSorted=[...ands].sort((a,b)=>(a.fields.Nome||'').localeCompare(b.fields.Nome||'','pt-BR'));
+  const ambsSorted=[...ambs].sort((a,b)=>cleanName(a.fields.Nome||'').localeCompare(cleanName(b.fields.Nome||''),'pt-BR'));
   document.getElementById('tbl-unidades').innerHTML=unis.length
     ?`<table><thead><tr><th>Unidade</th></tr></thead><tbody>${unis.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td></tr>`).join('')}</tbody></table>`
     :'<div class="empty"><i class="ti ti-building"></i><p>Nenhuma unidade</p></div>';
-  document.getElementById('tbl-andares').innerHTML=ands.length
-    ?`<table><thead><tr><th>Andar</th><th>Unidade</th></tr></thead><tbody>${ands.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${rName(C.unidades,(r.fields.Unidade||[])[0])}</td></tr>`).join('')}</tbody></table>`
+  document.getElementById('tbl-andares').innerHTML=andsSorted.length
+    ?`<table><thead><tr><th>Andar</th><th>Unidade</th><th></th></tr></thead><tbody>${andsSorted.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${rName(C.unidades,(r.fields.Unidade||[])[0])}</td>${editBtn(`editAndar('${r.id}')`)}</tr>`).join('')}</tbody></table>`
     :'<div class="empty"><i class="ti ti-layers"></i><p>Nenhum andar</p></div>';
-  document.getElementById('tbl-ambientes').innerHTML=ambs.length
-    ?`<table><thead><tr><th>Ambiente</th><th>Andar</th><th>Unidade</th></tr></thead><tbody>${ambs.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${rName(C.andares,(r.fields.Andar||[])[0])}</td><td>${ambUnit(r.id)||'—'}</td></tr>`).join('')}</tbody></table>`
+  document.getElementById('tbl-ambientes').innerHTML=ambsSorted.length
+    ?`<table><thead><tr><th>Ambiente</th><th>Andar</th><th>Unidade</th><th></th></tr></thead><tbody>${ambsSorted.map(r=>`<tr><td><strong>${cleanName(r.fields.Nome||'—')}</strong></td><td>${rName(C.andares,(r.fields.Andar||[])[0])}</td><td>${ambUnit(r.id)||'—'}</td>${editBtn(`editAmbiente('${r.id}')`)}</tr>`).join('')}</tbody></table>`
     :'<div class="empty"><i class="ti ti-door"></i><p>Nenhum ambiente</p></div>';
 }
 
@@ -907,42 +756,35 @@ let ativosData=[];
 async function loadAtivos(){
   const recs=await fetchAll(TBL.ativos);
   ativosData=currentUnit==='Ambas'?recs:recs.filter(r=>ambUnit((r.fields.Ambiente||[])[0])===currentUnit||!r.fields.Ambiente?.length);
+  ativosData.sort((a,b)=>(a.fields.Nome||'').localeCompare(b.fields.Nome||'','pt-BR'));
   renderAtivos(ativosData);
 }
-function filtroAtivos(cat){
-  renderAtivos(cat?ativosData.filter(r=>r.fields.Categoria===cat):ativosData);
-}
+function filtroAtivos(cat){renderAtivos(cat?ativosData.filter(r=>r.fields.Categoria===cat):ativosData);}
 function renderAtivos(data){
   document.getElementById('tbl-ativos').innerHTML=data.length
-    ?`<table><thead><tr><th>Equipamento</th><th>Categoria</th><th>Local</th><th>Marca/Modelo</th><th>Compra</th><th>Status</th><th>Crítico</th></tr></thead><tbody>${data.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${r.fields.Categoria||'—'}</td><td style="font-size:10px">${ambLocal((r.fields.Ambiente||[])[0])}</td><td>${r.fields['Marca/Modelo']||'—'}</td><td>${fDate(r.fields['Data Compra'])}</td><td>${chip(r.fields.Status)}</td><td style="text-align:center">${r.fields.Crítico?'⚠️':''}</td></tr>`).join('')}</tbody></table>`
+    ?`<table><thead><tr><th>Equipamento</th><th>Categoria</th><th>Local</th><th>Marca/Modelo</th><th>Compra</th><th>Status</th><th>Crítico</th><th></th></tr></thead><tbody>${data.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${r.fields.Categoria||'—'}</td><td style="font-size:11px">${ambLocal((r.fields.Ambiente||[])[0])}</td><td>${r.fields['Marca/Modelo']||'—'}</td><td>${fDate(r.fields['Data Compra'])}</td><td>${chip(r.fields.Status)}</td><td style="text-align:center">${r.fields.Crítico?'⚠️':''}</td>${editBtn(`editAtivo('${r.id}')`)}</tr>`).join('')}</tbody></table>`
     :'<div class="empty"><i class="ti ti-device-desktop"></i><p>Nenhum ativo cadastrado</p></div>';
 }
 
 // Manutenção
 async function loadMan(){
-  const [man,hist]=await Promise.all([fetchAll(TBL.manutencoes),fetchAll(TBL.historico)]);
-  const mF=currentUnit==='Ambas'?man:man.filter(r=>{
-    const aid=(r.fields.Ativo||[])[0]; return !aid||ambUnit(C.ativos[aid]?.amb)===currentUnit;
-  });
-  const hF=currentUnit==='Ambas'?hist:hist.filter(r=>{
-    const aid=(r.fields.Ativo||[])[0]; return !aid||ambUnit(C.ativos[aid]?.amb)===currentUnit;
-  });
-
+  const[man,hist]=await Promise.all([fetchAll(TBL.manutencoes),fetchAll(TBL.historico)]);
+  const mF=currentUnit==='Ambas'?man:man.filter(r=>{const aid=(r.fields.Ativo||[])[0];return!aid||ambUnit(C.ativos[aid]?.amb)===currentUnit;});
+  const hF=currentUnit==='Ambas'?hist:hist.filter(r=>{const aid=(r.fields.Ativo||[])[0];return!aid||ambUnit(C.ativos[aid]?.amb)===currentUnit;});
   const sorted=[...mF].sort((a,b)=>daysDiff(a.fields['Proxima Data'])-daysDiff(b.fields['Proxima Data']));
   document.getElementById('tbl-man').innerHTML=sorted.length
-    ?`<table><thead><tr><th>Título</th><th>Ativo</th><th>Local</th><th>Tipo</th><th>Última</th><th>Próxima</th><th>Prestador</th><th>Crítico</th></tr></thead><tbody>${sorted.map(r=>{
-        const aid=(r.fields.Ativo||[])[0]; const atv=C.ativos[aid]||{};
+    ?`<table><thead><tr><th>Título</th><th>Ativo</th><th>Local</th><th>Tipo</th><th>Última</th><th>Próxima</th><th>Prestador</th><th>Crit.</th><th></th></tr></thead><tbody>${sorted.map(r=>{
+        const aid=(r.fields.Ativo||[])[0];const atv=C.ativos[aid]||{};
         const diff=r.fields['Proxima Data']?daysDiff(r.fields['Proxima Data']):null;
         const st=diff===null?'—':diff<=0?'Vencida':diff<=7?'Próxima':'Em dia';
         const pid=(r.fields.Prestador||[])[0];
-        return `<tr><td><strong>${r.fields.Titulo||'—'}</strong></td><td>${atv.name||'—'}</td><td style="font-size:10px">${ambLocal(atv.amb)}</td><td>${r.fields.Tipo||'—'}</td><td>${fDate(r.fields['Ultima Data'])}</td><td>${fDate(r.fields['Proxima Data'])} ${diff!==null?`<span style="font-size:9px;color:${diff<=0?'var(--red)':diff<=7?'var(--amber)':'var(--green)'}">(${diff<=0?Math.abs(diff)+'d atrás':diff+'d'})</span>`:''}</td><td>${rName(C.prestadores,pid)}</td><td style="text-align:center">${r.fields.Critico?'⚠️':''}</td></tr>`;
+        return`<tr><td><strong>${r.fields.Titulo||'—'}</strong></td><td>${atv.name||'—'}</td><td style="font-size:11px">${ambLocal(atv.amb)}</td><td>${r.fields.Tipo||'—'}</td><td>${fDate(r.fields['Ultima Data'])}</td><td>${fDate(r.fields['Proxima Data'])}${diff!==null?` <span style="font-size:10px;color:${diff<=0?'var(--red)':diff<=7?'var(--amber)':'var(--green)'}">(${diff<=0?Math.abs(diff)+'d atrás':diff+'d'})</span>`:''}</td><td>${rName(C.prestadores,pid)}</td><td style="text-align:center">${r.fields.Critico?'⚠️':''}</td>${editBtn(`editMan('${r.id}')`)}</tr>`;
       }).join('')}</tbody></table>`
     :'<div class="empty"><i class="ti ti-tool"></i><p>Nenhuma manutenção cadastrada</p></div>';
-
   document.getElementById('tbl-hist').innerHTML=hF.length
-    ?`<table><thead><tr><th>Título</th><th>Ativo</th><th>Data Realizada</th><th>Tipo</th><th>Prestador</th><th>Obs.</th></tr></thead><tbody>${[...hF].reverse().map(r=>{
-        const aid=(r.fields.Ativo||[])[0]; const pid=(r.fields.Prestador||[])[0];
-        return `<tr><td><strong>${r.fields.Titulo||'—'}</strong></td><td>${C.ativos[aid]?.name||'—'}</td><td>${fDate(r.fields['Data Realizada'])}</td><td>${r.fields.Tipo||'—'}</td><td>${rName(C.prestadores,pid)}</td><td style="font-size:10px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.fields.Observacoes||'—'}</td></tr>`;
+    ?`<table><thead><tr><th>Título</th><th>Ativo</th><th>Data Realizada</th><th>Tipo</th><th>Prestador</th><th>Obs.</th><th></th></tr></thead><tbody>${[...hF].reverse().map(r=>{
+        const aid=(r.fields.Ativo||[])[0];const pid=(r.fields.Prestador||[])[0];
+        return`<tr><td><strong>${r.fields.Titulo||'—'}</strong></td><td>${C.ativos[aid]?.name||'—'}</td><td>${fDate(r.fields['Data Realizada'])}</td><td>${r.fields.Tipo||'—'}</td><td>${rName(C.prestadores,pid)}</td><td style="font-size:11px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.fields.Observacoes||'—'}</td>${editBtn(`editHist('${r.id}')`)}</tr>`;
       }).join('')}</tbody></table>`
     :'<div class="empty"><i class="ti ti-history"></i><p>Nenhum histórico registrado</p></div>';
 }
@@ -951,12 +793,12 @@ async function loadMan(){
 async function loadChamados(){
   const filter=document.getElementById('cham-filter')?.value||'';
   let recs=await fetchAll(TBL.chamados);
-  if(currentUnit!=='Ambas') recs=recs.filter(r=>ambUnit((r.fields.Ambiente||[])[0])===currentUnit||!r.fields.Ambiente?.length);
-  if(filter) recs=recs.filter(r=>r.fields.Status===filter);
+  if(currentUnit!=='Ambas')recs=recs.filter(r=>ambUnit((r.fields.Ambiente||[])[0])===currentUnit||!r.fields.Ambiente?.length);
+  if(filter)recs=recs.filter(r=>r.fields.Status===filter);
   document.getElementById('tbl-cham').innerHTML=recs.length
-    ?`<table><thead><tr><th>Descrição</th><th>Local</th><th>Ativo</th><th>Tipo</th><th>Solicitante</th><th>Prestador</th><th>Abertura</th><th>Conclusão</th><th>Status</th></tr></thead><tbody>${recs.map(r=>{
-        const amid=(r.fields.Ambiente||[])[0]; const acid=(r.fields.Ativo||[])[0]; const pid=(r.fields.Prestador||[])[0];
-        return `<tr><td><strong>${r.fields.Descricao||'—'}</strong></td><td style="font-size:10px">${ambLocal(amid)}</td><td>${C.ativos[acid]?.name||'—'}</td><td>${r.fields.Tipo||'—'}</td><td>${r.fields.Solicitante||'—'}</td><td>${rName(C.prestadores,pid)}</td><td>${fDate(r.fields['Data Abertura'])}</td><td>${fDate(r.fields['Data Conclusao'])}</td><td>${chip(r.fields.Status)}</td></tr>`;
+    ?`<table><thead><tr><th>Descrição</th><th>Local</th><th>Ativo</th><th>Tipo</th><th>Solicitante</th><th>Prestador</th><th>Abertura</th><th>Conclusão</th><th>Status</th><th></th></tr></thead><tbody>${recs.map(r=>{
+        const amid=(r.fields.Ambiente||[])[0];const acid=(r.fields.Ativo||[])[0];const pid=(r.fields.Prestador||[])[0];
+        return`<tr><td><strong>${r.fields.Descricao||'—'}</strong></td><td style="font-size:11px">${ambLocal(amid)}</td><td>${C.ativos[acid]?.name||'—'}</td><td>${r.fields.Tipo||'—'}</td><td>${r.fields.Solicitante||'—'}</td><td>${rName(C.prestadores,pid)}</td><td>${fDate(r.fields['Data Abertura'])}</td><td>${fDate(r.fields['Data Conclusao'])}</td><td>${chip(r.fields.Status)}</td>${editBtn(`editCham('${r.id}')`)}</tr>`;
       }).join('')}</tbody></table>`
     :'<div class="empty"><i class="ti ti-clipboard-list"></i><p>Nenhum chamado encontrado</p></div>';
 }
@@ -964,69 +806,39 @@ async function loadChamados(){
 // Prestadores
 async function loadPrest(){
   const recs=await fetchAll(TBL.prestadores);
-  document.getElementById('tbl-prest').innerHTML=recs.length
-    ?`<table><thead><tr><th>Nome / Empresa</th><th>Especialidade</th><th>Contato</th></tr></thead><tbody>${recs.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${r.fields.Especialidade||'—'}</td><td>${r.fields.Contato?`<a href="tel:${r.fields.Contato}" style="color:var(--green)">${r.fields.Contato}</a>`:'—'}</td></tr>`).join('')}</tbody></table>`
+  const sorted=[...recs].sort((a,b)=>(a.fields.Nome||'').localeCompare(b.fields.Nome||'','pt-BR'));
+  document.getElementById('tbl-prest').innerHTML=sorted.length
+    ?`<table><thead><tr><th>Nome / Empresa</th><th>Especialidade</th><th>Contato</th><th></th></tr></thead><tbody>${sorted.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${r.fields.Especialidade||'—'}</td><td>${r.fields.Contato?`<a href="tel:${r.fields.Contato}" style="color:var(--green)">${r.fields.Contato}</a>`:'—'}</td>${editBtn(`editPrest('${r.id}')`)}</tr>`).join('')}</tbody></table>`
     :'<div class="empty"><i class="ti ti-users"></i><p>Nenhum prestador cadastrado</p></div>';
-}
-
-// Compras
-async function loadComp(){
-  const recs=await fetchAll(TBL.compras);
-  document.getElementById('tbl-comp').innerHTML=recs.length
-    ?`<table><thead><tr><th>Item</th><th>Fornecedor</th><th>Qtd</th><th>Vlr. Unit.</th><th>Total</th><th>Pedido</th><th>Entrega</th><th>Status</th></tr></thead><tbody>${recs.map(r=>`<tr><td><strong>${r.fields.Item||'—'}</strong></td><td>${r.fields.Fornecedor||'—'}</td><td>${r.fields.Quantidade||'—'}</td><td>${fCur(r.fields['Valor Unitario'])}</td><td style="color:var(--green);font-weight:600">${fCur(r.fields['Valor Total'])}</td><td>${fDate(r.fields['Data Pedido'])}</td><td>${fDate(r.fields['Data Entrega'])}</td><td>${chip(r.fields.Status)}</td></tr>`).join('')}</tbody></table>`
-    :'<div class="empty"><i class="ti ti-shopping-cart"></i><p>Nenhuma compra registrada</p></div>';
-}
-
-// Despesas
-async function loadDesp(){
-  const recs=filterUnit(await fetchAll(TBL.despesas));
-  const total=recs.reduce((s,r)=>s+(Number(r.fields.Valor)||0),0);
-  document.getElementById('tbl-desp').innerHTML=recs.length
-    ?`<div style="padding:10px 14px;background:#f9fafb;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:11px;color:var(--txt3)">Total registrado</span><span style="font-size:14px;font-weight:700;color:var(--green)">${fCur(total)}</span></div><table><thead><tr><th>Descrição</th><th>Valor</th><th>Data</th><th>Categoria</th><th>Fornecedor</th></tr></thead><tbody>${[...recs].reverse().map(r=>`<tr><td><strong>${r.fields.Descricao||'—'}</strong></td><td style="color:var(--green);font-weight:600">${fCur(r.fields.Valor)}</td><td>${fDate(r.fields.Data)}</td><td>${r.fields.Categoria||'—'}</td><td>${r.fields.Fornecedor||'—'}</td></tr>`).join('')}</tbody></table>`
-    :'<div class="empty"><i class="ti ti-cash"></i><p>Nenhuma despesa registrada</p></div>';
 }
 
 // Relatórios
 async function loadRel(){
-  const [man,desp,atv,cham]=await Promise.all([fetchAll(TBL.manutencoes),fetchAll(TBL.despesas),fetchAll(TBL.ativos),fetchAll(TBL.chamados)]);
-  const mF=filterUnit(man); const dF=filterUnit(desp);
-
-  // Manutenções por status
+  const[man,atv,cham]=await Promise.all([fetchAll(TBL.manutencoes),fetchAll(TBL.ativos),fetchAll(TBL.chamados)]);
+  const mF=filterUnit(man);const cF=filterUnit(cham);
   const sc={};
-  mF.forEach(r=>{
-    const d=r.fields['Proxima Data']; let s='Sem data';
-    if(d){ const diff=daysDiff(d); s=diff<=0?'Vencida':diff<=7?'Próxima':'Em dia'; }
-    sc[s]=(sc[s]||0)+1;
-  });
+  mF.forEach(r=>{const d=r.fields['Proxima Data'];let s='Sem data';if(d){const diff=daysDiff(d);s=diff<=0?'Vencida':diff<=7?'Próxima':'Em dia';}sc[s]=(sc[s]||0)+1;});
   document.getElementById('rel-man').innerHTML=Object.keys(sc).length
-    ?Object.entries(sc).map(([s,c])=>`<div class="bar-row">${chip(s)}<div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/mF.length*100)}%;background:var(--green)"></div></div><div class="bar-val">${c} manutenção${c>1?'ões':''}</div></div>`).join('')
-    :'<p style="font-size:12px;color:var(--txt3)">Sem dados</p>';
-
-  // Despesas por mês
-  const mc={};
-  dF.forEach(r=>{ const d=r.fields.Data; if(!d) return; const dt=new Date(d); const k=`${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}`; mc[k]=(mc[k]||0)+(Number(r.fields.Valor)||0); });
-  const ms=Object.entries(mc).sort(([a],[b])=>a.localeCompare(b)).slice(-6);
-  const mx=Math.max(...ms.map(([,v])=>v),1);
-  document.getElementById('rel-desp').innerHTML=ms.length
-    ?ms.map(([k,v])=>{ const[ano,mes]=k.split('-'); const nm=new Date(+ano,+mes-1,1).toLocaleString('pt-BR',{month:'short'}); return`<div class="bar-row"><div class="bar-lbl">${nm}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(v/mx*100)}%;background:var(--teal)"></div></div><div class="bar-val">${fCur(v)}</div></div>`; }).join('')
-    :'<p style="font-size:12px;color:var(--txt3)">Sem dados de despesas</p>';
-
-  const tot=dF.reduce((s,r)=>s+(Number(r.fields.Valor)||0),0);
-  const abrCham=filterUnit(cham).filter(r=>['Aberto','Em andamento'].includes(r.fields.Status)).length;
+    ?Object.entries(sc).map(([s,c])=>`<div class="bar-row">${chip(s)}<div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/mF.length*100)}%;background:var(--green)"></div></div><div class="bar-val">${c} item${c>1?'s':''}</div></div>`).join('')
+    :'<p style="font-size:13px;color:var(--txt3)">Sem dados</p>';
+  const cs={};
+  cF.forEach(r=>{const s=r.fields.Status||'Sem status';cs[s]=(cs[s]||0)+1;});
+  document.getElementById('rel-cham').innerHTML=Object.keys(cs).length
+    ?Object.entries(cs).map(([s,c])=>`<div class="bar-row">${chip(s)}<div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/cF.length*100)}%;background:var(--teal)"></div></div><div class="bar-val">${c} item${c>1?'s':''}</div></div>`).join('')
+    :'<p style="font-size:13px;color:var(--txt3)">Sem dados</p>';
+  const abrCham=cF.filter(r=>['Aberto','Em andamento'].includes(r.fields.Status)).length;
   document.getElementById('rel-resumo').innerHTML=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
-    <div style="text-align:center;padding:12px;background:#f9fafb;border-radius:7px;border:1px solid var(--border)"><div style="font-size:20px;font-weight:700;color:var(--teal)">${mF.length}</div><div style="font-size:10px;color:var(--txt3);margin-top:3px">Manutenções</div></div>
-    <div style="text-align:center;padding:12px;background:#fef2f2;border-radius:7px;border:1px solid #fca5a5"><div style="font-size:20px;font-weight:700;color:var(--red)">${mF.filter(r=>r.fields['Proxima Data']&&daysDiff(r.fields['Proxima Data'])<=0).length}</div><div style="font-size:10px;color:var(--txt3);margin-top:3px">Vencidas</div></div>
-    <div style="text-align:center;padding:12px;background:#fffbeb;border-radius:7px;border:1px solid #fbbf24"><div style="font-size:20px;font-weight:700;color:var(--amber)">${abrCham}</div><div style="font-size:10px;color:var(--txt3);margin-top:3px">Chamados Abertos</div></div>
-    <div style="text-align:center;padding:12px;background:#f0fdf4;border-radius:7px;border:1px solid #86efac"><div style="font-size:15px;font-weight:700;color:var(--green)">${fCur(tot)}</div><div style="font-size:10px;color:var(--txt3);margin-top:3px">Total Despesas</div></div>
+    <div style="text-align:center;padding:12px;background:#f9fafb;border-radius:7px;border:1px solid var(--border)"><div style="font-size:22px;font-weight:700;color:var(--teal)">${mF.length}</div><div style="font-size:11px;color:var(--txt3);margin-top:3px">Manutenções</div></div>
+    <div style="text-align:center;padding:12px;background:#fef2f2;border-radius:7px;border:1px solid #fca5a5"><div style="font-size:22px;font-weight:700;color:var(--red)">${mF.filter(r=>r.fields['Proxima Data']&&daysDiff(r.fields['Proxima Data'])<=0).length}</div><div style="font-size:11px;color:var(--txt3);margin-top:3px">Vencidas</div></div>
+    <div style="text-align:center;padding:12px;background:#fffbeb;border-radius:7px;border:1px solid #fbbf24"><div style="font-size:22px;font-weight:700;color:var(--amber)">${abrCham}</div><div style="font-size:11px;color:var(--txt3);margin-top:3px">Chamados Abertos</div></div>
+    <div style="text-align:center;padding:12px;background:#f0f9fa;border-radius:7px;border:1px solid #a5d6e0"><div style="font-size:22px;font-weight:700;color:var(--teal)">${Object.keys(C.ativos).length}</div><div style="font-size:11px;color:var(--txt3);margin-top:3px">Ativos</div></div>
   </div>`;
-
-  // Ativos por ambiente
   const amb={};
-  atv.forEach(r=>{ const aid=(r.fields.Ambiente||[])[0]; const lbl=ambLocal(aid); amb[lbl]=(amb[lbl]||0)+1; });
+  atv.forEach(r=>{const aid=(r.fields.Ambiente||[])[0];const lbl=ambLocal(aid);amb[lbl]=(amb[lbl]||0)+1;});
   const ams=Object.entries(amb).sort(([,a],[,b])=>b-a).slice(0,8);
   const mxA=Math.max(...ams.map(([,v])=>v),1);
   document.getElementById('rel-ativos').innerHTML=ams.length
-    ?`<div style="padding:14px">${ams.map(([l,c])=>`<div class="bar-row"><div class="bar-lbl" style="width:140px;text-align:left;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${l}">${l}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/mxA*100)}%;background:var(--teal)"></div></div><div class="bar-val" style="min-width:50px">${c} ativo${c>1?'s':''}</div></div>`).join('')}</div>`
+    ?`<div style="padding:14px">${ams.map(([l,c])=>`<div class="bar-row"><div class="bar-lbl" style="width:160px;text-align:left;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${l}">${l}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/mxA*100)}%;background:var(--teal)"></div></div><div class="bar-val" style="min-width:50px">${c} ativo${c>1?'s':''}</div></div>`).join('')}</div>`
     :'<div class="empty"><i class="ti ti-chart-bar"></i><p>Sem dados</p></div>';
 }
 
@@ -1035,10 +847,9 @@ let mobData=[];
 async function loadMob(){
   const recs=await fetchAll(TBL.ativos);
   mobData=currentUnit==='Ambas'?recs:recs.filter(r=>ambUnit((r.fields.Ambiente||[])[0])===currentUnit);
-
-  // KPIs por categoria
+  mobData.sort((a,b)=>(a.fields.Nome||'').localeCompare(b.fields.Nome||'','pt-BR'));
   const cats={'Ar Condicionado':0,'Nobreak':0,'Extintor':0,'Impressora':0};
-  mobData.forEach(r=>{ const c=r.fields.Categoria; if(c in cats) cats[c]++; });
+  mobData.forEach(r=>{const c=r.fields.Categoria;if(c in cats)cats[c]++;});
   document.getElementById('mob-kpi').innerHTML=`
     <div class="kpi"><div class="kpi-top"><div class="kpi-ic tel"><i class="ti ti-wind"></i></div></div><div class="kpi-val">${cats['Ar Condicionado']}</div><div class="kpi-lbl">Ar-condicionados</div></div>
     <div class="kpi"><div class="kpi-top"><div class="kpi-ic amb"><i class="ti ti-battery-charging"></i></div></div><div class="kpi-val">${cats['Nobreak']}</div><div class="kpi-lbl">Nobreaks</div></div>
@@ -1046,151 +857,244 @@ async function loadMob(){
     <div class="kpi"><div class="kpi-top"><div class="kpi-ic grn"><i class="ti ti-printer"></i></div></div><div class="kpi-val">${cats['Impressora']}</div><div class="kpi-lbl">Impressoras</div></div>`;
   renderMob(mobData);
 }
-function filtroMob(cat){ renderMob(cat?mobData.filter(r=>r.fields.Categoria===cat):mobData); }
+function filtroMob(cat){renderMob(cat?mobData.filter(r=>r.fields.Categoria===cat):mobData);}
 function renderMob(data){
   document.getElementById('tbl-mob').innerHTML=data.length
-    ?`<table><thead><tr><th>Equipamento</th><th>Categoria</th><th>Local</th><th>Marca/Modelo</th><th>Data Compra</th><th>Status</th><th>Crítico</th></tr></thead><tbody>${data.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${r.fields.Categoria||'—'}</td><td style="font-size:10px">${ambLocal((r.fields.Ambiente||[])[0])}</td><td>${r.fields['Marca/Modelo']||'—'}</td><td>${fDate(r.fields['Data Compra'])}</td><td>${chip(r.fields.Status)}</td><td style="text-align:center">${r.fields.Crítico?'⚠️':''}</td></tr>`).join('')}</tbody></table>`
+    ?`<table><thead><tr><th>Equipamento</th><th>Categoria</th><th>Local</th><th>Marca/Modelo</th><th>Data Compra</th><th>Status</th><th>Crítico</th><th></th></tr></thead><tbody>${data.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${r.fields.Categoria||'—'}</td><td style="font-size:11px">${ambLocal((r.fields.Ambiente||[])[0])}</td><td>${r.fields['Marca/Modelo']||'—'}</td><td>${fDate(r.fields['Data Compra'])}</td><td>${chip(r.fields.Status)}</td><td style="text-align:center">${r.fields.Crítico?'⚠️':''}</td>${editBtn(`editAtivo('${r.id}')`)}</tr>`).join('')}</tbody></table>`
     :'<div class="empty"><i class="ti ti-armchair"></i><p>Nenhum item encontrado</p></div>';
 }
 
-// ══════════════════════════════════════════
-//  MODAIS
-// ══════════════════════════════════════════
-function openM(id){ document.getElementById(id).classList.add('on'); }
-function closeM(id){ document.getElementById(id).classList.remove('on'); }
-document.querySelectorAll('.mo').forEach(m=>m.addEventListener('click',e=>{if(e.target===m) m.classList.remove('on');}));
-
-// ══════════════════════════════════════════
-//  SAVES
-// ══════════════════════════════════════════
-function toast(msg,err=false){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.className='on'+(err?' err':'');
-  setTimeout(()=>t.className='',3200);
+// ══ MODAIS ══
+function openM(id){document.getElementById(id).classList.add('on');}
+function closeM(id){document.getElementById(id).classList.remove('on');editId=null;editModal=null;}
+function openNew(id){
+  editId=null;editModal=null;
+  const titles={
+    'm-ativo':'Novo Ativo / Equipamento','m-man':'Nova Manutenção Programada',
+    'm-hist':'Registrar Manutenção Realizada','m-cham':'Novo Chamado / OS',
+    'm-prest':'Novo Prestador','m-andar':'Novo Andar','m-ambiente':'Novo Ambiente'
+  };
+  const tEl=document.getElementById(id+'-titulo');
+  if(tEl)tEl.textContent=titles[id]||'Novo Registro';
+  // Limpar campos
+  document.querySelectorAll(`#${id} .fi, #${id} .ft`).forEach(el=>{el.value='';});
+  document.querySelectorAll(`#${id} input[type=checkbox]`).forEach(el=>{el.checked=false;});
+  // Data padrão
+  const df=document.querySelector(`#${id} input[type=date]`);if(df)df.value=today();
+  openM(id);
 }
+document.querySelectorAll('.mo').forEach(m=>m.addEventListener('click',e=>{if(e.target===m){m.classList.remove('on');editId=null;editModal=null;}}));
+
+// ══ EDIT FUNCTIONS ══
+function setField(id,val){const e=document.getElementById(id);if(e&&val!==undefined&&val!==null)e.value=val;}
+function setCheck(id,val){const e=document.getElementById(id);if(e)e.checked=!!val;}
+function setSelect(id,val){const e=document.getElementById(id);if(e&&val){const op=[...e.options].find(o=>o.value===val||o.text===val);if(op)op.selected=true;}}
+
+function editAtivo(id){
+  const all=[...ativosData,...mobData];
+  const r=all.find(x=>x.id===id);if(!r)return;
+  editId=id;editModal='m-ativo';
+  document.getElementById('m-ativo-titulo').textContent='Editar Ativo';
+  setField('f-at-nome',r.fields.Nome);
+  setSelect('f-at-cat',r.fields.Categoria);
+  setSelect('f-at-amb',(r.fields.Ambiente||[])[0]);
+  setField('f-at-marca',r.fields['Marca/Modelo']);
+  setField('f-at-data',r.fields['Data Compra']);
+  setSelect('f-at-status',r.fields.Status);
+  setCheck('f-at-crit',r.fields.Crítico);
+  openM('m-ativo');
+}
+async function editMan(id){
+  const all=await fetchAll(TBL.manutencoes);
+  const r=all.find(x=>x.id===id);if(!r)return;
+  editId=id;editModal='m-man';
+  document.getElementById('m-man-titulo').textContent='Editar Manutenção';
+  setField('f-man-tit',r.fields.Titulo);
+  setSelect('f-man-at',(r.fields.Ativo||[])[0]);
+  setSelect('f-man-tipo',r.fields.Tipo);
+  setField('f-man-ult',r.fields['Ultima Data']);
+  setField('f-man-prox',r.fields['Proxima Data']);
+  setSelect('f-man-prest',(r.fields.Prestador||[])[0]);
+  setCheck('f-man-crit',r.fields.Critico);
+  setField('f-man-obs',r.fields.Observacoes);
+  openM('m-man');
+}
+async function editHist(id){
+  const all=await fetchAll(TBL.historico);
+  const r=all.find(x=>x.id===id);if(!r)return;
+  editId=id;editModal='m-hist';
+  document.getElementById('m-hist-titulo').textContent='Editar Histórico';
+  setField('f-hist-tit',r.fields.Titulo);
+  setSelect('f-hist-at',(r.fields.Ativo||[])[0]);
+  setField('f-hist-data',r.fields['Data Realizada']);
+  setSelect('f-hist-tipo',r.fields.Tipo);
+  setSelect('f-hist-prest',(r.fields.Prestador||[])[0]);
+  setField('f-hist-obs',r.fields.Observacoes);
+  openM('m-hist');
+}
+async function editCham(id){
+  const all=await fetchAll(TBL.chamados);
+  const r=all.find(x=>x.id===id);if(!r)return;
+  editId=id;editModal='m-cham';
+  document.getElementById('m-cham-titulo').textContent='Editar Chamado';
+  setField('f-ch-desc',r.fields.Descricao);
+  setSelect('f-ch-amb',(r.fields.Ambiente||[])[0]);
+  setSelect('f-ch-at',(r.fields.Ativo||[])[0]||'');
+  setSelect('f-ch-tipo',r.fields.Tipo);
+  setSelect('f-ch-status',r.fields.Status);
+  setField('f-ch-sol',r.fields.Solicitante);
+  setSelect('f-ch-prest',(r.fields.Prestador||[])[0]);
+  setField('f-ch-obs',r.fields.Observacoes);
+  openM('m-cham');
+}
+async function editPrest(id){
+  const all=await fetchAll(TBL.prestadores);
+  const r=all.find(x=>x.id===id);if(!r)return;
+  editId=id;editModal='m-prest';
+  document.getElementById('m-prest-titulo').textContent='Editar Prestador';
+  setField('f-pr-nome',r.fields.Nome);
+  setField('f-pr-esp',r.fields.Especialidade);
+  setField('f-pr-cont',r.fields.Contato);
+  openM('m-prest');
+}
+async function editAndar(id){
+  const all=await fetchAll(TBL.andares);
+  const r=all.find(x=>x.id===id);if(!r)return;
+  editId=id;editModal='m-andar';
+  document.getElementById('m-andar-titulo').textContent='Editar Andar';
+  setSelect('f-and-uni',(r.fields.Unidade||[])[0]);
+  setField('f-and-nome',r.fields.Nome);
+  openM('m-andar');
+}
+async function editAmbiente(id){
+  const all=await fetchAll(TBL.ambientes);
+  const r=all.find(x=>x.id===id);if(!r)return;
+  editId=id;editModal='m-ambiente';
+  document.getElementById('m-ambiente-titulo').textContent='Editar Ambiente';
+  setSelect('f-amb-andar',(r.fields.Andar||[])[0]);
+  setField('f-amb-nome',r.fields.Nome);
+  openM('m-ambiente');
+}
+
+// ══ TOAST ══
+function toast(msg,err=false){const t=document.getElementById('toast');t.textContent=msg;t.className='on'+(err?' err':'');setTimeout(()=>t.className='',3200);}
+
+// ══ SAVES ══
+function v(id){const e=document.getElementById(id);return e?e.value.trim():'';}
 
 async function saveAndar(){
-  const nome=v('f-and-nome'); const uni=v('f-and-uni');
+  const nome=v('f-and-nome'),uni=v('f-and-uni');
   if(!nome||!uni){toast('Preencha todos os campos.',true);return;}
-  try{ await create(TBL.andares,{Nome:nome,Unidade:[uni]}); closeM('m-andar'); toast('✓ Andar criado!'); loadLocais(); }
-  catch(e){toast(e.message,true);}
+  try{
+    if(editId)await update(TBL.andares,editId,{Nome:nome,Unidade:[uni]});
+    else await create(TBL.andares,{Nome:nome,Unidade:[uni]});
+    closeM('m-andar');toast(editId?'✓ Andar atualizado!':'✓ Andar criado!');loadLocais();
+  }catch(e){toast(e.message,true);}
 }
 async function saveAmbiente(){
-  const nome=v('f-amb-nome'); const andar=v('f-amb-andar');
+  const nome=v('f-amb-nome'),andar=v('f-amb-andar');
   if(!nome||!andar){toast('Preencha todos os campos.',true);return;}
-  try{ await create(TBL.ambientes,{Nome:nome,Andar:[andar]}); closeM('m-ambiente'); toast('✓ Ambiente criado!'); loadLocais(); }
-  catch(e){toast(e.message,true);}
+  try{
+    if(editId)await update(TBL.ambientes,editId,{Nome:nome,Andar:[andar]});
+    else await create(TBL.ambientes,{Nome:nome,Andar:[andar]});
+    closeM('m-ambiente');toast(editId?'✓ Ambiente atualizado!':'✓ Ambiente criado!');loadLocais();
+  }catch(e){toast(e.message,true);}
 }
 async function saveAtivo(){
   const nome=v('f-at-nome');
   if(!nome){toast('Informe o nome do equipamento.',true);return;}
   const fields={Nome:nome,Categoria:v('f-at-cat'),Crítico:document.getElementById('f-at-crit').checked};
-  if(v('f-at-amb')) fields.Ambiente=[v('f-at-amb')];
-  if(v('f-at-marca')) fields['Marca/Modelo']=v('f-at-marca');
-  if(v('f-at-data')) fields['Data Compra']=v('f-at-data');
-  if(v('f-at-status')) fields.Status=v('f-at-status');
-  try{ await create(TBL.ativos,fields); closeM('m-ativo'); toast('✓ Ativo cadastrado!'); currentTab==='ativos'?loadAtivos():loadMob(); }
-  catch(e){toast(e.message,true);}
+  if(v('f-at-amb'))fields.Ambiente=[v('f-at-amb')];
+  if(v('f-at-marca'))fields['Marca/Modelo']=v('f-at-marca');
+  if(v('f-at-data'))fields['Data Compra']=v('f-at-data');
+  if(v('f-at-status'))fields.Status=v('f-at-status');
+  try{
+    if(editId)await update(TBL.ativos,editId,fields);
+    else await create(TBL.ativos,fields);
+    closeM('m-ativo');toast(editId?'✓ Ativo atualizado!':'✓ Ativo cadastrado!');
+    currentTab==='ativos'?loadAtivos():loadMob();
+  }catch(e){toast(e.message,true);}
 }
 async function saveMan(){
-  const tit=v('f-man-tit'); const at=v('f-man-at');
+  const tit=v('f-man-tit'),at=v('f-man-at');
   if(!tit||!at){toast('Informe título e ativo.',true);return;}
-  const fields={Titulo:tit,Tipo:v('f-man-tipo'),Critico:document.getElementById('f-man-crit').checked};
-  fields.Ativo=[at];
-  if(v('f-man-prox')) fields['Proxima Data']=v('f-man-prox');
-  if(v('f-man-ult')) fields['Ultima Data']=v('f-man-ult');
-  if(v('f-man-prest')) fields.Prestador=[v('f-man-prest')];
-  if(v('f-man-obs')) fields.Observacoes=v('f-man-obs');
-  try{ await create(TBL.manutencoes,fields); closeM('m-man'); toast('✓ Manutenção cadastrada!'); loadMan(); }
-  catch(e){toast(e.message,true);}
+  const fields={Titulo:tit,Tipo:v('f-man-tipo'),Critico:document.getElementById('f-man-crit').checked,Ativo:[at]};
+  if(v('f-man-prox'))fields['Proxima Data']=v('f-man-prox');
+  if(v('f-man-ult'))fields['Ultima Data']=v('f-man-ult');
+  if(v('f-man-prest'))fields.Prestador=[v('f-man-prest')];
+  if(v('f-man-obs'))fields.Observacoes=v('f-man-obs');
+  try{
+    if(editId)await update(TBL.manutencoes,editId,fields);
+    else await create(TBL.manutencoes,fields);
+    closeM('m-man');toast(editId?'✓ Manutenção atualizada!':'✓ Manutenção cadastrada!');loadMan();
+  }catch(e){toast(e.message,true);}
 }
 async function saveHist(){
-  const tit=v('f-hist-tit'); const at=v('f-hist-at'); const data=v('f-hist-data');
+  const tit=v('f-hist-tit'),at=v('f-hist-at'),data=v('f-hist-data');
   if(!tit||!at||!data){toast('Preencha título, ativo e data.',true);return;}
   const fields={Titulo:tit,'Data Realizada':data,Tipo:v('f-hist-tipo'),Ativo:[at]};
-  if(v('f-hist-prest')) fields.Prestador=[v('f-hist-prest')];
-  if(v('f-hist-obs')) fields.Observacoes=v('f-hist-obs');
-  try{ await create(TBL.historico,fields); closeM('m-hist'); toast('✓ Histórico registrado!'); loadMan(); }
-  catch(e){toast(e.message,true);}
+  if(v('f-hist-prest'))fields.Prestador=[v('f-hist-prest')];
+  if(v('f-hist-obs'))fields.Observacoes=v('f-hist-obs');
+  try{
+    if(editId)await update(TBL.historico,editId,fields);
+    else await create(TBL.historico,fields);
+    closeM('m-hist');toast(editId?'✓ Histórico atualizado!':'✓ Histórico registrado!');loadMan();
+  }catch(e){toast(e.message,true);}
 }
 async function saveCham(){
-  const desc=v('f-ch-desc'); const amb=v('f-ch-amb');
+  const desc=v('f-ch-desc'),amb=v('f-ch-amb');
   if(!desc||!amb){toast('Informe descrição e ambiente.',true);return;}
   const fields={Descricao:desc,Tipo:v('f-ch-tipo'),Status:v('f-ch-status'),Ambiente:[amb]};
-  if(v('f-ch-at')) fields.Ativo=[v('f-ch-at')];
-  if(v('f-ch-sol')) fields.Solicitante=v('f-ch-sol');
-  if(v('f-ch-prest')) fields.Prestador=[v('f-ch-prest')];
-  if(v('f-ch-obs')) fields.Observacoes=v('f-ch-obs');
-  fields['Data Abertura']=today();
-  try{ await create(TBL.chamados,fields); closeM('m-cham'); toast('✓ Chamado aberto!'); loadChamados(); }
-  catch(e){toast(e.message,true);}
+  if(v('f-ch-at'))fields.Ativo=[v('f-ch-at')];
+  if(v('f-ch-sol'))fields.Solicitante=v('f-ch-sol');
+  if(v('f-ch-prest'))fields.Prestador=[v('f-ch-prest')];
+  if(v('f-ch-obs'))fields.Observacoes=v('f-ch-obs');
+  if(!editId)fields['Data Abertura']=today();
+  try{
+    if(editId)await update(TBL.chamados,editId,fields);
+    else await create(TBL.chamados,fields);
+    closeM('m-cham');toast(editId?'✓ Chamado atualizado!':'✓ Chamado aberto!');loadChamados();
+  }catch(e){toast(e.message,true);}
 }
 async function savePrest(){
   const nome=v('f-pr-nome');
   if(!nome){toast('Informe o nome do prestador.',true);return;}
   const fields={Nome:nome};
-  if(v('f-pr-esp')) fields.Especialidade=v('f-pr-esp');
-  if(v('f-pr-cont')) fields.Contato=v('f-pr-cont');
-  try{ await create(TBL.prestadores,fields); closeM('m-prest'); toast('✓ Prestador cadastrado!'); loadPrest(); }
-  catch(e){toast(e.message,true);}
-}
-async function saveComp(){
-  const item=v('f-cp-item');
-  if(!item){toast('Informe o item.',true);return;}
-  const fields={Item:item,Status:v('f-cp-status')};
-  if(v('f-cp-forn')) fields.Fornecedor=v('f-cp-forn');
-  if(v('f-cp-qtd')) fields.Quantidade=Number(v('f-cp-qtd'));
-  if(v('f-cp-vl')) fields['Valor Unitario']=Number(v('f-cp-vl'));
-  if(v('f-cp-dp')) fields['Data Pedido']=v('f-cp-dp');
-  if(v('f-cp-de')) fields['Data Entrega']=v('f-cp-de');
-  if(v('f-cp-obs')) fields.Observacoes=v('f-cp-obs');
-  try{ await create(TBL.compras,fields); closeM('m-comp'); toast('✓ Compra registrada!'); loadComp(); }
-  catch(e){toast(e.message,true);}
-}
-async function saveDesp(){
-  const desc=v('f-dp-desc'); const vl=v('f-dp-vl'); const data=v('f-dp-data');
-  if(!desc||!vl){toast('Informe descrição e valor.',true);return;}
-  const fields={Descricao:desc,Valor:Number(vl),Categoria:v('f-dp-cat')};
-  if(data) fields.Data=data;
-  if(v('f-dp-uni')) fields.Unidade=[v('f-dp-uni')];
-  if(v('f-dp-forn')) fields.Fornecedor=v('f-dp-forn');
-  try{ await create(TBL.despesas,fields); closeM('m-desp'); toast('✓ Despesa lançada!'); loadDesp(); }
-  catch(e){toast(e.message,true);}
+  if(v('f-pr-esp'))fields.Especialidade=v('f-pr-esp');
+  if(v('f-pr-cont'))fields.Contato=v('f-pr-cont');
+  try{
+    if(editId)await update(TBL.prestadores,editId,fields);
+    else await create(TBL.prestadores,fields);
+    closeM('m-prest');toast(editId?'✓ Prestador atualizado!':'✓ Prestador cadastrado!');loadPrest();
+  }catch(e){toast(e.message,true);}
 }
 
-function v(id){ const el=document.getElementById(id); return el?el.value.trim():''; }
-
-// ══════════════════════════════════════════
-//  BUSCA
-// ══════════════════════════════════════════
+// ══ BUSCA ══
 document.getElementById('srch').addEventListener('input',function(){
   const q=this.value.toLowerCase();
-  document.querySelectorAll('tbody tr').forEach(tr=>{ tr.style.display=tr.textContent.toLowerCase().includes(q)?'':'none'; });
-  document.querySelectorAll('.li').forEach(li=>{ li.style.display=li.textContent.toLowerCase().includes(q)?'':'none'; });
+  document.querySelectorAll('tbody tr').forEach(tr=>{tr.style.display=tr.textContent.toLowerCase().includes(q)?'':'none';});
+  document.querySelectorAll('.li').forEach(li=>{li.style.display=li.textContent.toLowerCase().includes(q)?'':'none';});
 });
 
-// ══════════════════════════════════════════
-//  EXPORT EXCEL
-// ══════════════════════════════════════════
-async function exportExcel(){
+// ══ EXPORT ══
+async function exportCSV(){
   toast('Preparando exportação...');
   try{
-    const [man,desp,cham,atv]=await Promise.all([fetchAll(TBL.manutencoes),fetchAll(TBL.despesas),fetchAll(TBL.chamados),fetchAll(TBL.ativos)]);
-    let csv='SISTEMA CAMPO INCORPORADORA - EXPORTAÇÃO\n\n';
+    const[man,cham,atv]=await Promise.all([fetchAll(TBL.manutencoes),fetchAll(TBL.chamados),fetchAll(TBL.ativos)]);
+    let csv='CAMPO INCORPORADORA — EXPORTAÇÃO DO SISTEMA\n\n';
     csv+='=== MANUTENÇÕES ===\nTítulo,Ativo,Próxima Data,Prestador,Crítico\n';
-    man.forEach(r=>{ const aid=(r.fields.Ativo||[])[0]; const pid=(r.fields.Prestador||[])[0]; csv+=`"${r.fields.Titulo||''}","${C.ativos[aid]?.name||''}","${r.fields['Proxima Data']||''}","${C.prestadores[pid]?.name||''}","${r.fields.Critico?'SIM':'NÃO'}"\n`; });
-    csv+='\n=== DESPESAS ===\nDescrição,Valor,Data,Categoria,Fornecedor\n';
-    desp.forEach(r=>{ csv+=`"${r.fields.Descricao||''}","${r.fields.Valor||0}","${r.fields.Data||''}","${r.fields.Categoria||''}","${r.fields.Fornecedor||''}"\n`; });
+    man.forEach(r=>{const aid=(r.fields.Ativo||[])[0];const pid=(r.fields.Prestador||[])[0];csv+=`"${r.fields.Titulo||''}","${C.ativos[aid]?.name||''}","${r.fields['Proxima Data']||''}","${C.prestadores[pid]?.name||''}","${r.fields.Critico?'SIM':'NÃO'}"\n`;});
     csv+='\n=== CHAMADOS ===\nDescrição,Status,Tipo,Solicitante,Abertura\n';
-    cham.forEach(r=>{ csv+=`"${r.fields.Descricao||''}","${r.fields.Status||''}","${r.fields.Tipo||''}","${r.fields.Solicitante||''}","${r.fields['Data Abertura']||''}"\n`; });
-
+    cham.forEach(r=>{csv+=`"${r.fields.Descricao||''}","${r.fields.Status||''}","${r.fields.Tipo||''}","${r.fields.Solicitante||''}","${r.fields['Data Abertura']||''}"\n`;});
+    csv+='\n=== ATIVOS ===\nEquipamento,Categoria,Marca/Modelo,Status\n';
+    atv.forEach(r=>{csv+=`"${r.fields.Nome||''}","${r.fields.Categoria||''}","${r.fields['Marca/Modelo']||''}","${r.fields.Status||''}"\n`;});
     const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
     const url=URL.createObjectURL(blob);
-    const a=document.createElement('a'); a.href=url;
-    a.download='Campo_Incorporadora_'+new Date().toISOString().split('T')[0]+'.csv';
-    a.click(); URL.revokeObjectURL(url);
+    const a=document.createElement('a');a.href=url;
+    a.download='Campo_'+new Date().toISOString().split('T')[0]+'.csv';
+    a.click();URL.revokeObjectURL(url);
     toast('✓ Exportado com sucesso!');
-  } catch(e){ toast('Erro na exportação.',true); }
+  }catch(e){toast('Erro na exportação.',true);}
 }
 </script>
 </body>
