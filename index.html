@@ -639,12 +639,12 @@ async function fetchAll(tbl,filter=''){
   return all;
 }
 async function create(tbl,fields){
-  const res=await fetch(atURL(tbl),{method:'POST',headers:hdrs(),body:JSON.stringify({records:[{fields}]})});
+  const res=await fetch(atURL(tbl),{method:'POST',headers:hdrs(),body:JSON.stringify({records:[{fields}],typecast:true})});
   if(!res.ok){const j=await res.json();throw new Error(j.error?.message||'Erro '+res.status);}
   clearCache(tbl);await buildCache();populateSelects();return res.json();
 }
 async function update(tbl,id,fields){
-  const res=await fetch(atURL(tbl,'/'+id),{method:'PATCH',headers:hdrs(),body:JSON.stringify({fields})});
+  const res=await fetch(atURL(tbl,'/'+id),{method:'PATCH',headers:hdrs(),body:JSON.stringify({fields,typecast:true})});
   if(!res.ok){const j=await res.json();throw new Error(j.error?.message||'Erro '+res.status);}
   clearCache(tbl);await buildCache();populateSelects();return res.json();
 }
