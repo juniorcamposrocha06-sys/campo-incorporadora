@@ -1,1771 +1,1197 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Campo Incorporadora - Gestão Integrada</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Gestão · Campo Incorporadora</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+  --teal:#094752;--teal-d:#063038;--teal-l:rgba(9,71,82,.08);
+  --green:#23B368;--green-l:#e8f8ef;--green-d:#1a9057;
+  --red:#ef4444;--amber:#f59e0b;--blue:#3b82f6;
+  --bg:#f2f4f7;--white:#fff;--border:#e5e7eb;
+  --txt:#111827;--txt2:#6b7280;--txt3:#9ca3af;
+  --r:8px;--sw:240px;--th:54px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--txt);height:100vh;overflow:hidden;font-size:13px}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f5f5;
-            color: #333;
-        }
+/* ── LOGIN ── */
+#login-screen{position:fixed;inset:0;background:var(--teal);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:0}
+.login-box{background:#fff;border-radius:14px;padding:36px 40px;width:420px;max-width:92vw;box-shadow:0 24px 60px rgba(0,0,0,.2)}
+.login-logo{display:flex;justify-content:center;margin-bottom:24px}
+.login-logo img{height:40px}
+.login-logo-fallback{font-size:22px;font-weight:800;color:var(--teal);letter-spacing:-.5px;display:none}
+.login-title{font-size:16px;font-weight:600;color:var(--teal);text-align:center;margin-bottom:4px}
+.login-sub{font-size:12px;color:var(--txt3);text-align:center;margin-bottom:24px}
+.login-label{font-size:11px;font-weight:500;color:var(--txt2);margin-bottom:4px;display:block}
+.login-input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:7px;font-size:13px;outline:none;margin-bottom:14px;font-family:inherit;transition:border-color .15s}
+.login-input:focus{border-color:var(--green)}
+.login-btn{width:100%;padding:11px;background:var(--green);color:#fff;border:none;border-radius:7px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .15s}
+.login-btn:hover{background:var(--green-d)}
+.login-btn:disabled{opacity:.6;cursor:not-allowed}
+.login-info{font-size:10.5px;color:var(--txt3);text-align:center;margin-top:12px;line-height:1.5}
+.login-error{background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:8px 12px;font-size:11px;color:#b91c1c;margin-bottom:12px;display:none}
 
-        .sistema-container { display: flex; flex-direction: column; min-height: 100vh; }
+/* ── APP ── */
+#app{display:none;height:100vh;overflow:hidden}
+.layout{display:flex;height:100vh}
 
-        .header {
-            background: linear-gradient(135deg, #094752 0%, #0a5c69 100%);
-            color: white;
-            padding: 1.5rem 2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
+/* ── SIDEBAR ── */
+.sb{width:var(--sw);background:var(--teal);display:flex;flex-direction:column;flex-shrink:0}
+.sb-logo{padding:20px 18px 15px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-logo img{width:152px;height:auto;display:block}
+.sb-logo-fb{color:#fff;font-size:19px;font-weight:800;letter-spacing:-.5px;display:none}
+.sb-tag{font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#4da8b8;margin-top:7px}
+.sb-units{padding:10px 13px;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.12)}
+.sb-units-lbl{font-size:9px;color:#4da8b8;letter-spacing:1px;text-transform:uppercase;font-weight:600;margin-bottom:6px}
+.sb-units-row{display:flex;gap:5px}
+.uBtn{flex:1;padding:5px 0;border-radius:5px;border:1px solid rgba(255,255,255,.15);color:#9fc8d2;font-size:10px;font-weight:500;text-align:center;cursor:pointer;background:transparent;transition:all .15s;font-family:inherit}
+.uBtn:hover{background:rgba(255,255,255,.08);color:#fff}
+.uBtn.on{background:var(--green);border-color:var(--green);color:#fff}
+.sb-nav{flex:1;overflow-y:auto;padding:8px 0}
+.sb-nav::-webkit-scrollbar{width:3px}
+.sb-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:2px}
+.sb-sec{padding:10px 16px 4px;font-size:9px;color:#4da8b8;font-weight:600;letter-spacing:1.2px;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;color:#9fc8d2;font-size:12.5px;cursor:pointer;border-left:3px solid transparent;transition:all .15s;user-select:none}
+.nav-item i{font-size:17px;width:18px;text-align:center;flex-shrink:0}
+.nav-item:hover{background:rgba(255,255,255,.05);color:#fff}
+.nav-item.on{background:rgba(35,179,104,.13);border-left-color:var(--green);color:var(--green);font-weight:500}
+.nav-item.on i{color:var(--green)}
+.nbadge{margin-left:auto;background:var(--red);color:#fff;font-size:9px;padding:2px 7px;border-radius:20px;font-weight:700;min-width:20px;text-align:center}
+.nbadge.a{background:var(--amber)}.nbadge.g{background:var(--green)}
+.sb-foot{padding:12px 13px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
+.sb-av{width:30px;height:30px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
+.sb-nm{color:#cde8ee;font-size:11.5px;font-weight:500}
+.sb-rl{color:#4da8b8;font-size:9.5px;margin-top:1px}
+.sb-logout{margin-left:auto;color:#4da8b8;cursor:pointer;opacity:.7;font-size:17px}
+.sb-logout:hover{opacity:1}
 
-        .header h1 { font-size: 26px; margin-bottom: 4px; font-weight: 600; }
-        .header-subtitle { font-size: 14px; opacity: 0.95; }
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:0 22px;height:var(--th);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.topbar-l{display:flex;flex-direction:column}
+.topbar-title{font-size:15px;font-weight:600;color:var(--teal)}
+.topbar-sub{font-size:10.5px;color:var(--txt3);margin-top:2px}
+.topbar-r{display:flex;align-items:center;gap:8px}
+.sw{position:relative}
+.sw i{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--txt3);font-size:15px;pointer-events:none}
+.search{padding:7px 12px 7px 30px;border:1px solid var(--border);border-radius:7px;font-size:12px;width:200px;background:#f9fafb;color:var(--txt);outline:none;transition:border-color .15s;font-family:inherit}
+.search:focus{border-color:var(--green);background:#fff}
+.tbtn{width:34px;height:34px;border:1px solid var(--border);border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--white);color:var(--txt2);position:relative}
+.tbtn i{font-size:17px}
+.tbtn:hover{background:#f9fafb}
+.rdot{position:absolute;top:7px;right:7px;width:6px;height:6px;background:var(--red);border-radius:50%;border:1.5px solid #fff;display:none}
 
-        .tabs {
-            display: flex;
-            background: white;
-            border-bottom: 2px solid #e0e0e0;
-            padding: 0 1rem;
-            gap: 0;
-            overflow-x: auto;
-        }
+/* ── CONTENT ── */
+.cw{flex:1;overflow-y:auto}
+.cw::-webkit-scrollbar{width:4px}
+.cw::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.tab{display:none;padding:16px 22px}
+.tab.on{display:block}
 
-        .tab-button {
-            flex-shrink: 0;
-            padding: 14px 18px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            color: #666;
-            transition: all 0.2s;
-            border-bottom: 3px solid transparent;
-            white-space: nowrap;
-        }
+/* ── COMPONENTS ── */
+.alert-bar{background:#fff;border:1px solid #fbbf24;border-left:4px solid var(--amber);border-radius:var(--r);padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;font-size:11.5px;color:#92400e}
+.alert-bar i{color:var(--amber);font-size:17px;flex-shrink:0}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.kpi{background:var(--white);border-radius:var(--r);padding:14px;border:1px solid var(--border)}
+.kpi-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.kpi-ic{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center}
+.kpi-ic i{font-size:17px}
+.kpi-ic.red{background:#fef2f2}.kpi-ic.red i{color:var(--red)}
+.kpi-ic.amb{background:#fffbeb}.kpi-ic.amb i{color:var(--amber)}
+.kpi-ic.grn{background:#f0fdf4}.kpi-ic.grn i{color:var(--green)}
+.kpi-ic.tel{background:#f0f9fa}.kpi-ic.tel i{color:var(--teal)}
+.kpi-val{font-size:22px;font-weight:700;color:var(--txt);line-height:1}
+.kpi-val.red{color:var(--red)}.kpi-val.amb{color:var(--amber)}.kpi-val.grn{color:var(--green)}
+.kpi-lbl{font-size:10px;color:var(--txt3);margin-top:3px}
+.kpi-hint{font-size:9.5px;color:#d1d5db;margin-top:2px}
+.g2{display:grid;grid-template-columns:3fr 2fr;gap:10px;margin-bottom:10px}
+.g2e{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.card{background:var(--white);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;margin-bottom:10px}
+.ch{padding:11px 14px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;justify-content:space-between}
+.ct{font-size:12px;font-weight:600;color:var(--txt)}
+.ca{font-size:10.5px;color:var(--green);cursor:pointer;font-weight:500}
+.ca:hover{text-decoration:underline}
+table{width:100%;border-collapse:collapse}
+th{font-size:9px;color:var(--txt3);padding:7px 14px;text-align:left;background:#fafafa;border-bottom:1px solid #f3f4f6;font-weight:600;letter-spacing:.6px;text-transform:uppercase;white-space:nowrap}
+td{font-size:11px;color:var(--txt2);padding:8px 14px;border-bottom:1px solid #f9fafb;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:#fafafa}
+.chip{display:inline-block;padding:2px 9px;border-radius:20px;font-size:9px;font-weight:600;white-space:nowrap}
+.chip.red{background:#fef2f2;color:#b91c1c}
+.chip.grn{background:#f0fdf4;color:#166534}
+.chip.amb{background:#fffbeb;color:#92400e}
+.chip.blu{background:#eff6ff;color:#1d4ed8}
+.chip.gry{background:#f9fafb;color:#374151}
+.li{padding:9px 14px;border-bottom:1px solid #f9fafb;display:flex;align-items:center;gap:10px}
+.li:last-child{border-bottom:none}
+.lav{width:30px;height:30px;border-radius:7px;background:#e0f2fe;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--teal);flex-shrink:0}
+.ln{font-size:11px;font-weight:500;color:var(--txt)}
+.ls{font-size:10px;color:var(--txt3);margin-top:1px}
+.la{margin-left:auto;width:26px;height:26px;background:var(--green-l);border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;text-decoration:none}
+.la i{font-size:13px;color:var(--green)}
+.ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.ph h2{font-size:16px;font-weight:600;color:var(--txt)}
+.ph p{font-size:11px;color:var(--txt3);margin-top:2px}
+.btn{padding:8px 14px;border-radius:7px;border:none;font-size:12px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s;font-family:inherit}
+.btn-p{background:var(--green);color:#fff}.btn-p:hover{background:var(--green-d)}
+.btn-s{background:var(--white);color:var(--txt);border:1px solid var(--border)}.btn-s:hover{background:#f9fafb}
+.btn-d{background:#fef2f2;color:var(--red);border:1px solid #fca5a5}.btn-d:hover{background:#fee2e2}
+.loading{display:flex;align-items:center;justify-content:center;padding:40px;color:var(--txt3);font-size:12px;gap:10px}
+.spin{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{text-align:center;padding:40px 20px;color:var(--txt3)}
+.empty i{font-size:36px;margin-bottom:10px;display:block;opacity:.35}
+.empty p{font-size:12px}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.bar-lbl{font-size:10px;color:var(--txt3);width:40px;text-align:right;flex-shrink:0}
+.bar-track{flex:1;background:#f0f0f0;border-radius:4px;height:8px}
+.bar-fill{height:8px;border-radius:4px;transition:width .4s}
+.bar-val{font-size:11px;font-weight:600;color:var(--txt);min-width:90px;text-align:right;flex-shrink:0}
 
-        .tab-button:hover:not(.active) { color: #333; background: #f9f9f9; }
-        .tab-button.active { color: #094752; border-bottom-color: #23B368; }
+/* ── TOAST ── */
+#toast{position:fixed;bottom:20px;right:20px;background:var(--teal);color:#fff;padding:10px 16px;border-radius:8px;font-size:12px;font-weight:500;z-index:1000;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
+#toast.on{opacity:1;transform:translateY(0)}
+#toast.err{background:#b91c1c}
 
-        .content { flex: 1; padding: 1.5rem 2rem; max-width: 1400px; width: 100%; margin: 0 auto; }
-
-        .alert-box {
-            background: #fff3cd; border-left: 4px solid #ffc107;
-            padding: 12px 16px; border-radius: 4px; margin-bottom: 1rem; color: #856404;
-        }
-        .alert-box.danger { background: #f8d7da; border-left-color: #dc3545; color: #721c24; }
-        .alert-box.success { background: #d4edda; border-left-color: #28a745; color: #155724; }
-
-        .dashboard-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 14px; margin-bottom: 1.5rem;
-        }
-
-        .metric-card {
-            background: white; padding: 1.3rem; border-radius: 12px;
-            border: 1px solid #e0e0e0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-        .metric-label {
-            font-size: 11px; color: #888; text-transform: uppercase;
-            letter-spacing: 0.5px; margin-bottom: 10px; font-weight: 600;
-        }
-        .metric-value { font-size: 28px; font-weight: 600; color: #094752; }
-
-        .button-group { display: flex; gap: 10px; margin-bottom: 1.2rem; flex-wrap: wrap; }
-
-        button {
-            padding: 9px 16px; border-radius: 8px; border: 1px solid #ddd;
-            background: white; cursor: pointer; font-size: 13px; font-weight: 500;
-            transition: all 0.2s; color: #333;
-        }
-        button:hover { background: #f9f9f9; border-color: #bbb; }
-
-        .button-primary { background: #23B368; color: white; border-color: #23B368; }
-        .button-primary:hover { background: #1a8a50; border-color: #1a8a50; }
-
-        .section-title { font-size: 17px; font-weight: 600; color: #094752; margin: 1.5rem 0 0.8rem 0; }
-
-        .table-container {
-            background: white; border-radius: 12px; border: 1px solid #e0e0e0;
-            overflow-x: auto; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        thead { background: #f8f9fa; border-bottom: 1px solid #e0e0e0; }
-        th { padding: 12px 14px; text-align: left; font-weight: 600; color: #094752; font-size: 12px; white-space: nowrap; }
-        td { padding: 12px 14px; border-bottom: 1px solid #e0e0e0; color: #333; }
-        tr:hover { background: #f9f9f9; }
-
-        input, select, textarea {
-            padding: 9px 12px; border: 1px solid #ddd; border-radius: 8px;
-            font-size: 14px; font-family: inherit; width: 100%;
-        }
-        input:focus, select:focus, textarea:focus {
-            outline: none; border-color: #23B368; box-shadow: 0 0 0 3px rgba(35, 179, 104, 0.1);
-        }
-
-        .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #094752; }
-        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
-
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5); display: flex; align-items: center;
-            justify-content: center; z-index: 1000; padding: 20px;
-        }
-        .modal-overlay.hidden { display: none; }
-        .modal-content {
-            background: white; border-radius: 16px; padding: 2rem; max-width: 600px;
-            width: 100%; max-height: 85vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        }
-        .modal-header { font-size: 18px; font-weight: 600; margin-bottom: 1.2rem; color: #094752; }
-        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 1.5rem; }
-
-        .status-badge { display: inline-block; padding: 5px 12px; border-radius: 14px; font-size: 11px; font-weight: 600; white-space: nowrap; }
-        .status-emdia { background: #d4edda; color: #155724; }
-        .status-alerta { background: #fff3cd; color: #856404; }
-        .status-critico { background: #f8d7da; color: #721c24; }
-        .status-aberto { background: #cce5ff; color: #004085; }
-        .status-andamento { background: #fff3cd; color: #856404; }
-        .status-concluido { background: #d4edda; color: #155724; }
-
-        .icon-action { cursor: pointer; font-size: 17px; transition: transform 0.2s; margin-right: 8px; }
-        .icon-action:hover { transform: scale(1.2); }
-
-        .toast {
-            position: fixed; bottom: 20px; right: 20px; background: #23B368; color: white;
-            padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 2000; animation: slideIn 0.3s ease; display: none;
-        }
-        @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-
-        .filter-group { background: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border: 1px solid #e0e0e0; }
-        .filter-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
-        .filter-row label { display: block; font-size: 11px; font-weight: 600; margin-bottom: 4px; color: #094752; text-transform: uppercase; }
-
-        .badge-tipo { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
-        .badge-preventiva { background: #e8f4f8; color: #094752; }
-        .badge-corretiva { background: #fff0e0; color: #b35900; }
-
-        .empty-msg { text-align: center; padding: 2rem; color: #999; }
-
-        /* ===== Layout Manutenção estilo Optimus ===== */
-        .categoria-tabs {
-            display: flex; gap: 6px; background: #094752; border-radius: 10px;
-            padding: 6px; margin-bottom: 1.2rem; overflow-x: auto;
-        }
-        .categoria-tab-btn {
-            flex-shrink: 0; padding: 9px 16px; border-radius: 7px; border: none;
-            background: transparent; color: rgba(255,255,255,0.75); font-size: 13px;
-            font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;
-            transition: all 0.15s;
-        }
-        .categoria-tab-btn:hover { background: rgba(255,255,255,0.08); color: white; }
-        .categoria-tab-btn.active { background: #23B368; color: white; }
-        .categoria-tab-count {
-            background: rgba(255,255,255,0.2); padding: 1px 8px; border-radius: 10px; font-size: 11px;
-        }
-        .categoria-tab-btn.active .categoria-tab-count { background: rgba(255,255,255,0.3); }
-
-        .categoria-summary {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 12px; margin-bottom: 1.5rem;
-        }
-        .summary-card {
-            background: white; padding: 1rem 1.2rem; border-radius: 12px; border: 1px solid #e0e0e0;
-        }
-        .summary-card-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 6px; }
-        .summary-card-value { font-size: 24px; font-weight: 700; color: #094752; }
-        .summary-card-value.cor-verde { color: #23B368; }
-        .summary-card-value.cor-amarelo { color: #d4900a; }
-        .summary-card-value.cor-vermelho { color: #dc3545; }
-
-        .categoria-header {
-            display: flex; align-items: center; justify-content: space-between;
-            margin-bottom: 1rem; flex-wrap: wrap; gap: 10px;
-        }
-        .categoria-header-title { font-size: 17px; font-weight: 600; color: #094752; }
-
-        .unidade-filter-pills { display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap; }
-        .pill-btn {
-            padding: 7px 16px; border-radius: 20px; border: 1px solid #ddd; background: white;
-            font-size: 12px; font-weight: 600; cursor: pointer; color: #555; transition: all 0.15s;
-        }
-        .pill-btn:hover { border-color: #23B368; }
-        .pill-btn.active { background: #094752; color: white; border-color: #094752; }
-
-        .local-destaque-unidade {
-            display: inline-block; background: #e8f4f8; color: #094752; font-size: 10px;
-            font-weight: 700; padding: 2px 8px; border-radius: 8px; margin-bottom: 3px;
-            text-transform: uppercase; letter-spacing: 0.3px;
-        }
-        .local-destaque-ambiente { display: block; font-size: 14px; font-weight: 700; color: #1a1a1a; }
-
-        /* ===== Tela de Configuração/Conexão ===== */
-        .config-screen {
-            min-height: 100vh; display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(135deg, #094752 0%, #0a5c69 100%); padding: 20px;
-        }
-        .config-card {
-            background: white; border-radius: 16px; padding: 2.5rem; max-width: 440px; width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        .config-logo { font-size: 42px; text-align: center; margin-bottom: 0.5rem; }
-        .config-title { font-size: 20px; font-weight: 700; color: #094752; text-align: center; margin-bottom: 6px; }
-        .config-subtitle { font-size: 13px; color: #777; text-align: center; margin-bottom: 1.8rem; line-height: 1.4; }
-        .config-btn { width: 100%; padding: 12px; font-size: 14px; margin-top: 0.5rem; }
-        .config-error { color: #dc3545; font-size: 13px; margin-top: 10px; text-align: center; }
-        .config-loading { color: #094752; font-size: 13px; margin-top: 10px; text-align: center; }
-        .config-hint { font-size: 11px; color: #999; text-align: center; margin-top: 1.2rem; line-height: 1.4; }
-
-        @media (max-width: 768px) {
-            .content { padding: 1rem; }
-            .dashboard-grid { grid-template-columns: 1fr; }
-            .form-row { grid-template-columns: 1fr; }
-            table { font-size: 11px; }
-            th, td { padding: 8px 10px; }
-        }
-    </style>
+/* ── MODAL ── */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:none;align-items:center;justify-content:center}
+.mo.on{display:flex}
+.mb{background:var(--white);border-radius:10px;width:520px;max-width:92vw;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.mh{padding:15px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--white);z-index:1}
+.mt{font-size:14px;font-weight:600;color:var(--txt)}
+.mx{cursor:pointer;color:var(--txt3);font-size:22px;line-height:1}
+.mbd{padding:16px 20px}
+.mf{padding:12px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;position:sticky;bottom:0;background:var(--white)}
+.fg{margin-bottom:12px}
+.fl{font-size:11px;font-weight:500;color:var(--txt2);margin-bottom:4px;display:block}
+.fi,.fs,.ft{width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--txt);background:var(--white);outline:none;transition:border-color .15s;font-family:inherit}
+.fi:focus,.fs:focus,.ft:focus{border-color:var(--green)}
+.ft{resize:vertical;min-height:68px}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cb-row{display:flex;align-items:center;gap:8px}
+.cb-row input[type=checkbox]{width:15px;height:15px;accent-color:var(--green)}
+</style>
 </head>
 <body>
-    <!-- TELA DE CONFIGURAÇÃO / CONEXÃO COM AIRTABLE -->
-    <div id="configScreen" class="config-screen">
-        <div class="config-card">
-            <div class="config-logo">🏢</div>
-            <h1 class="config-title">Sistema Campo Incorporadora</h1>
-            <p class="config-subtitle">Conecte sua conta para sincronizar os dados em nuvem com sua equipe</p>
 
-            <div class="form-group">
-                <label>Personal Access Token do Airtable</label>
-                <input type="password" id="cfgToken" placeholder="pat_XXXXXXXXXXXXXXXX...">
-            </div>
-            <div class="form-group">
-                <label>Base ID</label>
-                <input type="text" id="cfgBaseId" value="app6FRO94lCtpAfXW" placeholder="appXXXXXXXXXXXXXX">
-            </div>
-
-            <button class="button-primary config-btn" onclick="conectarAirtable()">🔗 Conectar e Entrar</button>
-            <div id="configError" class="config-error"></div>
-            <div id="configLoading" class="config-loading" style="display:none;">⏳ Conectando e carregando dados...</div>
-
-            <p class="config-hint">O token fica salvo apenas neste navegador. Cada pessoa da equipe deve inserir seu próprio token de acesso.</p>
-        </div>
+<!-- ═══════ LOGIN ═══════ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="https://campoincorporadora.com.br/wp-content/uploads/2026/03/logo_white.svg"
+        id="logo-login" alt="Campo" style="filter:invert(1) sepia(1) saturate(0)"
+        onerror="this.style.display='none';document.getElementById('logo-login-fb').style.display='block'">
+      <div class="login-logo-fallback" id="logo-login-fb">Campo Incorporadora</div>
     </div>
+    <div class="login-title">Sistema de Gestão Integrada</div>
+    <div class="login-sub">Insira seu Personal Access Token do Airtable para acessar</div>
+    <div class="login-error" id="login-err"></div>
+    <label class="login-label">Personal Access Token *</label>
+    <input class="login-input" id="pat-input" type="password" placeholder="pat-na-...">
+    <button class="login-btn" id="login-btn" onclick="doLogin()">
+      <span id="login-btn-txt">Conectar e Entrar</span>
+    </button>
+    <div class="login-info">O token fica salvo apenas neste navegador.<br>Cada pessoa insere seu próprio token de acesso.</div>
+  </div>
+</div>
 
-    <div class="sistema-container" id="appContainer" style="display:none;">
-        <div class="header">
-            <h1>🏢 Sistema de Gestão Integrada</h1>
-            <div class="header-subtitle">Campo Incorporadora · Unidades Buritis & Administrativa <span id="syncIndicator" style="font-size:11px;background:rgba(255,255,255,0.15);padding:3px 9px;border-radius:10px;margin-left:8px;">☁️ Airtable</span>
-                <span onclick="trocarConta()" style="cursor:pointer;font-size:11px;text-decoration:underline;margin-left:12px;opacity:0.85;">Trocar conta</span>
-            </div>
-        </div>
+<!-- ═══════ APP ═══════ -->
+<div id="app">
+<div class="layout">
 
-        <div class="tabs">
-            <button class="tab-button active" data-tab="dashboard">📊 Dashboard</button>
-            <button class="tab-button" data-tab="locais">🏢 Locais</button>
-            <button class="tab-button" data-tab="manutencao">🔧 Manutenção</button>
-            <button class="tab-button" data-tab="chamados">📋 Chamados/OS</button>
-            <button class="tab-button" data-tab="prestadores">👷 Prestadores</button>
-            <button class="tab-button" data-tab="compras">📦 Compras</button>
-            <button class="tab-button" data-tab="despesas">💰 Despesas</button>
-            <button class="tab-button" data-tab="relatorios">📑 Relatórios</button>
-        </div>
-
-        <div class="content">
-
-            <!-- DASHBOARD -->
-            <div id="dashboard" class="tab-content">
-                <div id="alertasContainer"></div>
-
-                <div class="button-group">
-                    <button class="button-primary" onclick="exportarTudo()">📥 Exportar Tudo (Excel)</button>
-                </div>
-
-                <div class="dashboard-grid">
-                    <div class="metric-card">
-                        <div class="metric-label">Total de Ativos</div>
-                        <div class="metric-value" id="mTotalAtivos">0</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-label">Manutenções Pendentes</div>
-                        <div class="metric-value" id="mManutPendentes">0</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-label">Chamados Abertos</div>
-                        <div class="metric-value" id="mChamadosAbertos">0</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-label">Despesas do Mês</div>
-                        <div class="metric-value" id="mDespesasMes">R$ 0</div>
-                    </div>
-                </div>
-
-                <h2 class="section-title">⚠️ Alertas de Manutenção (7 dias) — Itens Críticos</h2>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Local - Ativo</th><th>Tipo</th><th>Próxima Manut.</th><th>Dias Restantes</th><th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="dashAlertasBody"></tbody>
-                    </table>
-                </div>
-
-                <h2 class="section-title">📋 Chamados em Aberto</h2>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr><th>Local</th><th>Descrição</th><th>Tipo</th><th>Solicitante</th><th>Abertura</th><th>Status</th></tr>
-                        </thead>
-                        <tbody id="dashChamadosBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- LOCAIS -->
-            <div id="locais" class="tab-content" style="display:none;">
-                <div class="button-group">
-                    <button class="button-primary" onclick="openModal('unidade')">➕ Nova Unidade</button>
-                    <button class="button-primary" onclick="openModal('andar')">➕ Novo Andar</button>
-                    <button class="button-primary" onclick="openModal('ambiente')">➕ Novo Ambiente</button>
-                </div>
-
-                <h2 class="section-title">🏢 Unidades</h2>
-                <div class="table-container">
-                    <table>
-                        <thead><tr><th>Nome</th><th>Ações</th></tr></thead>
-                        <tbody id="unidadesBody"></tbody>
-                    </table>
-                </div>
-
-                <h2 class="section-title">🏗️ Andares</h2>
-                <div class="table-container">
-                    <table>
-                        <thead><tr><th>Unidade</th><th>Andar</th><th>Ações</th></tr></thead>
-                        <tbody id="andaresBody"></tbody>
-                    </table>
-                </div>
-
-                <h2 class="section-title">🚪 Ambientes</h2>
-                <div class="table-container">
-                    <table>
-                        <thead><tr><th>Unidade</th><th>Andar</th><th>Ambiente</th><th>Ações</th></tr></thead>
-                        <tbody id="ambientesBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- MANUTENÇÃO -->
-            <div id="manutencao" class="tab-content" style="display:none;">
-
-                <div class="categoria-tabs" id="categoriaTabs"></div>
-
-                <div class="categoria-summary" id="categoriaSummary"></div>
-
-                <div class="categoria-header">
-                    <div class="categoria-header-title" id="categoriaTitulo">🔧 Equipamentos</div>
-                    <button class="button-primary" onclick="openModal('ativo')">➕ Novo Equipamento</button>
-                </div>
-
-                <div class="unidade-filter-pills" id="unidadeFilterPills"></div>
-
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr><th>Ações</th><th>Local</th><th>Unidade</th><th>Marca/Modelo</th><th>Última Manut.</th><th>Próxima Manut.</th><th>Status</th></tr>
-                        </thead>
-                        <tbody id="manutencaoBody"></tbody>
-                    </table>
-                </div>
-
-                <h2 class="section-title" style="margin-top:2rem;">🗂️ Histórico Completo de Manutenções (Extrato)</h2>
-                <div class="filter-group">
-                    <div class="filter-row">
-                        <div>
-                            <label>Ver histórico do Equipamento</label>
-                            <select id="filtroHistoricoAtivo" onchange="renderHistoricoManutencao()">
-                                <option value="">Selecione um equipamento...</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr><th>Data Realizada</th><th>Tipo</th><th>Prestador</th><th>Observações</th><th>Ações</th></tr>
-                        </thead>
-                        <tbody id="historicoManutencaoBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- MODAL NOVA/EDITAR MANUTENÇÃO (acionado por botão dentro da tabela) -->
-            <div id="manutencaoOculta" style="display:none;"></div>
-
-            <!-- CHAMADOS / OS -->
-            <div id="chamados" class="tab-content" style="display:none;">
-                <div class="button-group">
-                    <button class="button-primary" onclick="openModal('chamado')">➕ Novo Chamado</button>
-                </div>
-
-                <div class="filter-group">
-                    <div class="filter-row">
-                        <div>
-                            <label>Filtrar por Status</label>
-                            <select id="filtroStatusChamado" onchange="renderChamados()">
-                                <option value="">Todos</option>
-                                <option value="Aberto">Aberto</option>
-                                <option value="Em andamento">Em andamento</option>
-                                <option value="Concluído">Concluído</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr><th>Local</th><th>Descrição</th><th>Tipo</th><th>Solicitante</th><th>Prestador</th><th>Abertura</th><th>Conclusão</th><th>Status</th><th>Ações</th></tr>
-                        </thead>
-                        <tbody id="chamadosBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- PRESTADORES -->
-            <div id="prestadores" class="tab-content" style="display:none;">
-                <div class="button-group">
-                    <button class="button-primary" onclick="openModal('prestador')">➕ Novo Prestador</button>
-                </div>
-
-                <div class="table-container">
-                    <table>
-                        <thead><tr><th>Nome</th><th>Especialidade</th><th>Contato</th><th>Ações</th></tr></thead>
-                        <tbody id="prestadoresBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- COMPRAS -->
-            <div id="compras" class="tab-content" style="display:none;">
-                <div class="button-group">
-                    <button class="button-primary" onclick="openModal('compra')">➕ Nova Compra</button>
-                </div>
-
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr><th>Item</th><th>Fornecedor</th><th>Qtd</th><th>Valor Unit.</th><th>Data Pedido</th><th>Data Entrega</th><th>Valor Total</th><th>Status</th><th>Obs.</th><th>Ações</th></tr>
-                        </thead>
-                        <tbody id="comprasBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- DESPESAS -->
-            <div id="despesas" class="tab-content" style="display:none;">
-                <div class="button-group">
-                    <button class="button-primary" onclick="openModal('despesa')">➕ Nova Despesa</button>
-                </div>
-
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr><th>Descrição</th><th>Categoria</th><th>Unidade</th><th>Data</th><th>Valor</th><th>Fornecedor/Prestador</th><th>Ações</th></tr>
-                        </thead>
-                        <tbody id="despesasBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- RELATÓRIOS -->
-            <div id="relatorios" class="tab-content" style="display:none;">
-                <div class="button-group">
-                    <button class="button-primary" onclick="relPendencias()">📄 Pendências de Manutenção</button>
-                    <button class="button-primary" onclick="relDespesasUnidade()">💰 Despesas por Unidade</button>
-                    <button class="button-primary" onclick="relChamadosPrestador()">👷 Chamados por Prestador</button>
-                    <button class="button-primary" onclick="relAtivosLocal()">🏢 Ativos por Local</button>
-                </div>
-                <div id="relatorioOutput"></div>
-            </div>
-
-        </div>
+  <!-- SIDEBAR -->
+  <aside class="sb">
+    <div class="sb-logo">
+      <img src="https://campoincorporadora.com.br/wp-content/uploads/2026/03/logo_white.svg"
+        alt="Campo Incorporadora" id="sb-logo-img"
+        onerror="this.style.display='none';document.getElementById('sb-logo-fb').style.display='block'">
+      <div class="sb-logo-fb" id="sb-logo-fb">campo</div>
+      <div class="sb-tag">Sistema de Gestão</div>
     </div>
-
-    <!-- MODAL -->
-    <div id="modal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <div class="modal-header" id="modalTitle">Modal</div>
-            <div id="modalBody"></div>
-            <div class="modal-actions">
-                <button onclick="closeModal()">Cancelar</button>
-                <button class="button-primary" onclick="salvarItem()">Salvar</button>
-            </div>
-        </div>
+    <div class="sb-units">
+      <div class="sb-units-lbl">Unidade</div>
+      <div class="sb-units-row">
+        <button class="uBtn on" onclick="setUnit('Buritis',this)">Buritis</button>
+        <button class="uBtn" onclick="setUnit('Administrativa',this)">Adm.</button>
+        <button class="uBtn" onclick="setUnit('Ambas',this)">Ambas</button>
+      </div>
     </div>
-
-    <div id="toast" class="toast"></div>
-
-    <script>
-        // ============ DADOS ============
-        let unidades = [];
-        let andares = [];
-        let ambientes = [];
-        let ativos = [];
-        let manutencoes = [];
-        let historicoManutencoes = [];
-        let chamados = [];
-        let prestadores = [];
-        let compras = [];
-        let despesas = [];
-        let modalType = '';
-        let editingId = null;
-        let categoriaAtiva = 'Todos';
-        let unidadeFiltroAtiva = 'Todos';
-
-        const CATEGORIAS = [
-            { id: 'Ar-Condicionado', label: 'Ar-Condicionado', icone: '❄️' },
-            { id: 'Nobreak', label: 'Nobreaks', icone: '🔋' },
-            { id: 'Extintor', label: 'Extintores', icone: '🧯' },
-            { id: 'Impressora', label: 'Impressoras', icone: '🖨️' },
-            { id: 'Periféricos/Informática', label: 'Periféricos/Informática', icone: '💻' },
-            { id: 'Predial', label: 'Predial', icone: '🏗️' },
-            { id: 'Outros', label: 'Outros', icone: '🔧' },
-        ];
-
-        // (dados agora vêm do Airtable, ver loadData)
-
-        // ============ CONFIGURAÇÃO AIRTABLE ============
-        const AIRTABLE_API = 'https://api.airtable.com/v0';
-
-        const TABELAS = {
-            unidades: 'tblQIiulLhGvSlc5j',
-            andares: 'tblnaqWSeDDKYQhcW',
-            ambientes: 'tbljTc0rmF8RiOJkr',
-            prestadores: 'tblvdtFg1SI2GXmGU',
-            ativos: 'tbl1SsWbJE3l5xutZ',
-            manutencoes: 'tblgjuSTgEqifxRwE',
-            historicoManutencoes: 'tblV9JbbgltZ50ygp',
-            chamados: 'tblNNI1ODUUncxPM1',
-            compras: 'tbl74SsHKMxTzQnkO',
-            despesas: 'tblrMDMW8DIqF1ntb',
-        };
-
-        // Mapa de campos: nomeJS -> nomeCampoAirtable (usando nomes, com typecast:true a API aceita pelo nome)
-        const CAMPOS = {
-            unidades: { nome: 'Nome' },
-            andares: { nome: 'Nome', unidadeId: 'Unidade' },
-            ambientes: { nome: 'Nome', andarId: 'Andar' },
-            prestadores: { nome: 'Nome', especialidade: 'Especialidade', contato: 'Contato' },
-            ativos: { nome: 'Nome', ambienteId: 'Ambiente', categoria: 'Categoria', marca: 'Marca/Modelo', dataCompra: 'Data Compra', critico: 'Crítico', status: 'Status' },
-            manutencoes: { titulo: 'Titulo', ativoId: 'Ativo', tipo: 'Tipo', ultimaData: 'Ultima Data', proximaData: 'Proxima Data', prestadorId: 'Prestador', critico: 'Critico', observacoes: 'Observacoes' },
-            historicoManutencoes: { titulo: 'Titulo', ativoId: 'Ativo', data: 'Data Realizada', tipo: 'Tipo', prestadorId: 'Prestador', observacoes: 'Observacoes' },
-            chamados: { descricao: 'Descricao', ambienteId: 'Ambiente', ativoId: 'Ativo', tipo: 'Tipo', solicitante: 'Solicitante', prestadorId: 'Prestador', status: 'Status', dataAbertura: 'Data Abertura', dataConclusao: 'Data Conclusao', observacoes: 'Observacoes' },
-            compras: { item: 'Item', fornecedor: 'Fornecedor', quantidade: 'Quantidade', valorUnitario: 'Valor Unitario', valor: 'Valor Total', dataPedido: 'Data Pedido', dataEntrega: 'Data Entrega', status: 'Status', observacoes: 'Observacoes' },
-            despesas: { descricao: 'Descricao', categoria: 'Categoria', unidadeId: 'Unidade', data: 'Data', valor: 'Valor', fornecedor: 'Fornecedor' },
-        };
-
-        // Campos do tipo "link" (array de record IDs) por entidade
-        const CAMPOS_LINK = {
-            andares: ['unidadeId'],
-            ambientes: ['andarId'],
-            ativos: ['ambienteId'],
-            manutencoes: ['ativoId', 'prestadorId'],
-            historicoManutencoes: ['ativoId', 'prestadorId'],
-            chamados: ['ambienteId', 'ativoId', 'prestadorId'],
-            despesas: ['unidadeId'],
-        };
-
-        let AIRTABLE_TOKEN = '';
-        let AIRTABLE_BASE_ID = '';
-
-        function airtableHeaders() {
-            return {
-                'Authorization': `Bearer ${AIRTABLE_TOKEN}`,
-                'Content-Type': 'application/json'
-            };
-        }
-
-        // Converte um registro do Airtable (formato {id, fields}) para o objeto JS usado pelo sistema
-        function airtableParaObjeto(entidade, record) {
-            const mapa = CAMPOS[entidade];
-            const linkFields = CAMPOS_LINK[entidade] || [];
-            const obj = { id: record.id, _airtableId: record.id };
-            for (const [jsKey, airtableKey] of Object.entries(mapa)) {
-                let valor = record.fields[airtableKey];
-                if (linkFields.includes(jsKey)) {
-                    obj[jsKey] = (valor && valor.length > 0) ? valor[0] : null; // pega o primeiro link
-                } else if (valor === undefined) {
-                    obj[jsKey] = '';
-                } else {
-                    obj[jsKey] = valor;
-                }
-            }
-            return obj;
-        }
-
-        // Converte um objeto JS para o formato de "fields" do Airtable
-        const CAMPOS_SOMENTE_LEITURA = {
-            compras: ['valor'],
-        };
-
-        function objetoParaAirtableFields(entidade, obj) {
-            const mapa = CAMPOS[entidade];
-            const linkFields = CAMPOS_LINK[entidade] || [];
-            const camposReadOnly = CAMPOS_SOMENTE_LEITURA[entidade] || [];
-            const fields = {};
-            for (const [jsKey, airtableKey] of Object.entries(mapa)) {
-                if (camposReadOnly.includes(jsKey)) continue; // campo calculado, nunca enviar
-                if (obj[jsKey] === undefined || obj[jsKey] === null || obj[jsKey] === '') {
-                    if (linkFields.includes(jsKey)) continue; // não envia link vazio
-                    if (typeof obj[jsKey] === 'boolean') { fields[airtableKey] = obj[jsKey]; continue; }
-                    continue;
-                }
-                if (linkFields.includes(jsKey)) {
-                    fields[airtableKey] = [obj[jsKey]];
-                } else {
-                    fields[airtableKey] = obj[jsKey];
-                }
-            }
-            return fields;
-        }
-
-        async function airtableListAll(entidade) {
-            const tableId = TABELAS[entidade];
-            let registros = [];
-            let offset = null;
-            do {
-                const url = `${AIRTABLE_API}/${AIRTABLE_BASE_ID}/${tableId}${offset ? '?offset=' + offset : ''}`;
-                const resp = await fetch(url, { headers: airtableHeaders() });
-                if (!resp.ok) {
-                    const err = await resp.json().catch(() => ({}));
-                    throw new Error(`Erro ao ler ${entidade}: ${resp.status} ${err.error?.message || resp.statusText}`);
-                }
-                const data = await resp.json();
-                registros = registros.concat(data.records);
-                offset = data.offset || null;
-            } while (offset);
-            return registros.map(r => airtableParaObjeto(entidade, r));
-        }
-
-        async function airtableCreate(entidade, obj) {
-            const tableId = TABELAS[entidade];
-            const fields = objetoParaAirtableFields(entidade, obj);
-            const resp = await fetch(`${AIRTABLE_API}/${AIRTABLE_BASE_ID}/${tableId}`, {
-                method: 'POST',
-                headers: airtableHeaders(),
-                body: JSON.stringify({ records: [{ fields }], typecast: true })
-            });
-            if (!resp.ok) {
-                const err = await resp.json().catch(() => ({}));
-                throw new Error(`Erro ao criar em ${entidade}: ${err.error?.message || resp.statusText}`);
-            }
-            const data = await resp.json();
-            return airtableParaObjeto(entidade, data.records[0]);
-        }
-
-        async function airtableUpdate(entidade, recordId, obj) {
-            const tableId = TABELAS[entidade];
-            const fields = objetoParaAirtableFields(entidade, obj);
-            const resp = await fetch(`${AIRTABLE_API}/${AIRTABLE_BASE_ID}/${tableId}`, {
-                method: 'PATCH',
-                headers: airtableHeaders(),
-                body: JSON.stringify({ records: [{ id: recordId, fields }], typecast: true })
-            });
-            if (!resp.ok) {
-                const err = await resp.json().catch(() => ({}));
-                throw new Error(`Erro ao atualizar em ${entidade}: ${err.error?.message || resp.statusText}`);
-            }
-            const data = await resp.json();
-            return airtableParaObjeto(entidade, data.records[0]);
-        }
-
-        async function airtableDelete(entidade, recordId) {
-            const tableId = TABELAS[entidade];
-            const resp = await fetch(`${AIRTABLE_API}/${AIRTABLE_BASE_ID}/${tableId}?records[]=${recordId}`, {
-                method: 'DELETE',
-                headers: airtableHeaders()
-            });
-            if (!resp.ok) {
-                const err = await resp.json().catch(() => ({}));
-                throw new Error(`Erro ao excluir em ${entidade}: ${err.error?.message || resp.statusText}`);
-            }
-        }
-
-        // ============ TELA DE CONFIGURAÇÃO ============
-        function carregarCredenciaisSalvas() {
-            const token = localStorage.getItem('campoAirtableToken');
-            const baseId = localStorage.getItem('campoAirtableBaseId');
-            if (token && baseId) {
-                document.getElementById('cfgToken').value = token;
-                document.getElementById('cfgBaseId').value = baseId;
-                return { token, baseId };
-            }
-            return null;
-        }
-
-        async function conectarAirtable() {
-            const token = document.getElementById('cfgToken').value.trim();
-            const baseId = document.getElementById('cfgBaseId').value.trim();
-            const errEl = document.getElementById('configError');
-            const loadingEl = document.getElementById('configLoading');
-            errEl.textContent = '';
-
-            if (!token || !baseId) {
-                errEl.textContent = '❌ Preencha o Token e o Base ID.';
-                return;
-            }
-
-            AIRTABLE_TOKEN = token;
-            AIRTABLE_BASE_ID = baseId;
-            loadingEl.style.display = 'block';
-
-            try {
-                await loadData();
-                localStorage.setItem('campoAirtableToken', token);
-                localStorage.setItem('campoAirtableBaseId', baseId);
-                document.getElementById('configScreen').style.display = 'none';
-                document.getElementById('appContainer').style.display = 'flex';
-            } catch (e) {
-                errEl.textContent = '❌ ' + e.message + ' — verifique o token e o Base ID.';
-            } finally {
-                loadingEl.style.display = 'none';
-            }
-        }
-
-        function trocarConta() {
-            localStorage.removeItem('campoAirtableToken');
-            localStorage.removeItem('campoAirtableBaseId');
-            location.reload();
-        }
-
-        // ============ PERSISTÊNCIA (AIRTABLE) ============
-        async function loadData() {
-            const [
-                u, an, am, ativosData, manutData, histData, chamData, prestData, comprData, despData
-            ] = await Promise.all([
-                airtableListAll('unidades'),
-                airtableListAll('andares'),
-                airtableListAll('ambientes'),
-                airtableListAll('ativos'),
-                airtableListAll('manutencoes'),
-                airtableListAll('historicoManutencoes'),
-                airtableListAll('chamados'),
-                airtableListAll('prestadores'),
-                airtableListAll('compras'),
-                airtableListAll('despesas'),
-            ]);
-            unidades = u;
-            andares = an;
-            ambientes = am;
-            ativos = ativosData;
-            manutencoes = manutData;
-            historicoManutencoes = histData;
-            chamados = chamData;
-            prestadores = prestData;
-            compras = comprData;
-            despesas = despData;
-            renderAll();
-        }
-
-        async function recarregarSilencioso() {
-            try {
-                await loadData();
-            } catch (e) {
-                console.error('Erro ao sincronizar:', e);
-            }
-        }
-
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 2500);
-        }
-
-        // ============ TABS ============
-        document.querySelectorAll('.tab-button').forEach(button => {
-            button.addEventListener('click', () => {
-                const tabName = button.dataset.tab;
-                document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
-                document.getElementById(tabName).style.display = 'block';
-                document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-                button.classList.add('active');
-                renderAll();
-            });
-        });
-
-        // ============ HELPERS ============
-        function getUnidadeNome(id) { return unidades.find(u => u.id === id)?.nome || 'N/A'; }
-        function getAndar(id) { return andares.find(a => a.id === id); }
-        function getAmbiente(id) { return ambientes.find(a => a.id === id); }
-        function getAtivo(id) { return ativos.find(a => a.id === id); }
-        function getPrestadorNome(id) { return prestadores.find(p => p.id === id)?.nome || '-'; }
-
-        function getLocalCompleto(ambienteId) {
-            const amb = getAmbiente(ambienteId);
-            if (!amb) return 'N/A';
-            const andar = getAndar(amb.andarId);
-            if (!andar) return amb.nome;
-            const unidade = unidades.find(u => u.id === andar.unidadeId);
-            return `${unidade?.nome || ''} / ${andar.nome} / ${amb.nome}`;
-        }
-
-        function ambientesOrdenadosPorLocal() {
-            return [...ambientes].sort((a, b) => getLocalCompleto(a.id).localeCompare(getLocalCompleto(b.id), 'pt-BR'));
-        }
-
-        function getLocalAtivo(ativoId) {
-            const ativo = getAtivo(ativoId);
-            if (!ativo) return 'N/A';
-            return getLocalCompleto(ativo.ambienteId);
-        }
-
-        function getUnidadeAtivo(ativoId) {
-            const ativo = getAtivo(ativoId);
-            if (!ativo) return null;
-            const amb = getAmbiente(ativo.ambienteId);
-            if (!amb) return null;
-            const andar = getAndar(amb.andarId);
-            return andar ? andar.unidadeId : null;
-        }
-
-        function calcularDias(data) {
-            if (!data) return null;
-            const hoje = new Date();
-            hoje.setHours(0,0,0,0);
-            const prox = new Date(data);
-            return Math.ceil((prox - hoje) / (1000*60*60*24));
-        }
-
-        function statusPorDias(dias) {
-            if (dias === null) return 'Em dia';
-            if (dias < 0) return 'Vencido';
-            if (dias <= 7) return 'Alerta';
-            return 'Em dia';
-        }
-
-        function statusClass(status) {
-            if (status === 'Vencido' || status === 'Crítico') return 'status-critico';
-            if (status === 'Alerta' || status === 'Pendente') return 'status-alerta';
-            return 'status-emdia';
-        }
-
-        // ============ MODAL ============
-        function openModal(type, id = null) {
-            modalType = type;
-            editingId = id;
-            let html = '';
-
-            if (type === 'unidade') {
-                const item = id ? unidades.find(u => u.id === id) : {};
-                document.getElementById('modalTitle').textContent = id ? 'Editar Unidade' : 'Nova Unidade';
-                html = `<div class="form-group"><label>Nome da Unidade</label><input type="text" id="f_nome" value="${item.nome || ''}"></div>`;
-            }
-
-            else if (type === 'andar') {
-                const item = id ? andares.find(a => a.id === id) : {};
-                document.getElementById('modalTitle').textContent = id ? 'Editar Andar' : 'Novo Andar';
-                const opts = unidades.map(u => `<option value="${u.id}" ${item.unidadeId===u.id?'selected':''}>${u.nome}</option>`).join('');
-                html = `
-                    <div class="form-group"><label>Unidade</label><select id="f_unidadeId"><option value="">Selecione...</option>${opts}</select></div>
-                    <div class="form-group"><label>Nome do Andar</label><input type="text" id="f_nome" value="${item.nome || ''}" placeholder="Ex: Térreo, 1º Piso"></div>
-                `;
-            }
-
-            else if (type === 'ambiente') {
-                const item = id ? ambientes.find(a => a.id === id) : {};
-                document.getElementById('modalTitle').textContent = id ? 'Editar Ambiente' : 'Novo Ambiente';
-                const opts = andares.map(a => `<option value="${a.id}" ${item.andarId===a.id?'selected':''}>${getUnidadeNome(a.unidadeId)} - ${a.nome}</option>`).join('');
-                html = `
-                    <div class="form-group"><label>Andar</label><select id="f_andarId"><option value="">Selecione...</option>${opts}</select></div>
-                    <div class="form-group"><label>Nome do Ambiente</label><input type="text" id="f_nome" value="${item.nome || ''}" placeholder="Ex: Recepção, Sala de Reuniões"></div>
-                `;
-            }
-
-            else if (type === 'ativo') {
-                const item = id ? ativos.find(a => a.id === id) : {};
-                document.getElementById('modalTitle').textContent = id ? 'Editar Equipamento' : 'Novo Equipamento';
-                const opts = ambientesOrdenadosPorLocal().map(a => `<option value="${a.id}" ${item.ambienteId===a.id?'selected':''}>${getLocalCompleto(a.id)}</option>`).join('');
-                const categoriaPre = item.categoria || (categoriaAtiva !== 'Todos' ? categoriaAtiva : 'Ar-Condicionado');
-                const optsCategoria = CATEGORIAS.map(c => `<option value="${c.id}" ${categoriaPre===c.id?'selected':''}>${c.icone} ${c.label}</option>`).join('');
-
-                // Busca manutenção vinculada (se existir) para já trazer no mesmo form
-                const manutVinculada = id ? manutencoes.find(m => m.ativoId === id) : null;
-
-                html = `
-                    <div class="form-group"><label>Nome/Identificação do Equipamento</label><input type="text" id="f_nome" value="${item.nome || ''}" placeholder="Ex: Ar-condicionado Split 9000 BTUs"></div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Categoria</label><select id="f_categoria">${optsCategoria}</select></div>
-                        <div class="form-group"><label>Local (Ambiente)</label><select id="f_ambienteId"><option value="">Selecione...</option>${opts}</select></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Marca/Modelo</label><input type="text" id="f_marca" value="${item.marca || ''}" placeholder="Ex: Samsung 9-BTUs"></div>
-                        <div class="form-group"><label>Data da Compra</label><input type="date" id="f_dataCompra" value="${item.dataCompra || ''}"></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Item Crítico?</label>
-                            <select id="f_critico">
-                                <option value="false" ${item.critico===false?'selected':''}>Não</option>
-                                <option value="true" ${item.critico===true||item.critico===undefined?'selected':''}>Sim</option>
-                            </select>
-                        </div>
-                        <div class="form-group"><label>Status</label>
-                            <select id="f_status">
-                                <option value="Ativo" ${item.status==='Ativo'||!item.status?'selected':''}>Ativo</option>
-                                <option value="Inativo" ${item.status==='Inativo'?'selected':''}>Inativo</option>
-                                <option value="Em Manutenção" ${item.status==='Em Manutenção'?'selected':''}>Em Manutenção</option>
-                            </select>
-                        </div>
-                    </div>
-                    <hr style="margin:1.2rem 0;border:none;border-top:1px solid #eee;">
-                    <div style="font-size:13px;font-weight:600;color:#094752;margin-bottom:0.8rem;">📅 Controle de Manutenção</div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Última Manutenção</label><input type="date" id="f_ultimaData" value="${manutVinculada?.ultimaData || ''}"></div>
-                        <div class="form-group"><label>Próxima Manutenção</label><input type="date" id="f_proximaData" value="${manutVinculada?.proximaData || ''}"></div>
-                    </div>
-                    <div class="form-group"><label>Prestador Responsável</label>
-                        <select id="f_prestadorId">
-                            <option value="">Não definido</option>
-                            ${prestadores.map(p => `<option value="${p.id}" ${manutVinculada?.prestadorId===p.id?'selected':''}>${p.nome}</option>`).join('')}
-                        </select>
-                    </div>
-                    <input type="hidden" id="f_manutencaoId" value="${manutVinculada?.id || ''}">
-                `;
-            }
-
-            else if (type === 'manutencao') {
-                const item = id ? manutencoes.find(m => m.id === id) : {};
-                document.getElementById('modalTitle').textContent = id ? 'Editar Manutenção' : 'Nova Manutenção';
-                const optsAtivo = ativos.map(a => `<option value="${a.id}" ${item.ativoId===a.id?'selected':''}>${a.nome} (${getLocalAtivo(a.id)})</option>`).join('');
-                const optsPrest = prestadores.map(p => `<option value="${p.id}" ${item.prestadorId===p.id?'selected':''}>${p.nome}</option>`).join('');
-                html = `
-                    <div class="form-group"><label>Ativo</label><select id="f_ativoId"><option value="">Selecione...</option>${optsAtivo}</select></div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Tipo</label>
-                            <select id="f_tipo">
-                                <option value="Preventiva" ${item.tipo==='Preventiva'?'selected':''}>Preventiva</option>
-                                <option value="Corretiva" ${item.tipo==='Corretiva'?'selected':''}>Corretiva</option>
-                            </select>
-                        </div>
-                        <div class="form-group"><label>Prestador</label><select id="f_prestadorId"><option value="">Selecione...</option>${optsPrest}</select></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Última Manutenção</label><input type="date" id="f_ultimaData" value="${item.ultimaData || ''}"></div>
-                        <div class="form-group"><label>Próxima Manutenção</label><input type="date" id="f_proximaData" value="${item.proximaData || ''}"></div>
-                    </div>
-                    <div class="form-group"><label>Item Crítico (para alertas)?</label>
-                        <select id="f_critico">
-                            <option value="false" ${item.critico===false?'selected':''}>Não</option>
-                            <option value="true" ${item.critico===true?'selected':''}>Sim</option>
-                        </select>
-                    </div>
-                    <div class="form-group"><label>Observações</label><textarea id="f_observacoes" rows="3">${item.observacoes || ''}</textarea></div>
-                `;
-            }
-
-            else if (type === 'chamado') {
-                const item = id ? chamados.find(c => c.id === id) : {};
-                document.getElementById('modalTitle').textContent = id ? 'Editar Chamado' : 'Novo Chamado/OS';
-                const optsAmb = ambientesOrdenadosPorLocal().map(a => `<option value="${a.id}" ${item.ambienteId===a.id?'selected':''}>${getLocalCompleto(a.id)}</option>`).join('');
-                const optsAtivo = '<option value="">Nenhum (ambiente geral)</option>' + ativos.map(a => `<option value="${a.id}" ${item.ativoId===a.id?'selected':''}>${a.nome}</option>`).join('');
-                const optsPrest = '<option value="">Não definido</option>' + prestadores.map(p => `<option value="${p.id}" ${item.prestadorId===p.id?'selected':''}>${p.nome}</option>`).join('');
-                html = `
-                    <div class="form-group"><label>Local (Ambiente)</label><select id="f_ambienteId"><option value="">Selecione...</option>${optsAmb}</select></div>
-                    <div class="form-group"><label>Ativo Relacionado (opcional)</label><select id="f_ativoId">${optsAtivo}</select></div>
-                    <div class="form-group"><label>Descrição do Problema/Solicitação</label><textarea id="f_descricao" rows="3">${item.descricao || ''}</textarea></div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Tipo</label>
-                            <select id="f_tipo">
-                                <option value="Corretiva" ${item.tipo==='Corretiva'?'selected':''}>Corretiva</option>
-                                <option value="Preventiva" ${item.tipo==='Preventiva'?'selected':''}>Preventiva</option>
-                                <option value="Solicitação" ${item.tipo==='Solicitação'?'selected':''}>Solicitação</option>
-                            </select>
-                        </div>
-                        <div class="form-group"><label>Solicitante</label><input type="text" id="f_solicitante" value="${item.solicitante || ''}"></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Prestador Responsável</label><select id="f_prestadorId">${optsPrest}</select></div>
-                        <div class="form-group"><label>Status</label>
-                            <select id="f_status">
-                                <option value="Aberto" ${item.status==='Aberto'?'selected':''}>Aberto</option>
-                                <option value="Em andamento" ${item.status==='Em andamento'?'selected':''}>Em andamento</option>
-                                <option value="Concluído" ${item.status==='Concluído'?'selected':''}>Concluído</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Data de Abertura</label><input type="date" id="f_dataAbertura" value="${item.dataAbertura || ''}"></div>
-                        <div class="form-group"><label>Data de Conclusão</label><input type="date" id="f_dataConclusao" value="${item.dataConclusao || ''}"></div>
-                    </div>
-                    <div class="form-group"><label>Observações</label><textarea id="f_observacoes" rows="2">${item.observacoes || ''}</textarea></div>
-                `;
-            }
-
-            else if (type === 'prestador') {
-                const item = id ? prestadores.find(p => p.id === id) : {};
-                document.getElementById('modalTitle').textContent = id ? 'Editar Prestador' : 'Novo Prestador';
-                html = `
-                    <div class="form-group"><label>Nome</label><input type="text" id="f_nome" value="${item.nome || ''}"></div>
-                    <div class="form-group"><label>Especialidade</label><input type="text" id="f_especialidade" value="${item.especialidade || ''}" placeholder="Ex: Elétrica, TI, Dedetização"></div>
-                    <div class="form-group"><label>Contato</label><input type="text" id="f_contato" value="${item.contato || ''}" placeholder="Telefone ou e-mail"></div>
-                `;
-            }
-
-            else if (type === 'compra') {
-                const item = id ? compras.find(c => c.id === id) : {};
-                document.getElementById('modalTitle').textContent = id ? 'Editar Compra' : 'Nova Compra';
-                html = `
-                    <div class="form-group"><label>Item</label><input type="text" id="f_item" value="${item.item || ''}"></div>
-                    <div class="form-group"><label>Fornecedor</label><input type="text" id="f_fornecedor" value="${item.fornecedor || ''}"></div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Data Pedido</label><input type="date" id="f_dataPedido" value="${item.dataPedido || ''}"></div>
-                        <div class="form-group"><label>Data Entrega</label><input type="date" id="f_dataEntrega" value="${item.dataEntrega || ''}"></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Quantidade</label><input type="number" id="f_quantidade" step="1" min="1" value="${item.quantidade || 1}" onInput="atualizarValorTotalCompra()"></div>
-                        <div class="form-group"><label>Valor Unitário (R$)</label><input type="number" id="f_valorUnitario" step="0.01" value="${item.valorUnitario || ''}" onInput="atualizarValorTotalCompra()"></div>
-                        <div class="form-group"><label>Valor Total (R$)</label><input type="number" id="f_valor" step="0.01" value="${item.valor || ''}" readonly style="background:#f5f5f5;"></div>
-                    </div>
-                    <div class="form-group"><label>Status</label>
-                        <select id="f_status">
-                            <option value="Pendente" ${item.status==='Pendente'?'selected':''}>Pendente</option>
-                            <option value="Entregue" ${item.status==='Entregue'?'selected':''}>Entregue</option>
-                            <option value="Cancelado" ${item.status==='Cancelado'?'selected':''}>Cancelado</option>
-                        </select>
-                    </div>
-                    <div class="form-group"><label>Observações</label><textarea id="f_observacoes" rows="3" placeholder="Detalhes adicionais sobre a compra...">${item.observacoes || ''}</textarea></div>
-                `;
-            }
-
-            else if (type === 'despesa') {
-                const item = id ? despesas.find(d => d.id === id) : {};
-                document.getElementById('modalTitle').textContent = id ? 'Editar Despesa' : 'Nova Despesa';
-                const optsUnidade = unidades.map(u => `<option value="${u.id}" ${item.unidadeId===u.id?'selected':''}>${u.nome}</option>`).join('');
-                html = `
-                    <div class="form-group"><label>Descrição</label><input type="text" id="f_descricao" value="${item.descricao || ''}"></div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Categoria</label>
-                            <select id="f_categoria">
-                                <option value="Manutenção" ${item.categoria==='Manutenção'?'selected':''}>Manutenção</option>
-                                <option value="Segurança" ${item.categoria==='Segurança'?'selected':''}>Segurança</option>
-                                <option value="Limpeza" ${item.categoria==='Limpeza'?'selected':''}>Limpeza</option>
-                                <option value="TI" ${item.categoria==='TI'?'selected':''}>TI</option>
-                                <option value="Outros" ${item.categoria==='Outros'?'selected':''}>Outros</option>
-                            </select>
-                        </div>
-                        <div class="form-group"><label>Unidade</label><select id="f_unidadeId"><option value="">Geral</option>${optsUnidade}</select></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Data</label><input type="date" id="f_data" value="${item.data || ''}"></div>
-                        <div class="form-group"><label>Valor (R$)</label><input type="number" id="f_valor" step="0.01" value="${item.valor || ''}"></div>
-                    </div>
-                    <div class="form-group"><label>Fornecedor/Prestador</label><input type="text" id="f_fornecedor" value="${item.fornecedor || ''}"></div>
-                `;
-            }
-
-            else if (type === 'historico') {
-                const item = id ? historicoManutencoes.find(h => h.id === id) : {};
-                document.getElementById('modalTitle').textContent = id ? 'Editar Registro do Histórico' : 'Nova Manutenção Realizada (Histórico)';
-                const ativoPreSelecionado = window._historicoAtivoAtual || item.ativoId || '';
-                const optsAtivo = ativos.map(a => `<option value="${a.id}" ${(ativoPreSelecionado==a.id)?'selected':''}>${a.nome} (${getLocalAtivo(a.id)})</option>`).join('');
-                const optsPrest = prestadores.map(p => `<option value="${p.id}" ${item.prestadorId===p.id?'selected':''}>${p.nome}</option>`).join('');
-                html = `
-                    <div class="form-group"><label>Ativo</label><select id="f_ativoId"><option value="">Selecione...</option>${optsAtivo}</select></div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Data Realizada</label><input type="date" id="f_data" value="${item.data || ''}"></div>
-                        <div class="form-group"><label>Tipo</label>
-                            <select id="f_tipo">
-                                <option value="Preventiva" ${item.tipo==='Preventiva'?'selected':''}>Preventiva</option>
-                                <option value="Corretiva" ${item.tipo==='Corretiva'?'selected':''}>Corretiva</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group"><label>Prestador</label><select id="f_prestadorId"><option value="">Selecione...</option>${optsPrest}</select></div>
-                    <div class="form-group"><label>Observações / Serviço Realizado</label><textarea id="f_observacoes" rows="3">${item.observacoes || ''}</textarea></div>
-                `;
-            }
-
-            document.getElementById('modalBody').innerHTML = html;
-            document.getElementById('modal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('modal').classList.add('hidden');
-            window._historicoAtivoAtual = null;
-        }
-
-        function abrirHistoricoParaAtivo(ativoId) {
-            window._historicoAtivoAtual = ativoId;
-            openModal('historico');
-        }
-
-        function val(id) { const el = document.getElementById(id); return el ? el.value : ''; }
-
-        function atualizarValorTotalCompra() {
-            const qtd = parseFloat(val('f_quantidade')) || 0;
-            const valorUnit = parseFloat(val('f_valorUnitario')) || 0;
-            const total = qtd * valorUnit;
-            const elTotal = document.getElementById('f_valor');
-            if (elTotal) elTotal.value = total.toFixed(2);
-        }
-
-        async function salvarItem() {
-            const btnSalvar = document.querySelector('.modal-actions .button-primary');
-            const textoOriginal = btnSalvar.textContent;
-            btnSalvar.textContent = '⏳ Salvando...';
-            btnSalvar.disabled = true;
-
-            try {
-                if (modalType === 'unidade') {
-                    const item = { nome: val('f_nome') };
-                    if (!item.nome) { showToast('❌ Informe o nome!'); return; }
-                    if (editingId) await airtableUpdate('unidades', editingId, item);
-                    else await airtableCreate('unidades', item);
-                }
-                else if (modalType === 'andar') {
-                    const item = { unidadeId: val('f_unidadeId'), nome: val('f_nome') };
-                    if (!item.unidadeId || !item.nome) { showToast('❌ Preencha todos os campos!'); return; }
-                    if (editingId) await airtableUpdate('andares', editingId, item);
-                    else await airtableCreate('andares', item);
-                }
-                else if (modalType === 'ambiente') {
-                    const item = { andarId: val('f_andarId'), nome: val('f_nome') };
-                    if (!item.andarId || !item.nome) { showToast('❌ Preencha todos os campos!'); return; }
-                    if (editingId) await airtableUpdate('ambientes', editingId, item);
-                    else await airtableCreate('ambientes', item);
-                }
-                else if (modalType === 'ativo') {
-                    const item = {
-                        nome: val('f_nome'), ambienteId: val('f_ambienteId'),
-                        categoria: val('f_categoria'), marca: val('f_marca'),
-                        dataCompra: val('f_dataCompra'), critico: val('f_critico')==='true', status: val('f_status')
-                    };
-                    if (!item.nome || !item.ambienteId) { showToast('❌ Preencha nome e local!'); return; }
-
-                    let ativoId = editingId;
-                    if (editingId) await airtableUpdate('ativos', editingId, item);
-                    else {
-                        const novo = await airtableCreate('ativos', item);
-                        ativoId = novo.id;
-                    }
-
-                    // Cria ou atualiza o registro de manutenção vinculado automaticamente
-                    const proximaData = val('f_proximaData');
-                    const ultimaData = val('f_ultimaData');
-                    const manutencaoIdExistente = val('f_manutencaoId') || null;
-                    if (proximaData || ultimaData) {
-                        const manutItem = {
-                            titulo: `${item.nome} - ${item.categoria}`,
-                            ativoId: ativoId, tipo: 'Preventiva',
-                            ultimaData: ultimaData, proximaData: proximaData,
-                            prestadorId: val('f_prestadorId') || null,
-                            critico: item.critico, observacoes: ''
-                        };
-                        if (manutencaoIdExistente) await airtableUpdate('manutencoes', manutencaoIdExistente, manutItem);
-                        else await airtableCreate('manutencoes', manutItem);
-                    }
-                }
-                else if (modalType === 'manutencao') {
-                    const item = {
-                        titulo: 'Manutenção', ativoId: val('f_ativoId'), tipo: val('f_tipo'),
-                        ultimaData: val('f_ultimaData'), proximaData: val('f_proximaData'),
-                        prestadorId: val('f_prestadorId') || null,
-                        critico: val('f_critico')==='true', observacoes: val('f_observacoes')
-                    };
-                    if (!item.ativoId) { showToast('❌ Selecione o ativo!'); return; }
-                    if (editingId) await airtableUpdate('manutencoes', editingId, item);
-                    else await airtableCreate('manutencoes', item);
-                }
-                else if (modalType === 'chamado') {
-                    const item = {
-                        ambienteId: val('f_ambienteId'),
-                        ativoId: val('f_ativoId') || null,
-                        descricao: val('f_descricao'), tipo: val('f_tipo'), solicitante: val('f_solicitante'),
-                        prestadorId: val('f_prestadorId') || null,
-                        status: val('f_status'), dataAbertura: val('f_dataAbertura'),
-                        dataConclusao: val('f_dataConclusao'), observacoes: val('f_observacoes')
-                    };
-                    if (!item.ambienteId || !item.descricao) { showToast('❌ Preencha local e descrição!'); return; }
-                    if (editingId) await airtableUpdate('chamados', editingId, item);
-                    else await airtableCreate('chamados', item);
-                }
-                else if (modalType === 'prestador') {
-                    const item = { nome: val('f_nome'), especialidade: val('f_especialidade'), contato: val('f_contato') };
-                    if (!item.nome) { showToast('❌ Informe o nome!'); return; }
-                    if (editingId) await airtableUpdate('prestadores', editingId, item);
-                    else await airtableCreate('prestadores', item);
-                }
-                else if (modalType === 'compra') {
-                    const item = {
-                        item: val('f_item'), fornecedor: val('f_fornecedor'),
-                        dataPedido: val('f_dataPedido'), dataEntrega: val('f_dataEntrega'),
-                        quantidade: parseFloat(val('f_quantidade')) || 1,
-                        valorUnitario: parseFloat(val('f_valorUnitario')) || 0,
-                        status: val('f_status'),
-                        observacoes: val('f_observacoes')
-                    };
-                    if (!item.item) { showToast('❌ Informe o item!'); return; }
-                    if (editingId) await airtableUpdate('compras', editingId, item);
-                    else await airtableCreate('compras', item);
-                }
-                else if (modalType === 'despesa') {
-                    const item = {
-                        descricao: val('f_descricao'), categoria: val('f_categoria'),
-                        unidadeId: val('f_unidadeId') || null,
-                        data: val('f_data'), valor: parseFloat(val('f_valor')) || 0, fornecedor: val('f_fornecedor')
-                    };
-                    if (!item.descricao) { showToast('❌ Informe a descrição!'); return; }
-                    if (editingId) await airtableUpdate('despesas', editingId, item);
-                    else await airtableCreate('despesas', item);
-                }
-                else if (modalType === 'historico') {
-                    const ativoSel = getAtivo(val('f_ativoId'));
-                    const item = {
-                        titulo: `Manutenção - ${val('f_data')}`,
-                        ativoId: val('f_ativoId'), data: val('f_data'), tipo: val('f_tipo'),
-                        prestadorId: val('f_prestadorId') || null,
-                        observacoes: val('f_observacoes')
-                    };
-                    if (!item.ativoId || !item.data) { showToast('❌ Selecione o ativo e a data!'); return; }
-                    if (editingId) await airtableUpdate('historicoManutencoes', editingId, item);
-                    else await airtableCreate('historicoManutencoes', item);
-                }
-
-                showToast('✅ Salvo na nuvem!');
-                closeModal();
-                await loadData();
-            } catch (e) {
-                showToast('❌ ' + e.message);
-            } finally {
-                btnSalvar.textContent = textoOriginal;
-                btnSalvar.disabled = false;
-            }
-        }
-
-        async function deleteItem(type, id) {
-            if (!confirm('Tem certeza que deseja deletar este registro?')) return;
-            const mapaTabelas = {
-                unidade: 'unidades', andar: 'andares', ambiente: 'ambientes', ativo: 'ativos',
-                manutencao: 'manutencoes', chamado: 'chamados', prestador: 'prestadores',
-                compra: 'compras', despesa: 'despesas', historico: 'historicoManutencoes'
-            };
-            const entidade = mapaTabelas[type];
-            if (!entidade) return;
-
-            try {
-                await airtableDelete(entidade, id);
-                showToast('✅ Excluído da nuvem!');
-                await loadData();
-            } catch (e) {
-                showToast('❌ ' + e.message);
-            }
-        }
-
-        // ============ RENDERS ============
-        function renderDashboard() {
-            document.getElementById('mTotalAtivos').textContent = ativos.length;
-            document.getElementById('mManutPendentes').textContent = manutencoes.filter(m => {
-                const d = calcularDias(m.proximaData);
-                return statusPorDias(d) !== 'Em dia';
-            }).length;
-            document.getElementById('mChamadosAbertos').textContent = chamados.filter(c => c.status !== 'Concluído').length;
-
-            const hoje = new Date();
-            const despesasMes = despesas.filter(d => {
-                if (!d.data) return false;
-                const dt = new Date(d.data);
-                return dt.getMonth() === hoje.getMonth() && dt.getFullYear() === hoje.getFullYear();
-            }).reduce((s,d) => s + (d.valor || 0), 0);
-            document.getElementById('mDespesasMes').textContent = 'R$ ' + despesasMes.toFixed(2).replace('.', ',');
-
-            // Alertas críticos 7 dias
-            const alertasCriticos = manutencoes.filter(m => {
-                const dias = calcularDias(m.proximaData);
-                return m.critico && dias !== null && dias <= 7;
-            });
-
-            let alertHtml = '';
-            if (alertasCriticos.length > 0) {
-                const vencidos = alertasCriticos.filter(m => calcularDias(m.proximaData) < 0).length;
-                if (vencidos > 0) {
-                    alertHtml = `<div class="alert-box danger">🚨 ${vencidos} item(ns) crítico(s) com manutenção VENCIDA! E ${alertasCriticos.length - vencidos} vencendo em até 7 dias.</div>`;
-                } else {
-                    alertHtml = `<div class="alert-box">⚠️ ${alertasCriticos.length} item(ns) crítico(s) com manutenção vencendo em até 7 dias!</div>`;
-                }
-            } else {
-                alertHtml = `<div class="alert-box success">✅ Nenhum alerta crítico no momento.</div>`;
-            }
-            document.getElementById('alertasContainer').innerHTML = alertHtml;
-
-            // Tabela de alertas
-            let html = '';
-            alertasCriticos.sort((a,b) => calcularDias(a.proximaData) - calcularDias(b.proximaData)).forEach(m => {
-                const dias = calcularDias(m.proximaData);
-                const ativo = getAtivo(m.ativoId);
-                const st = statusPorDias(dias);
-                html += `<tr>
-                    <td><strong>${getLocalAtivo(m.ativoId)} - ${ativo?.nome || 'N/A'}</strong></td>
-                    <td><span class="badge-tipo badge-${m.tipo==='Preventiva'?'preventiva':'corretiva'}">${m.tipo}</span></td>
-                    <td>${m.proximaData}</td>
-                    <td><strong>${dias}</strong> dias</td>
-                    <td><span class="status-badge ${statusClass(st)}">${st}</span></td>
-                </tr>`;
-            });
-            document.getElementById('dashAlertasBody').innerHTML = html || '<tr><td colspan="5" class="empty-msg">Nenhum alerta no momento</td></tr>';
-
-            // Chamados abertos no dashboard
-            let chHtml = '';
-            chamados.filter(c => c.status !== 'Concluído').forEach(c => {
-                chHtml += `<tr>
-                    <td>${getLocalCompleto(c.ambienteId)}</td>
-                    <td>${c.descricao}</td>
-                    <td><span class="badge-tipo badge-${c.tipo==='Preventiva'?'preventiva':'corretiva'}">${c.tipo}</span></td>
-                    <td>${c.solicitante || '-'}</td>
-                    <td>${c.dataAbertura || '-'}</td>
-                    <td><span class="status-badge status-${c.status==='Aberto'?'aberto':'andamento'}">${c.status}</span></td>
-                </tr>`;
-            });
-            document.getElementById('dashChamadosBody').innerHTML = chHtml || '<tr><td colspan="6" class="empty-msg">Nenhum chamado em aberto</td></tr>';
-        }
-
-        function renderLocais() {
-            // Unidades
-            let html = '';
-            unidades.forEach(u => {
-                html += `<tr><td><strong>${u.nome}</strong></td><td>
-                    <span class="icon-action" onclick="openModal('unidade', '${u.id}')">✏️</span>
-                    <span class="icon-action" onclick="deleteItem('unidade', '${u.id}')">🗑️</span>
-                </td></tr>`;
-            });
-            document.getElementById('unidadesBody').innerHTML = html || '<tr><td colspan="2" class="empty-msg">Nenhuma unidade</td></tr>';
-
-            // Andares
-            html = '';
-            andares.forEach(a => {
-                html += `<tr><td>${getUnidadeNome(a.unidadeId)}</td><td>${a.nome}</td><td>
-                    <span class="icon-action" onclick="openModal('andar', '${a.id}')">✏️</span>
-                    <span class="icon-action" onclick="deleteItem('andar', '${a.id}')">🗑️</span>
-                </td></tr>`;
-            });
-            document.getElementById('andaresBody').innerHTML = html || '<tr><td colspan="3" class="empty-msg">Nenhum andar</td></tr>';
-
-            // Ambientes (ordenados alfabeticamente por Unidade, depois por nome do Ambiente)
-            html = '';
-            const ambientesOrdenados = [...ambientes].sort((a, b) => {
-                const andarA = getAndar(a.andarId);
-                const andarB = getAndar(b.andarId);
-                const unidadeA = andarA ? getUnidadeNome(andarA.unidadeId) : '';
-                const unidadeB = andarB ? getUnidadeNome(andarB.unidadeId) : '';
-                if (unidadeA !== unidadeB) return unidadeA.localeCompare(unidadeB, 'pt-BR');
-                return a.nome.localeCompare(b.nome, 'pt-BR');
-            });
-            ambientesOrdenados.forEach(a => {
-                const andar = getAndar(a.andarId);
-                html += `<tr>
-                    <td>${andar ? getUnidadeNome(andar.unidadeId) : '-'}</td>
-                    <td>${andar?.nome || '-'}</td>
-                    <td>${a.nome}</td>
-                    <td>
-                        <span class="icon-action" onclick="openModal('ambiente', '${a.id}')">✏️</span>
-                        <span class="icon-action" onclick="deleteItem('ambiente', '${a.id}')">🗑️</span>
-                    </td>
-                </tr>`;
-            });
-            document.getElementById('ambientesBody').innerHTML = html || '<tr><td colspan="4" class="empty-msg">Nenhum ambiente</td></tr>';
-        }
-
-        function renderCategoriaTabs() {
-            const container = document.getElementById('categoriaTabs');
-            if (!container) return;
-
-            const countTodos = ativos.length;
-            let html = `<button class="categoria-tab-btn ${categoriaAtiva==='Todos'?'active':''}" onclick="selecionarCategoria('Todos')">
-                📋 Todos <span class="categoria-tab-count">${countTodos}</span>
-            </button>`;
-
-            CATEGORIAS.forEach(cat => {
-                const count = ativos.filter(a => a.categoria === cat.id).length;
-                html += `<button class="categoria-tab-btn ${categoriaAtiva===cat.id?'active':''}" onclick="selecionarCategoria('${cat.id}')">
-                    ${cat.icone} ${cat.label} <span class="categoria-tab-count">${count}</span>
-                </button>`;
-            });
-
-            container.innerHTML = html;
-        }
-
-        function selecionarCategoria(cat) {
-            categoriaAtiva = cat;
-            renderManutencoes();
-        }
-
-        function selecionarUnidadeFiltro(unidadeId) {
-            unidadeFiltroAtiva = unidadeId;
-            renderManutencoes();
-        }
-
-        function renderUnidadePills() {
-            const container = document.getElementById('unidadeFilterPills');
-            if (!container) return;
-            let html = `<button class="pill-btn ${unidadeFiltroAtiva==='Todos'?'active':''}" onclick="selecionarUnidadeFiltro('Todos')">Todos</button>`;
-            unidades.forEach(u => {
-                html += `<button class="pill-btn ${unidadeFiltroAtiva===u.id?'active':''}" onclick="selecionarUnidadeFiltro('${u.id}')">${u.nome}</button>`;
-            });
-            container.innerHTML = html;
-        }
-
-        function renderCategoriaSummary(listaFiltrada) {
-            const container = document.getElementById('categoriaSummary');
-            if (!container) return;
-
-            const total = listaFiltrada.length;
-            let emDia = 0, aVencer = 0, vencidos = 0;
-
-            listaFiltrada.forEach(a => {
-                const manut = manutencoes.find(m => m.ativoId === a.id);
-                if (!manut || !manut.proximaData) { emDia++; return; }
-                const dias = calcularDias(manut.proximaData);
-                const st = statusPorDias(dias);
-                if (st === 'Vencido') vencidos++;
-                else if (st === 'Alerta') aVencer++;
-                else emDia++;
-            });
-
-            const catLabel = categoriaAtiva === 'Todos' ? 'Todos os Equipamentos' : (CATEGORIAS.find(c => c.id === categoriaAtiva)?.label || categoriaAtiva);
-            document.getElementById('categoriaTitulo').textContent = `🔧 ${catLabel}`;
-
-            container.innerHTML = `
-                <div class="summary-card"><div class="summary-card-label">Total</div><div class="summary-card-value">${total}</div></div>
-                <div class="summary-card"><div class="summary-card-label">Em dia</div><div class="summary-card-value cor-verde">${emDia}</div></div>
-                <div class="summary-card"><div class="summary-card-label">A vencer (≤7d)</div><div class="summary-card-value cor-amarelo">${aVencer}</div></div>
-                <div class="summary-card"><div class="summary-card-label">Vencidos</div><div class="summary-card-value cor-vermelho">${vencidos}</div></div>
-            `;
-        }
-
-        function renderManutencoes() {
-            renderCategoriaTabs();
-            renderUnidadePills();
-
-            const listaFiltrada = ativos.filter(a => {
-                if (categoriaAtiva !== 'Todos' && a.categoria !== categoriaAtiva) return false;
-                if (unidadeFiltroAtiva !== 'Todos' && getUnidadeAtivo(a.id) !== unidadeFiltroAtiva) return false;
-                return true;
-            }).sort((a, b) => {
-                const localA = getLocalAtivo(a.id);
-                const localB = getLocalAtivo(b.id);
-                return localA.localeCompare(localB, 'pt-BR');
-            });
-
-            renderCategoriaSummary(listaFiltrada);
-
-            let html = '';
-            listaFiltrada.forEach(a => {
-                const manut = manutencoes.find(m => m.ativoId === a.id);
-                const dias = manut ? calcularDias(manut.proximaData) : null;
-                const st = manut ? statusPorDias(dias) : 'Em dia';
-                const amb = getAmbiente(a.ambienteId);
-                const andar = amb ? getAndar(amb.andarId) : null;
-                const unidadeNome = andar ? getUnidadeNome(andar.unidadeId) : '';
-
-                html += `<tr>
-                    <td style="white-space:nowrap;">
-                        <span class="icon-action" title="Editar" onclick="openModal('ativo', '${a.id}')">✏️</span>
-                        <span class="icon-action" title="Excluir" onclick="deleteItem('ativo', '${a.id}')">🗑️</span>
-                        <span class="icon-action" title="Registrar manutenção realizada" onclick="abrirHistoricoParaAtivo('${a.id}')">📝</span>
-                    </td>
-                    <td>
-                        <span class="local-destaque-unidade">${unidadeNome}</span>
-                        <span class="local-destaque-ambiente">${amb?.nome || '-'} — ${a.nome}</span>
-                    </td>
-                    <td>${unidadeNome}</td>
-                    <td>${a.marca || '-'}</td>
-                    <td>${(manut?.ultimaData && !manut.ultimaData.startsWith('0001')) ? manut.ultimaData : '-'}</td>
-                    <td>${(manut?.proximaData && !manut.proximaData.startsWith('0001')) ? manut.proximaData : '-'}</td>
-                    <td><span class="status-badge ${statusClass(st)}">${st}</span></td>
-                </tr>`;
-            });
-            document.getElementById('manutencaoBody').innerHTML = html || '<tr><td colspan="7" class="empty-msg">Nenhum equipamento cadastrado nesta categoria</td></tr>';
-
-            // Atualizar select do histórico (Local - Ativo)
-            const fHistSel = document.getElementById('filtroHistoricoAtivo');
-            if (fHistSel) {
-                const valorAtual = fHistSel.value;
-                let opts = '<option value="">Selecione um equipamento...</option>';
-                ativos.forEach(a => opts += `<option value="${a.id}">${getLocalAtivo(a.id)} - ${a.nome}</option>`);
-                fHistSel.innerHTML = opts;
-                fHistSel.value = valorAtual;
-            }
-        }
-
-        function renderHistoricoManutencao() {
-            const ativoId = document.getElementById('filtroHistoricoAtivo')?.value;
-            let html = '';
-
-            if (!ativoId) {
-                document.getElementById('historicoManutencaoBody').innerHTML = '<tr><td colspan="5" class="empty-msg">Selecione um equipamento acima para ver o histórico completo de manutenções</td></tr>';
-                return;
-            }
-
-            const registros = historicoManutencoes
-                .filter(h => h.ativoId === ativoId)
-                .sort((a, b) => new Date(b.data) - new Date(a.data));
-
-            registros.forEach(h => {
-                html += `<tr>
-                    <td><strong>${h.data || '-'}</strong></td>
-                    <td><span class="badge-tipo badge-${h.tipo==='Preventiva'?'preventiva':'corretiva'}">${h.tipo}</span></td>
-                    <td>${getPrestadorNome(h.prestadorId)}</td>
-                    <td>${h.observacoes || '-'}</td>
-                    <td>
-                        <span class="icon-action" onclick="openModal('historico', '${h.id}')">✏️</span>
-                        <span class="icon-action" onclick="deleteItem('historico', '${h.id}')">🗑️</span>
-                    </td>
-                </tr>`;
-            });
-
-            document.getElementById('historicoManutencaoBody').innerHTML = html || '<tr><td colspan="5" class="empty-msg">Nenhum registro de manutenção realizada para este equipamento ainda</td></tr>';
-        }
-
-        function renderChamados() {
-            const fStatus = document.getElementById('filtroStatusChamado')?.value;
-            let html = '';
-            chamados.filter(c => !fStatus || c.status === fStatus).forEach(c => {
-                const statusCls = c.status === 'Aberto' ? 'status-aberto' : c.status === 'Em andamento' ? 'status-andamento' : 'status-concluido';
-                html += `<tr>
-                    <td>${getLocalCompleto(c.ambienteId)}</td>
-                    <td>${c.descricao}</td>
-                    <td><span class="badge-tipo badge-${c.tipo==='Preventiva'?'preventiva':'corretiva'}">${c.tipo}</span></td>
-                    <td>${c.solicitante || '-'}</td>
-                    <td>${getPrestadorNome(c.prestadorId)}</td>
-                    <td>${c.dataAbertura || '-'}</td>
-                    <td>${c.dataConclusao || '-'}</td>
-                    <td><span class="status-badge ${statusCls}">${c.status}</span></td>
-                    <td>
-                        <span class="icon-action" onclick="openModal('chamado', '${c.id}')">✏️</span>
-                        <span class="icon-action" onclick="deleteItem('chamado', '${c.id}')">🗑️</span>
-                    </td>
-                </tr>`;
-            });
-            document.getElementById('chamadosBody').innerHTML = html || '<tr><td colspan="9" class="empty-msg">Nenhum chamado cadastrado</td></tr>';
-        }
-
-        function renderPrestadores() {
-            let html = '';
-            const prestadoresOrdenados = [...prestadores].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
-            prestadoresOrdenados.forEach(p => {
-                html += `<tr>
-                    <td><strong>${p.nome}</strong></td>
-                    <td>${p.especialidade || '-'}</td>
-                    <td>${p.contato || '-'}</td>
-                    <td>
-                        <span class="icon-action" onclick="openModal('prestador', '${p.id}')">✏️</span>
-                        <span class="icon-action" onclick="deleteItem('prestador', '${p.id}')">🗑️</span>
-                    </td>
-                </tr>`;
-            });
-            document.getElementById('prestadoresBody').innerHTML = html || '<tr><td colspan="4" class="empty-msg">Nenhum prestador cadastrado</td></tr>';
-        }
-
-        function renderCompras() {
-            let html = '';
-            compras.forEach(c => {
-                const statusColors = { Entregue: ['#d4edda','#155724'], Pendente: ['#fff3cd','#856404'], Cancelado: ['#f8d7da','#721c24'] };
-                const col = statusColors[c.status] || ['#eee','#333'];
-                const obsResumo = c.observacoes ? (c.observacoes.length > 30 ? c.observacoes.substring(0,30) + '...' : c.observacoes) : '-';
-                html += `<tr>
-                    <td>${c.item}</td>
-                    <td>${c.fornecedor}</td>
-                    <td>${c.quantidade || 1}</td>
-                    <td>R$ ${(c.valorUnitario || 0).toFixed(2)}</td>
-                    <td>${c.dataPedido || '-'}</td>
-                    <td>${c.dataEntrega || '-'}</td>
-                    <td><strong>R$ ${(c.valor || 0).toFixed(2)}</strong></td>
-                    <td><span class="status-badge" style="background:${col[0]};color:${col[1]}">${c.status}</span></td>
-                    <td title="${c.observacoes || ''}">${obsResumo}</td>
-                    <td>
-                        <span class="icon-action" onclick="openModal('compra', '${c.id}')">✏️</span>
-                        <span class="icon-action" onclick="deleteItem('compra', '${c.id}')">🗑️</span>
-                    </td>
-                </tr>`;
-            });
-            document.getElementById('comprasBody').innerHTML = html || '<tr><td colspan="10" class="empty-msg">Nenhuma compra cadastrada</td></tr>';
-        }
-
-        function renderDespesas() {
-            let html = '';
-            despesas.forEach(d => {
-                html += `<tr>
-                    <td>${d.descricao}</td>
-                    <td>${d.categoria}</td>
-                    <td>${d.unidadeId ? getUnidadeNome(d.unidadeId) : 'Geral'}</td>
-                    <td>${d.data || '-'}</td>
-                    <td>R$ ${(d.valor || 0).toFixed(2)}</td>
-                    <td>${d.fornecedor || '-'}</td>
-                    <td>
-                        <span class="icon-action" onclick="openModal('despesa', '${d.id}')">✏️</span>
-                        <span class="icon-action" onclick="deleteItem('despesa', '${d.id}')">🗑️</span>
-                    </td>
-                </tr>`;
-            });
-            document.getElementById('despesasBody').innerHTML = html || '<tr><td colspan="7" class="empty-msg">Nenhuma despesa cadastrada</td></tr>';
-        }
-
-        function renderAll() {
-            renderLocais();
-            renderManutencoes();
-            renderHistoricoManutencao();
-            renderChamados();
-            renderPrestadores();
-            renderCompras();
-            renderDespesas();
-            renderDashboard();
-        }
-
-        // ============ RELATÓRIOS ============
-        function tabelaHTML(headers, rows) {
-            let html = '<div class="table-container" style="margin-top:1rem;"><table><thead><tr>';
-            headers.forEach(h => html += `<th>${h}</th>`);
-            html += '</tr></thead><tbody>';
-            rows.forEach(r => {
-                html += '<tr>';
-                r.forEach(c => html += `<td>${c}</td>`);
-                html += '</tr>';
-            });
-            html += '</tbody></table></div>';
-            return html;
-        }
-
-        function relPendencias() {
-            const rows = manutencoes.filter(m => {
-                const d = calcularDias(m.proximaData);
-                return statusPorDias(d) !== 'Em dia';
-            }).map(m => {
-                const dias = calcularDias(m.proximaData);
-                const ativo = getAtivo(m.ativoId);
-                return [ativo?.nome || 'N/A', getLocalAtivo(m.ativoId), m.tipo, m.proximaData, dias + ' dias', statusPorDias(dias), m.critico ? '⚠️ Sim' : 'Não'];
-            });
-            document.getElementById('relatorioOutput').innerHTML = '<h2 class="section-title">📄 Pendências de Manutenção</h2>' +
-                tabelaHTML(['Ativo','Local','Tipo','Próxima','Dias','Status','Crítico'], rows);
-            showToast('✅ Relatório gerado!');
-        }
-
-        function relDespesasUnidade() {
-            const totais = {};
-            unidades.forEach(u => totais[u.id] = 0);
-            let geral = 0;
-            despesas.forEach(d => {
-                if (d.unidadeId) totais[d.unidadeId] = (totais[d.unidadeId] || 0) + (d.valor || 0);
-                else geral += (d.valor || 0);
-            });
-            const rows = unidades.map(u => [u.nome, 'R$ ' + (totais[u.id]||0).toFixed(2)]);
-            rows.push(['Geral (sem unidade)', 'R$ ' + geral.toFixed(2)]);
-            const total = despesas.reduce((s,d)=>s+(d.valor || 0),0);
-            rows.push(['<strong>TOTAL</strong>', '<strong>R$ ' + total.toFixed(2) + '</strong>']);
-            document.getElementById('relatorioOutput').innerHTML = '<h2 class="section-title">💰 Despesas por Unidade</h2>' +
-                tabelaHTML(['Unidade','Total Gasto'], rows);
-            showToast('✅ Relatório gerado!');
-        }
-
-        function relChamadosPrestador() {
-            const contagem = {};
-            chamados.forEach(c => {
-                const nome = getPrestadorNome(c.prestadorId);
-                if (!contagem[nome]) contagem[nome] = { total: 0, abertos: 0, concluidos: 0 };
-                contagem[nome].total++;
-                if (c.status === 'Concluído') contagem[nome].concluidos++;
-                else contagem[nome].abertos++;
-            });
-            const rows = Object.entries(contagem).map(([nome, c]) => [nome, c.total, c.abertos, c.concluidos]);
-            document.getElementById('relatorioOutput').innerHTML = '<h2 class="section-title">👷 Chamados por Prestador</h2>' +
-                tabelaHTML(['Prestador','Total','Abertos/Andamento','Concluídos'], rows.length ? rows : [['Nenhum chamado registrado','-','-','-']]);
-            showToast('✅ Relatório gerado!');
-        }
-
-        function relAtivosLocal() {
-            const rows = ativos.map(a => [a.nome, getLocalAtivo(a.id), a.categoria, a.critico ? '⚠️ Sim' : 'Não', a.status]);
-            document.getElementById('relatorioOutput').innerHTML = '<h2 class="section-title">🏢 Ativos por Local</h2>' +
-                tabelaHTML(['Equipamento','Local Completo','Categoria','Crítico','Status'], rows);
-            showToast('✅ Relatório gerado!');
-        }
-
-        // ============ EXPORTAÇÃO ============
-        function exportarTudo() {
-            const wb = XLSX.utils.book_new();
-
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(unidades.map(u => ({ID:u.id, Unidade:u.nome}))), 'Unidades');
-
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(ambientes.map(a => {
-                const andar = getAndar(a.andarId);
-                return { Unidade: andar ? getUnidadeNome(andar.unidadeId) : '', Andar: andar?.nome || '', Ambiente: a.nome };
-            })), 'Locais');
-
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(ativos.map(a => ({
-                Equipamento: a.nome, Local: getLocalAtivo(a.id), Categoria: a.categoria,
-                'Marca/Modelo': a.marca, 'Data Compra': a.dataCompra, Crítico: a.critico ? 'Sim' : 'Não', Status: a.status
-            }))), 'Ativos');
-
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(manutencoes.map(m => {
-                const dias = calcularDias(m.proximaData);
-                return {
-                    Ativo: getAtivo(m.ativoId)?.nome || '', Local: getLocalAtivo(m.ativoId), Tipo: m.tipo,
-                    'Última Manutenção': m.ultimaData, 'Próxima Manutenção': m.proximaData,
-                    'Dias Restantes': dias, Status: statusPorDias(dias), Prestador: getPrestadorNome(m.prestadorId),
-                    Crítico: m.critico ? 'Sim' : 'Não', Observações: m.observacoes
-                };
-            })), 'Manutencoes');
-
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(historicoManutencoes.map(h => ({
-                Ativo: getAtivo(h.ativoId)?.nome || '', Local: getLocalAtivo(h.ativoId), 'Data Realizada': h.data,
-                Tipo: h.tipo, Prestador: getPrestadorNome(h.prestadorId), Observações: h.observacoes
-            }))), 'Historico_Manutencoes');
-
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(chamados.map(c => ({
-                Local: getLocalCompleto(c.ambienteId), Ativo: c.ativoId ? getAtivo(c.ativoId)?.nome : '',
-                Descrição: c.descricao, Tipo: c.tipo, Solicitante: c.solicitante, Prestador: getPrestadorNome(c.prestadorId),
-                'Data Abertura': c.dataAbertura, 'Data Conclusão': c.dataConclusao, Status: c.status
-            }))), 'Chamados');
-
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(prestadores.map(p => ({
-                Nome: p.nome, Especialidade: p.especialidade, Contato: p.contato
-            }))), 'Prestadores');
-
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(compras.map(c => ({
-                Item: c.item, Fornecedor: c.fornecedor, Quantidade: c.quantidade || 1,
-                'Valor Unitário': c.valorUnitario || 0, 'Data Pedido': c.dataPedido,
-                'Data Entrega': c.dataEntrega, 'Valor Total': c.valor, Status: c.status, Observações: c.observacoes || ''
-            }))), 'Compras');
-
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(despesas.map(d => ({
-                Descrição: d.descricao, Categoria: d.categoria, Unidade: d.unidadeId ? getUnidadeNome(d.unidadeId) : 'Geral',
-                Data: d.data, Valor: d.valor, Fornecedor: d.fornecedor
-            }))), 'Despesas');
-
-            XLSX.writeFile(wb, `Sistema_Campo_Incorporadora_${new Date().toISOString().split('T')[0]}.xlsx`);
-            showToast('✅ Relatório completo exportado!');
-        }
-
-        // ============ INIT ============
-        (function iniciarSistema() {
-            const creds = carregarCredenciaisSalvas();
-            if (creds) {
-                AIRTABLE_TOKEN = creds.token;
-                AIRTABLE_BASE_ID = creds.baseId;
-                document.getElementById('configLoading').style.display = 'block';
-                loadData().then(() => {
-                    document.getElementById('configScreen').style.display = 'none';
-                    document.getElementById('appContainer').style.display = 'flex';
-                }).catch(e => {
-                    document.getElementById('configLoading').style.display = 'none';
-                    document.getElementById('configError').textContent = '❌ ' + e.message + ' — verifique suas credenciais.';
-                });
-            }
-        })();
-    </script>
+    <nav class="sb-nav">
+      <div class="sb-sec">Principal</div>
+      <div class="nav-item on" data-tab="dashboard" onclick="goTab('dashboard',this)"><i class="ti ti-layout-dashboard"></i>Dashboard</div>
+      <div class="nav-item" data-tab="locais" onclick="goTab('locais',this)"><i class="ti ti-map-pin"></i>Locais</div>
+      <div class="nav-item" data-tab="ativos" onclick="goTab('ativos',this)"><i class="ti ti-device-desktop"></i>Ativos<span class="nbadge g" id="nb-ativos" style="display:none"></span></div>
+      <div class="nav-item" data-tab="manutencao" onclick="goTab('manutencao',this)"><i class="ti ti-tool"></i>Manutenção<span class="nbadge" id="nb-man"></span></div>
+      <div class="sb-sec">Operacional</div>
+      <div class="nav-item" data-tab="chamados" onclick="goTab('chamados',this)"><i class="ti ti-clipboard-list"></i>Chamados / OS<span class="nbadge a" id="nb-cham"></span></div>
+      <div class="nav-item" data-tab="prestadores" onclick="goTab('prestadores',this)"><i class="ti ti-users"></i>Prestadores</div>
+      <div class="nav-item" data-tab="compras" onclick="goTab('compras',this)"><i class="ti ti-shopping-cart"></i>Compras</div>
+      <div class="nav-item" data-tab="despesas" onclick="goTab('despesas',this)"><i class="ti ti-cash"></i>Despesas</div>
+      <div class="sb-sec">Análise</div>
+      <div class="nav-item" data-tab="relatorios" onclick="goTab('relatorios',this)"><i class="ti ti-chart-bar"></i>Relatórios</div>
+      <div class="nav-item" data-tab="mobiliario" onclick="goTab('mobiliario',this)"><i class="ti ti-armchair"></i>Mobiliário<span class="nbadge g">Novo</span></div>
+    </nav>
+    <div class="sb-foot">
+      <div class="sb-av">JR</div>
+      <div><div class="sb-nm">Júnior Rocha</div><div class="sb-rl">Supervisão de Manutenção</div></div>
+      <i class="ti ti-logout sb-logout" title="Sair" onclick="doLogout()"></i>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-l">
+        <div class="topbar-title" id="ttitle">Dashboard</div>
+        <div class="topbar-sub" id="tsub">Visão geral · <span id="ulabel">Buritis</span></div>
+      </div>
+      <div class="topbar-r">
+        <div class="sw"><i class="ti ti-search"></i><input class="search" id="srch" placeholder="Buscar..."></div>
+        <div class="tbtn" title="Alertas"><i class="ti ti-bell"></i><div class="rdot" id="rdot"></div></div>
+      </div>
+    </header>
+
+    <div class="cw">
+
+      <!-- DASHBOARD -->
+      <div class="tab on" id="tab-dashboard">
+        <div id="dash-alert"></div>
+        <div class="kpi-grid" id="dash-kpi">
+          <div class="kpi"><div class="loading"><div class="spin"></div></div></div>
+          <div class="kpi"><div class="loading"><div class="spin"></div></div></div>
+          <div class="kpi"><div class="loading"><div class="spin"></div></div></div>
+          <div class="kpi"><div class="loading"><div class="spin"></div></div></div>
+        </div>
+        <div class="g2">
+          <div class="card"><div class="ch"><span class="ct">Alertas de Manutenção (7 dias)</span><span class="ca" onclick="goTab('manutencao',document.querySelector('[data-tab=manutencao]'))">Ver todas →</span></div><div id="dash-man"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+          <div class="card"><div class="ch"><span class="ct">Prestadores</span><span class="ca" onclick="goTab('prestadores',document.querySelector('[data-tab=prestadores]'))">Ver todos →</span></div><div id="dash-prest"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+        </div>
+        <div class="g2e">
+          <div class="card"><div class="ch"><span class="ct">Chamados Abertos</span><span class="ca" onclick="goTab('chamados',document.querySelector('[data-tab=chamados]'))">Ver todos →</span></div><div id="dash-cham"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+          <div class="card"><div class="ch"><span class="ct">Últimas Despesas</span><span class="ca" onclick="goTab('despesas',document.querySelector('[data-tab=despesas]'))">Ver todas →</span></div><div id="dash-desp"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+        </div>
+      </div>
+
+      <!-- LOCAIS -->
+      <div class="tab" id="tab-locais">
+        <div class="ph"><div><h2>Locais</h2><p>Unidades, andares e ambientes cadastrados</p></div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-s" onclick="openM('m-andar')"><i class="ti ti-plus"></i>Andar</button>
+            <button class="btn btn-p" onclick="openM('m-ambiente')"><i class="ti ti-plus"></i>Ambiente</button>
+          </div>
+        </div>
+        <div class="card"><div class="ch"><span class="ct">Ambientes Cadastrados</span></div><div id="tbl-ambientes"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+        <div class="g2e">
+          <div class="card"><div class="ch"><span class="ct">Andares</span></div><div id="tbl-andares"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+          <div class="card"><div class="ch"><span class="ct">Unidades</span></div><div id="tbl-unidades"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+        </div>
+      </div>
+
+      <!-- ATIVOS -->
+      <div class="tab" id="tab-ativos">
+        <div class="ph"><div><h2>Ativos / Equipamentos</h2><p>Equipamentos vinculados a ambientes</p></div>
+          <button class="btn btn-p" onclick="openM('m-ativo')"><i class="ti ti-plus"></i>Novo Ativo</button>
+        </div>
+        <div class="card"><div class="ch"><span class="ct">Todos os Ativos</span>
+          <div style="display:flex;gap:5px;flex-wrap:wrap" id="cat-filtros">
+            <span class="chip grn" style="cursor:pointer" onclick="filtroAtivos('')">Todos</span>
+            <span class="chip blu" style="cursor:pointer;opacity:.65" onclick="filtroAtivos('Ar Condicionado')">Ar-cond.</span>
+            <span class="chip amb" style="cursor:pointer;opacity:.65" onclick="filtroAtivos('Nobreak')">Nobreak</span>
+            <span class="chip red" style="cursor:pointer;opacity:.65" onclick="filtroAtivos('Extintor')">Extintor</span>
+            <span class="chip gry" style="cursor:pointer;opacity:.65" onclick="filtroAtivos('Impressora')">Impressora</span>
+          </div>
+        </div><div id="tbl-ativos"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+      </div>
+
+      <!-- MANUTENÇÃO -->
+      <div class="tab" id="tab-manutencao">
+        <div class="ph"><div><h2>Manutenção</h2><p>Cronograma preventivo por equipamento</p></div>
+          <button class="btn btn-p" onclick="openM('m-man')"><i class="ti ti-plus"></i>Nova Manutenção</button>
+        </div>
+        <div class="card"><div class="ch"><span class="ct">Cronograma</span>
+          <div style="display:flex;gap:5px">
+            <span class="chip red">Vencida</span><span class="chip amb">Próxima</span><span class="chip grn">Em dia</span>
+          </div>
+        </div><div id="tbl-man"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+        <div class="card"><div class="ch"><span class="ct">Histórico de Manutenções Realizadas</span><span class="ca" onclick="openM('m-hist')"><i class="ti ti-plus" style="font-size:11px"></i> Registrar</span></div><div id="tbl-hist"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+      </div>
+
+      <!-- CHAMADOS -->
+      <div class="tab" id="tab-chamados">
+        <div class="ph"><div><h2>Chamados / OS</h2><p>Ordens de serviço e ocorrências</p></div>
+          <button class="btn btn-p" onclick="openM('m-cham')"><i class="ti ti-plus"></i>Novo Chamado</button>
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct">Todos os Chamados</span>
+            <select class="fs" style="width:auto;padding:4px 8px;font-size:11px" id="cham-filter" onchange="loadChamados()">
+              <option value="">Todos os Status</option>
+              <option value="Aberto">Aberto</option>
+              <option value="Em andamento">Em andamento</option>
+              <option value="Concluído">Concluído</option>
+            </select>
+          </div>
+          <div id="tbl-cham"><div class="loading"><div class="spin"></div>Carregando...</div></div>
+        </div>
+      </div>
+
+      <!-- PRESTADORES -->
+      <div class="tab" id="tab-prestadores">
+        <div class="ph"><div><h2>Prestadores</h2><p>Empresas e técnicos parceiros</p></div>
+          <button class="btn btn-p" onclick="openM('m-prest')"><i class="ti ti-plus"></i>Novo Prestador</button>
+        </div>
+        <div class="card"><div class="ch"><span class="ct">Todos os Prestadores</span></div><div id="tbl-prest"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+      </div>
+
+      <!-- COMPRAS -->
+      <div class="tab" id="tab-compras">
+        <div class="ph"><div><h2>Compras</h2><p>Registro de materiais e equipamentos adquiridos</p></div>
+          <button class="btn btn-p" onclick="openM('m-comp')"><i class="ti ti-plus"></i>Nova Compra</button>
+        </div>
+        <div class="card"><div class="ch"><span class="ct">Histórico de Compras</span></div><div id="tbl-comp"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+      </div>
+
+      <!-- DESPESAS -->
+      <div class="tab" id="tab-despesas">
+        <div class="ph"><div><h2>Despesas</h2><p>Controle financeiro de manutenção</p></div>
+          <button class="btn btn-p" onclick="openM('m-desp')"><i class="ti ti-plus"></i>Nova Despesa</button>
+        </div>
+        <div class="card"><div class="ch"><span class="ct">Lançamentos</span></div><div id="tbl-desp"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+      </div>
+
+      <!-- RELATÓRIOS -->
+      <div class="tab" id="tab-relatorios">
+        <div class="ph"><div><h2>Relatórios</h2><p>Análises e indicadores de desempenho</p></div>
+          <button class="btn btn-s" onclick="exportExcel()"><i class="ti ti-file-spreadsheet"></i>Exportar Excel</button>
+        </div>
+        <div class="g2e">
+          <div class="card"><div class="ch"><span class="ct">Manutenções por Status</span></div><div id="rel-man" style="padding:14px"><div class="loading"><div class="spin"></div></div></div></div>
+          <div class="card"><div class="ch"><span class="ct">Despesas por Mês</span></div><div id="rel-desp" style="padding:14px"><div class="loading"><div class="spin"></div></div></div></div>
+        </div>
+        <div class="card"><div class="ch"><span class="ct">Resumo Geral</span></div><div id="rel-resumo" style="padding:14px"><div class="loading"><div class="spin"></div></div></div></div>
+        <div class="card"><div class="ch"><span class="ct">Ativos por Local</span></div><div id="rel-ativos" style="padding:14px"><div class="loading"><div class="spin"></div></div></div></div>
+      </div>
+
+      <!-- MOBILIÁRIO -->
+      <div class="tab" id="tab-mobiliario">
+        <div class="ph"><div><h2>Mobiliário / Infraestrutura</h2><p>Inventário completo de ativos por local e categoria</p></div>
+          <button class="btn btn-p" onclick="openM('m-ativo')"><i class="ti ti-plus"></i>Novo Item</button>
+        </div>
+        <div class="kpi-grid" id="mob-kpi"><div class="kpi"><div class="loading"><div class="spin"></div></div></div><div class="kpi"><div class="loading"><div class="spin"></div></div></div><div class="kpi"><div class="loading"><div class="spin"></div></div></div><div class="kpi"><div class="loading"><div class="spin"></div></div></div></div>
+        <div class="card">
+          <div class="ch"><span class="ct">Inventário Completo</span>
+            <div style="display:flex;gap:5px;flex-wrap:wrap">
+              <span class="chip grn" style="cursor:pointer" onclick="filtroMob('')">Todos</span>
+              <span class="chip blu" style="cursor:pointer;opacity:.65" onclick="filtroMob('Ar Condicionado')">Ar-cond.</span>
+              <span class="chip amb" style="cursor:pointer;opacity:.65" onclick="filtroMob('Nobreak')">Nobreak</span>
+              <span class="chip red" style="cursor:pointer;opacity:.65" onclick="filtroMob('Extintor')">Extintor</span>
+              <span class="chip gry" style="cursor:pointer;opacity:.65" onclick="filtroMob('Impressora')">Impressora</span>
+              <span class="chip gry" style="cursor:pointer;opacity:.65" onclick="filtroMob('Câmera')">Câmera</span>
+            </div>
+          </div>
+          <div id="tbl-mob"><div class="loading"><div class="spin"></div>Carregando...</div></div>
+        </div>
+      </div>
+
+    </div><!-- /cw -->
+  </div><!-- /main -->
+</div>
+</div><!-- /app -->
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- ═══════ MODAIS ═══════ -->
+
+<!-- Andar -->
+<div class="mo" id="m-andar"><div class="mb">
+  <div class="mh"><span class="mt">Novo Andar</span><span class="mx" onclick="closeM('m-andar')">×</span></div>
+  <div class="mbd">
+    <div class="fr">
+      <div class="fg"><label class="fl">Unidade *</label><select class="fs" id="f-and-uni"></select></div>
+      <div class="fg"><label class="fl">Nome do Andar *</label><input class="fi" id="f-and-nome" placeholder="ex: Térreo, 1° Andar"></div>
+    </div>
+  </div>
+  <div class="mf"><button class="btn btn-s" onclick="closeM('m-andar')">Cancelar</button><button class="btn btn-p" onclick="saveAndar()"><i class="ti ti-check"></i>Salvar</button></div>
+</div></div>
+
+<!-- Ambiente -->
+<div class="mo" id="m-ambiente"><div class="mb">
+  <div class="mh"><span class="mt">Novo Ambiente</span><span class="mx" onclick="closeM('m-ambiente')">×</span></div>
+  <div class="mbd">
+    <div class="fr">
+      <div class="fg"><label class="fl">Andar *</label><select class="fs" id="f-amb-andar"></select></div>
+      <div class="fg"><label class="fl">Nome do Ambiente *</label><input class="fi" id="f-amb-nome" placeholder="ex: Sala de Reuniões"></div>
+    </div>
+  </div>
+  <div class="mf"><button class="btn btn-s" onclick="closeM('m-ambiente')">Cancelar</button><button class="btn btn-p" onclick="saveAmbiente()"><i class="ti ti-check"></i>Salvar</button></div>
+</div></div>
+
+<!-- Ativo -->
+<div class="mo" id="m-ativo"><div class="mb">
+  <div class="mh"><span class="mt">Novo Ativo / Equipamento</span><span class="mx" onclick="closeM('m-ativo')">×</span></div>
+  <div class="mbd">
+    <div class="fg"><label class="fl">Nome do Equipamento *</label><input class="fi" id="f-at-nome" placeholder="ex: AC Split 12.000 BTU Electrolux"></div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Categoria</label>
+        <select class="fs" id="f-at-cat">
+          <option>Ar Condicionado</option><option>Nobreak</option><option>Extintor</option>
+          <option>Impressora</option><option>Câmera</option><option>Mobiliário</option>
+          <option>Elétrico</option><option>Hidráulico</option><option>Outros</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">Ambiente</label><select class="fs" id="f-at-amb"></select></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Marca / Modelo</label><input class="fi" id="f-at-marca" placeholder="ex: Electrolux VI12F"></div>
+      <div class="fg"><label class="fl">Data de Compra</label><input class="fi" id="f-at-data" type="date"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Status</label>
+        <select class="fs" id="f-at-status">
+          <option>Ativo</option><option>Inativo</option><option>Em manutenção</option>
+        </select>
+      </div>
+      <div class="fg" style="display:flex;align-items:flex-end;padding-bottom:2px">
+        <div class="cb-row"><input type="checkbox" id="f-at-crit"><label class="fl" for="f-at-crit" style="margin:0;cursor:pointer">Equipamento Crítico</label></div>
+      </div>
+    </div>
+  </div>
+  <div class="mf"><button class="btn btn-s" onclick="closeM('m-ativo')">Cancelar</button><button class="btn btn-p" onclick="saveAtivo()"><i class="ti ti-check"></i>Cadastrar</button></div>
+</div></div>
+
+<!-- Manutenção -->
+<div class="mo" id="m-man"><div class="mb">
+  <div class="mh"><span class="mt">Nova Manutenção Programada</span><span class="mx" onclick="closeM('m-man')">×</span></div>
+  <div class="mbd">
+    <div class="fg"><label class="fl">Título *</label><input class="fi" id="f-man-tit" placeholder="ex: Limpeza filtros AC Split"></div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Ativo *</label><select class="fs" id="f-man-at"></select></div>
+      <div class="fg"><label class="fl">Tipo</label>
+        <select class="fs" id="f-man-tipo"><option>Preventiva</option><option>Corretiva</option><option>Preditiva</option></select>
+      </div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Última Manutenção</label><input class="fi" id="f-man-ult" type="date"></div>
+      <div class="fg"><label class="fl">Próxima Manutenção *</label><input class="fi" id="f-man-prox" type="date"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Prestador</label><select class="fs" id="f-man-prest"></select></div>
+      <div class="fg" style="display:flex;align-items:flex-end;padding-bottom:2px">
+        <div class="cb-row"><input type="checkbox" id="f-man-crit"><label class="fl" for="f-man-crit" style="margin:0;cursor:pointer">Crítico</label></div>
+      </div>
+    </div>
+    <div class="fg"><label class="fl">Observações</label><textarea class="ft" id="f-man-obs"></textarea></div>
+  </div>
+  <div class="mf"><button class="btn btn-s" onclick="closeM('m-man')">Cancelar</button><button class="btn btn-p" onclick="saveMan()"><i class="ti ti-check"></i>Salvar</button></div>
+</div></div>
+
+<!-- Histórico -->
+<div class="mo" id="m-hist"><div class="mb">
+  <div class="mh"><span class="mt">Registrar Manutenção Realizada</span><span class="mx" onclick="closeM('m-hist')">×</span></div>
+  <div class="mbd">
+    <div class="fg"><label class="fl">Título *</label><input class="fi" id="f-hist-tit" placeholder="ex: Limpeza e revisão AC"></div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Ativo *</label><select class="fs" id="f-hist-at"></select></div>
+      <div class="fg"><label class="fl">Data Realizada *</label><input class="fi" id="f-hist-data" type="date"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Tipo</label>
+        <select class="fs" id="f-hist-tipo"><option>Preventiva</option><option>Corretiva</option><option>Preditiva</option></select>
+      </div>
+      <div class="fg"><label class="fl">Prestador</label><select class="fs" id="f-hist-prest"></select></div>
+    </div>
+    <div class="fg"><label class="fl">Observações</label><textarea class="ft" id="f-hist-obs"></textarea></div>
+  </div>
+  <div class="mf"><button class="btn btn-s" onclick="closeM('m-hist')">Cancelar</button><button class="btn btn-p" onclick="saveHist()"><i class="ti ti-check"></i>Registrar</button></div>
+</div></div>
+
+<!-- Chamado -->
+<div class="mo" id="m-cham"><div class="mb">
+  <div class="mh"><span class="mt">Novo Chamado / OS</span><span class="mx" onclick="closeM('m-cham')">×</span></div>
+  <div class="mbd">
+    <div class="fg"><label class="fl">Descrição *</label><input class="fi" id="f-ch-desc" placeholder="ex: Vazamento na torneira da copa"></div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Ambiente</label><select class="fs" id="f-ch-amb"></select></div>
+      <div class="fg"><label class="fl">Ativo (opcional)</label><select class="fs" id="f-ch-at"><option value="">— nenhum —</option></select></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Tipo</label>
+        <select class="fs" id="f-ch-tipo"><option>Corretiva</option><option>Preventiva</option><option>Melhoria</option><option>Urgência</option></select>
+      </div>
+      <div class="fg"><label class="fl">Status</label>
+        <select class="fs" id="f-ch-status"><option>Aberto</option><option>Em andamento</option><option>Concluído</option></select>
+      </div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Solicitante</label><input class="fi" id="f-ch-sol" placeholder="Nome de quem abriu"></div>
+      <div class="fg"><label class="fl">Prestador</label><select class="fs" id="f-ch-prest"></select></div>
+    </div>
+    <div class="fg"><label class="fl">Observações</label><textarea class="ft" id="f-ch-obs"></textarea></div>
+  </div>
+  <div class="mf"><button class="btn btn-s" onclick="closeM('m-cham')">Cancelar</button><button class="btn btn-p" onclick="saveCham()"><i class="ti ti-check"></i>Abrir Chamado</button></div>
+</div></div>
+
+<!-- Prestador -->
+<div class="mo" id="m-prest"><div class="mb">
+  <div class="mh"><span class="mt">Novo Prestador</span><span class="mx" onclick="closeM('m-prest')">×</span></div>
+  <div class="mbd">
+    <div class="fg"><label class="fl">Nome / Empresa *</label><input class="fi" id="f-pr-nome" placeholder="ex: Refrigeração Pinguim"></div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Especialidade</label><input class="fi" id="f-pr-esp" placeholder="ex: Ar-condicionado"></div>
+      <div class="fg"><label class="fl">Contato (tel/email)</label><input class="fi" id="f-pr-cont" placeholder="(66) 9 9999-9999"></div>
+    </div>
+  </div>
+  <div class="mf"><button class="btn btn-s" onclick="closeM('m-prest')">Cancelar</button><button class="btn btn-p" onclick="savePrest()"><i class="ti ti-check"></i>Salvar</button></div>
+</div></div>
+
+<!-- Compra -->
+<div class="mo" id="m-comp"><div class="mb">
+  <div class="mh"><span class="mt">Nova Compra / Requisição</span><span class="mx" onclick="closeM('m-comp')">×</span></div>
+  <div class="mbd">
+    <div class="fg"><label class="fl">Item *</label><input class="fi" id="f-cp-item" placeholder="ex: Filtro AC 12.000 BTU"></div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Fornecedor</label><input class="fi" id="f-cp-forn"></div>
+      <div class="fg"><label class="fl">Status</label>
+        <select class="fs" id="f-cp-status"><option>Solicitado</option><option>Aprovado</option><option>Em trânsito</option><option>Recebido</option></select>
+      </div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Qtd</label><input class="fi" id="f-cp-qtd" type="number" min="1" value="1"></div>
+      <div class="fg"><label class="fl">Valor Unitário (R$)</label><input class="fi" id="f-cp-vl" type="number" step="0.01" placeholder="0,00"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Data Pedido</label><input class="fi" id="f-cp-dp" type="date"></div>
+      <div class="fg"><label class="fl">Data Entrega Prevista</label><input class="fi" id="f-cp-de" type="date"></div>
+    </div>
+    <div class="fg"><label class="fl">Observações</label><textarea class="ft" id="f-cp-obs"></textarea></div>
+  </div>
+  <div class="mf"><button class="btn btn-s" onclick="closeM('m-comp')">Cancelar</button><button class="btn btn-p" onclick="saveComp()"><i class="ti ti-check"></i>Salvar</button></div>
+</div></div>
+
+<!-- Despesa -->
+<div class="mo" id="m-desp"><div class="mb">
+  <div class="mh"><span class="mt">Nova Despesa</span><span class="mx" onclick="closeM('m-desp')">×</span></div>
+  <div class="mbd">
+    <div class="fg"><label class="fl">Descrição *</label><input class="fi" id="f-dp-desc" placeholder="ex: Manutenção AC - Refrigeração Pinguim"></div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Valor (R$) *</label><input class="fi" id="f-dp-vl" type="number" step="0.01" placeholder="0,00"></div>
+      <div class="fg"><label class="fl">Data *</label><input class="fi" id="f-dp-data" type="date"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Categoria</label>
+        <select class="fs" id="f-dp-cat"><option>Manutenção</option><option>Material</option><option>Serviço</option><option>Compra</option><option>Outros</option></select>
+      </div>
+      <div class="fg"><label class="fl">Unidade</label><select class="fs" id="f-dp-uni"></select></div>
+    </div>
+    <div class="fg"><label class="fl">Fornecedor / Prestador</label><input class="fi" id="f-dp-forn"></div>
+  </div>
+  <div class="mf"><button class="btn btn-s" onclick="closeM('m-desp')">Cancelar</button><button class="btn btn-p" onclick="saveDesp()"><i class="ti ti-check"></i>Lançar</button></div>
+</div></div>
+
+<script>
+// ══════════════════════════════════════════
+//  CONFIG
+// ══════════════════════════════════════════
+const BASE_ID = 'app6FRO94lCtpAfXW';
+const TBL = {
+  unidades:'tblQIiulLhGvSlc5j',
+  prestadores:'tblvdtFg1SI2GXmGU',
+  andares:'tblnaqWSeDDKYQhcW',
+  ambientes:'tbljTc0rmF8RiOJkr',
+  ativos:'tbl1SsWbJE3l5xutZ',
+  manutencoes:'tblgjuSTgEqifxRwE',
+  historico:'tblV9JbbgltZ50ygp',
+  chamados:'tblNNI1ODUUncxPM1',
+  compras:'tbl74SsHKMxTzQnkO',
+  despesas:'tblrMDMW8DIqF1ntb',
+};
+
+let PAT = '';
+let currentUnit = 'Buritis';
+let currentTab  = 'dashboard';
+
+// Caches
+const C = { unidades:{}, andares:{}, ambientes:{}, prestadores:{}, ativos:{} };
+const dataCache = {};
+
+function hdrs(){ return { 'Authorization':'Bearer '+PAT, 'Content-Type':'application/json' }; }
+function atURL(tbl,qs=''){ return `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(tbl)}${qs}`; }
+
+// ══════════════════════════════════════════
+//  LOGIN
+// ══════════════════════════════════════════
+window.addEventListener('DOMContentLoaded',()=>{
+  const saved = localStorage.getItem('campo_pat');
+  if(saved){ PAT=saved; showApp(); }
+  document.getElementById('pat-input').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
+});
+
+async function doLogin(){
+  const pat = document.getElementById('pat-input').value.trim();
+  if(!pat){ showErr('Insira o Personal Access Token.'); return; }
+  PAT = pat;
+  const btn = document.getElementById('login-btn');
+  btn.disabled=true;
+  document.getElementById('login-btn-txt').textContent='Conectando...';
+  document.getElementById('login-err').style.display='none';
+  try{
+    const res = await fetch(atURL(TBL.unidades,'?maxRecords=1'),{headers:hdrs()});
+    if(!res.ok) throw new Error('Token inválido ('+res.status+')');
+    localStorage.setItem('campo_pat',PAT);
+    showApp();
+  } catch(e){
+    showErr(e.message||'Erro de conexão. Verifique o token.');
+    PAT='';
+    btn.disabled=false;
+    document.getElementById('login-btn-txt').textContent='Conectar e Entrar';
+  }
+}
+
+function showErr(msg){ const el=document.getElementById('login-err'); el.textContent=msg; el.style.display='block'; }
+
+async function showApp(){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+  await buildCache();
+  populateSelects();
+  loadTab('dashboard');
+}
+
+function doLogout(){
+  localStorage.removeItem('campo_pat');
+  PAT='';
+  dataCache && Object.keys(dataCache).forEach(k=>delete dataCache[k]);
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('app').style.display='none';
+  document.getElementById('pat-input').value='';
+}
+
+// ══════════════════════════════════════════
+//  CACHE
+// ══════════════════════════════════════════
+async function buildCache(){
+  const [unis, ands, ambs, prest, atv] = await Promise.all([
+    fetchAll(TBL.unidades), fetchAll(TBL.andares),
+    fetchAll(TBL.ambientes), fetchAll(TBL.prestadores), fetchAll(TBL.ativos),
+  ]);
+  unis.forEach(r=>{ C.unidades[r.id]={name:r.fields.Nome||'—'}; });
+  ands.forEach(r=>{ C.andares[r.id]={name:r.fields.Nome||'—', uni:(r.fields.Unidade||[])[0]||''}; });
+  ambs.forEach(r=>{ C.ambientes[r.id]={name:r.fields.Nome||'—', andar:(r.fields.Andar||[])[0]||''}; });
+  prest.forEach(r=>{ C.prestadores[r.id]={name:r.fields.Nome||'—', esp:r.fields.Especialidade||'—', cont:r.fields.Contato||'—'}; });
+  atv.forEach(r=>{ C.ativos[r.id]={name:r.fields.Nome||'—', cat:r.fields.Categoria||'—', amb:(r.fields.Ambiente||[])[0]||''}; });
+}
+
+function rName(cache,id){ return cache[id]?.name||'—'; }
+function ambLocal(ambId){
+  const a = C.ambientes[ambId]; if(!a) return '—';
+  const and = C.andares[a.andar]; if(!and) return a.name;
+  const uni = C.unidades[and.uni]; if(!uni) return and.name+' / '+a.name;
+  return uni.name+' · '+and.name+' · '+a.name;
+}
+function ambUnit(ambId){
+  const a=C.ambientes[ambId]; if(!a) return '';
+  const and=C.andares[a.andar]; if(!and) return '';
+  return C.unidades[and.uni]?.name||'';
+}
+
+// ══════════════════════════════════════════
+//  SELECTS
+// ══════════════════════════════════════════
+function populateSelects(){
+  const unis = Object.entries(C.unidades);
+  const ands = Object.entries(C.andares);
+  const ambs = Object.entries(C.ambientes);
+  const prests = Object.entries(C.prestadores);
+  const atvs = Object.entries(C.ativos);
+
+  sel('f-and-uni', unis.map(([id,v])=>({id,name:v.name})));
+  sel('f-amb-andar', ands.map(([id,v])=>({id,name:rName(C.unidades,v.uni)+' / '+v.name})));
+  sel('f-at-amb', ambs.map(([id,v])=>({id,name:ambLocal(id)})));
+  sel('f-man-at', atvs.map(([id,v])=>({id,name:v.name+' ('+v.cat+')'})));
+  selOpt('f-man-prest', prests.map(([id,v])=>({id,name:v.name})));
+  sel('f-hist-at', atvs.map(([id,v])=>({id,name:v.name+' ('+v.cat+')'})));
+  selOpt('f-hist-prest', prests.map(([id,v])=>({id,name:v.name})));
+  sel('f-ch-amb', ambs.map(([id,v])=>({id,name:ambLocal(id)})));
+  selOpt('f-ch-at', [null,...atvs.map(([id,v])=>({id,name:v.name}))]);
+  selOpt('f-ch-prest', prests.map(([id,v])=>({id,name:v.name})));
+  sel('f-dp-uni', unis.map(([id,v])=>({id,name:v.name})));
+}
+
+function sel(id,items){
+  const el=document.getElementById(id); if(!el) return;
+  el.innerHTML=items.map(x=>x?`<option value="${x.id}">${x.name}</option>`:`<option value="">— nenhum —</option>`).join('');
+}
+function selOpt(id,items){ sel(id,items); }
+
+// ══════════════════════════════════════════
+//  FETCH
+// ══════════════════════════════════════════
+async function fetchAll(tbl, filter=''){
+  const key=tbl+filter+currentUnit;
+  if(dataCache[key]&&Date.now()-dataCache[key].ts<60000) return dataCache[key].d;
+  let all=[],off='';
+  try{
+    do{
+      let qs='?pageSize=100'+(filter?'&filterByFormula='+encodeURIComponent(filter):'')+(off?'&offset='+off:'');
+      const res=await fetch(atURL(tbl,qs),{headers:hdrs()});
+      const j=await res.json();
+      all=[...all,...(j.records||[])];
+      off=j.offset||'';
+    } while(off);
+    dataCache[key]={d:all,ts:Date.now()};
+  } catch(e){console.error(tbl,e);}
+  return all;
+}
+
+async function create(tbl,fields){
+  const res=await fetch(atURL(tbl),{method:'POST',headers:hdrs(),body:JSON.stringify({records:[{fields}]})});
+  if(!res.ok){ const j=await res.json(); throw new Error(j.error?.message||'Erro '+res.status); }
+  Object.keys(dataCache).forEach(k=>{if(k.startsWith(tbl)) delete dataCache[k];});
+  await buildCache(); populateSelects();
+  return res.json();
+}
+
+// ══════════════════════════════════════════
+//  UTILS
+// ══════════════════════════════════════════
+function filterUnit(recs){
+  if(currentUnit==='Ambas') return recs;
+  return recs.filter(r=>{
+    const ids=(r.fields.Ambiente||r.fields.Unidade||[]);
+    if(!ids.length) return true;
+    if(r.fields.Unidade){
+      const names=ids.map(id=>C.unidades[id]?.name||'');
+      return names.includes(currentUnit);
+    }
+    return ids.some(aid=>ambUnit(aid)===currentUnit);
+  });
+}
+
+function chip(s,extra=''){
+  const m={
+    'Vencida':'red','Aberto':'red','Urgência':'red','Corretiva':'red',
+    'Pendente':'amb','Em andamento':'blu','Em manutenção':'amb','Próxima':'amb',
+    'Concluída':'grn','Concluído':'grn','Ativo':'grn','Em dia':'grn',
+    'Alta':'red','Média':'amb','Baixa':'grn',
+  };
+  return `<span class="chip ${m[s]||'gry'}">${s||'—'}</span>`;
+}
+
+function fDate(d){ if(!d) return '—'; return new Date(d+'T12:00:00').toLocaleDateString('pt-BR'); }
+function fCur(v){ if(!v&&v!==0) return '—'; return 'R$ '+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2}); }
+function inits(n){ if(!n) return '?'; return n.trim().split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase(); }
+function today(){ return new Date().toISOString().split('T')[0]; }
+function daysDiff(d){ const dt=new Date(d+'T12:00:00'); return Math.ceil((dt-new Date())/(1000*60*60*24)); }
+
+const TITLES={dashboard:'Dashboard',locais:'Locais',ativos:'Ativos',manutencao:'Manutenção',
+  chamados:'Chamados / OS',prestadores:'Prestadores',compras:'Compras',
+  despesas:'Despesas',relatorios:'Relatórios',mobiliario:'Mobiliário / Infraestrutura'};
+
+function goTab(tab,el){
+  document.querySelectorAll('.tab').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('on'));
+  document.getElementById('tab-'+tab).classList.add('on');
+  if(el) el.classList.add('on');
+  document.getElementById('ttitle').textContent=TITLES[tab]||tab;
+  document.getElementById('tsub').innerHTML=TITLES[tab]+' · <span id="ulabel">'+currentUnit+'</span>';
+  currentTab=tab;
+  loadTab(tab);
+}
+
+function setUnit(u,el){
+  currentUnit=u;
+  document.querySelectorAll('.uBtn').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  const ul=document.getElementById('ulabel'); if(ul) ul.textContent=u;
+  Object.keys(dataCache).forEach(k=>delete dataCache[k]);
+  loadTab(currentTab);
+}
+
+// ══════════════════════════════════════════
+//  LOADERS
+// ══════════════════════════════════════════
+async function loadTab(tab){
+  const m={dashboard:loadDash,locais:loadLocais,ativos:loadAtivos,manutencao:loadMan,
+    chamados:loadChamados,prestadores:loadPrest,compras:loadComp,despesas:loadDesp,
+    relatorios:loadRel,mobiliario:loadMob};
+  if(m[tab]) await m[tab]();
+}
+
+// Dashboard
+async function loadDash(){
+  const [man,cham,desp,prest,hist] = await Promise.all([
+    fetchAll(TBL.manutencoes), fetchAll(TBL.chamados), fetchAll(TBL.despesas),
+    fetchAll(TBL.prestadores), fetchAll(TBL.historico),
+  ]);
+  const mF=filterUnit(man), cF=filterUnit(cham), dF=filterUnit(desp);
+
+  // Alertas — proxima data nos próximos 7 dias ou já passou
+  const alertas=mF.filter(r=>{
+    const d=r.fields['Proxima Data']; if(!d) return false;
+    const diff=daysDiff(d); return diff<=7;
+  }).sort((a,b)=>daysDiff(a.fields['Proxima Data'])-daysDiff(b.fields['Proxima Data']));
+
+  const venc=alertas.filter(r=>daysDiff(r.fields['Proxima Data'])<=0).length;
+  const abr=cF.filter(r=>['Aberto','Em andamento'].includes(r.fields.Status)).length;
+  const now=new Date();
+  const despMes=dF.filter(r=>{
+    const d=r.fields.Data; if(!d) return false;
+    const dt=new Date(d); return dt.getMonth()===now.getMonth()&&dt.getFullYear()===now.getFullYear();
+  }).reduce((s,r)=>s+(Number(r.fields.Valor)||0),0);
+
+  document.getElementById('nb-man').textContent=venc||'✓';
+  document.getElementById('nb-cham').textContent=abr||'0';
+  const rd=document.getElementById('rdot'); rd.style.display=venc>0?'block':'none';
+
+  const aw=document.getElementById('dash-alert');
+  if(venc>0){
+    const ns=alertas.filter(r=>daysDiff(r.fields['Proxima Data'])<=0).slice(0,3).map(r=>{
+      const aid=(r.fields.Ativo||[])[0]; return C.ativos[aid]?.name||r.fields.Titulo||'—';
+    }).join(', ');
+    aw.innerHTML=`<div class="alert-bar"><i class="ti ti-alert-triangle"></i><span><strong>${venc} manutenção${venc>1?'ões':''} vencida${venc>1?'s':''}</strong> — ${ns}</span></div>`;
+  } else aw.innerHTML='';
+
+  document.getElementById('dash-kpi').innerHTML=`
+    <div class="kpi"><div class="kpi-top"><div class="kpi-ic red"><i class="ti ti-tool"></i></div></div><div class="kpi-val red">${venc}</div><div class="kpi-lbl">Manutenções Vencidas</div><div class="kpi-hint">${venc>0?'⚠ Ação necessária':'✓ Tudo em dia'}</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-ic amb"><i class="ti ti-clipboard-list"></i></div></div><div class="kpi-val amb">${abr}</div><div class="kpi-lbl">Chamados Abertos</div><div class="kpi-hint">${abr} pendente${abr!==1?'s':''}</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-ic grn"><i class="ti ti-cash"></i></div></div><div class="kpi-val grn">${fCur(despMes)}</div><div class="kpi-lbl">Despesas do Mês</div><div class="kpi-hint">${now.toLocaleString('pt-BR',{month:'long'})}/${now.getFullYear()}</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-ic tel"><i class="ti ti-device-desktop"></i></div></div><div class="kpi-val">${Object.keys(C.ativos).length}</div><div class="kpi-lbl">Ativos Cadastrados</div><div class="kpi-hint">${prest.length} prestadores</div></div>`;
+
+  document.getElementById('dash-man').innerHTML = alertas.length
+    ? `<table><thead><tr><th>Equipamento</th><th>Local</th><th>Próxima Manut.</th><th>Dias</th><th>Status</th></tr></thead><tbody>${alertas.slice(0,6).map(r=>{
+        const aid=(r.fields.Ativo||[])[0]; const atv=C.ativos[aid];
+        const local=atv?ambLocal(atv.amb):'—';
+        const diff=daysDiff(r.fields['Proxima Data']);
+        const st=diff<=0?'Vencida':diff<=3?'Crítica':'Próxima';
+        return `<tr><td><strong>${atv?.name||r.fields.Titulo||'—'}</strong></td><td style="font-size:10px">${local}</td><td>${fDate(r.fields['Proxima Data'])}</td><td style="font-weight:600;color:${diff<=0?'var(--red)':diff<=3?'var(--amber)':'var(--green)'}"><span>${diff<=0?Math.abs(diff)+' dias atrás':diff+' dias'}</span></td><td>${chip(st)}</td></tr>`;
+      }).join('')}</tbody></table>`
+    : '<div class="empty"><i class="ti ti-circle-check"></i><p>Nenhuma manutenção próxima</p></div>';
+
+  document.getElementById('dash-prest').innerHTML = prest.length
+    ? prest.slice(0,5).map(r=>`<div class="li"><div class="lav">${inits(r.fields.Nome)}</div><div><div class="ln">${r.fields.Nome||'—'}</div><div class="ls">${r.fields.Especialidade||'—'}</div></div>${r.fields.Contato?`<a class="la" href="tel:${r.fields.Contato}"><i class="ti ti-phone"></i></a>`:''}</div>`).join('')
+    : '<div class="empty"><i class="ti ti-users"></i><p>Nenhum prestador cadastrado</p></div>';
+
+  const abrCham=cF.filter(r=>['Aberto','Em andamento'].includes(r.fields.Status)).slice(0,5);
+  document.getElementById('dash-cham').innerHTML = abrCham.length
+    ? `<table><thead><tr><th>Descrição</th><th>Local</th><th>Tipo</th><th>Status</th></tr></thead><tbody>${abrCham.map(r=>{
+        const aid=(r.fields.Ambiente||[])[0];
+        return `<tr><td><strong>${r.fields.Descricao||'—'}</strong></td><td style="font-size:10px">${aid?ambLocal(aid):'—'}</td><td>${r.fields.Tipo||'—'}</td><td>${chip(r.fields.Status)}</td></tr>`;
+      }).join('')}</tbody></table>`
+    : '<div class="empty"><i class="ti ti-circle-check"></i><p>Nenhum chamado aberto</p></div>';
+
+  const ult=[...dF].reverse().slice(0,5);
+  document.getElementById('dash-desp').innerHTML = ult.length
+    ? `<table><thead><tr><th>Descrição</th><th>Valor</th><th>Data</th></tr></thead><tbody>${ult.map(r=>`<tr><td>${r.fields.Descricao||'—'}</td><td style="color:var(--green);font-weight:600">${fCur(r.fields.Valor)}</td><td>${fDate(r.fields.Data)}</td></tr>`).join('')}</tbody></table>`
+    : '<div class="empty"><i class="ti ti-cash"></i><p>Nenhuma despesa registrada</p></div>';
+}
+
+// Locais
+async function loadLocais(){
+  const [unis,ands,ambs]=await Promise.all([fetchAll(TBL.unidades),fetchAll(TBL.andares),fetchAll(TBL.ambientes)]);
+  document.getElementById('tbl-unidades').innerHTML=unis.length
+    ?`<table><thead><tr><th>Unidade</th></tr></thead><tbody>${unis.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td></tr>`).join('')}</tbody></table>`
+    :'<div class="empty"><i class="ti ti-building"></i><p>Nenhuma unidade</p></div>';
+  document.getElementById('tbl-andares').innerHTML=ands.length
+    ?`<table><thead><tr><th>Andar</th><th>Unidade</th></tr></thead><tbody>${ands.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${rName(C.unidades,(r.fields.Unidade||[])[0])}</td></tr>`).join('')}</tbody></table>`
+    :'<div class="empty"><i class="ti ti-layers"></i><p>Nenhum andar</p></div>';
+  document.getElementById('tbl-ambientes').innerHTML=ambs.length
+    ?`<table><thead><tr><th>Ambiente</th><th>Andar</th><th>Unidade</th></tr></thead><tbody>${ambs.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${rName(C.andares,(r.fields.Andar||[])[0])}</td><td>${ambUnit(r.id)||'—'}</td></tr>`).join('')}</tbody></table>`
+    :'<div class="empty"><i class="ti ti-door"></i><p>Nenhum ambiente</p></div>';
+}
+
+// Ativos
+let ativosData=[];
+async function loadAtivos(){
+  const recs=await fetchAll(TBL.ativos);
+  ativosData=currentUnit==='Ambas'?recs:recs.filter(r=>ambUnit((r.fields.Ambiente||[])[0])===currentUnit||!r.fields.Ambiente?.length);
+  renderAtivos(ativosData);
+}
+function filtroAtivos(cat){
+  renderAtivos(cat?ativosData.filter(r=>r.fields.Categoria===cat):ativosData);
+}
+function renderAtivos(data){
+  document.getElementById('tbl-ativos').innerHTML=data.length
+    ?`<table><thead><tr><th>Equipamento</th><th>Categoria</th><th>Local</th><th>Marca/Modelo</th><th>Compra</th><th>Status</th><th>Crítico</th></tr></thead><tbody>${data.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${r.fields.Categoria||'—'}</td><td style="font-size:10px">${ambLocal((r.fields.Ambiente||[])[0])}</td><td>${r.fields['Marca/Modelo']||'—'}</td><td>${fDate(r.fields['Data Compra'])}</td><td>${chip(r.fields.Status)}</td><td style="text-align:center">${r.fields.Crítico?'⚠️':''}</td></tr>`).join('')}</tbody></table>`
+    :'<div class="empty"><i class="ti ti-device-desktop"></i><p>Nenhum ativo cadastrado</p></div>';
+}
+
+// Manutenção
+async function loadMan(){
+  const [man,hist]=await Promise.all([fetchAll(TBL.manutencoes),fetchAll(TBL.historico)]);
+  const mF=currentUnit==='Ambas'?man:man.filter(r=>{
+    const aid=(r.fields.Ativo||[])[0]; return !aid||ambUnit(C.ativos[aid]?.amb)===currentUnit;
+  });
+  const hF=currentUnit==='Ambas'?hist:hist.filter(r=>{
+    const aid=(r.fields.Ativo||[])[0]; return !aid||ambUnit(C.ativos[aid]?.amb)===currentUnit;
+  });
+
+  const sorted=[...mF].sort((a,b)=>daysDiff(a.fields['Proxima Data'])-daysDiff(b.fields['Proxima Data']));
+  document.getElementById('tbl-man').innerHTML=sorted.length
+    ?`<table><thead><tr><th>Título</th><th>Ativo</th><th>Local</th><th>Tipo</th><th>Última</th><th>Próxima</th><th>Prestador</th><th>Crítico</th></tr></thead><tbody>${sorted.map(r=>{
+        const aid=(r.fields.Ativo||[])[0]; const atv=C.ativos[aid]||{};
+        const diff=r.fields['Proxima Data']?daysDiff(r.fields['Proxima Data']):null;
+        const st=diff===null?'—':diff<=0?'Vencida':diff<=7?'Próxima':'Em dia';
+        const pid=(r.fields.Prestador||[])[0];
+        return `<tr><td><strong>${r.fields.Titulo||'—'}</strong></td><td>${atv.name||'—'}</td><td style="font-size:10px">${ambLocal(atv.amb)}</td><td>${r.fields.Tipo||'—'}</td><td>${fDate(r.fields['Ultima Data'])}</td><td>${fDate(r.fields['Proxima Data'])} ${diff!==null?`<span style="font-size:9px;color:${diff<=0?'var(--red)':diff<=7?'var(--amber)':'var(--green)'}">(${diff<=0?Math.abs(diff)+'d atrás':diff+'d'})</span>`:''}</td><td>${rName(C.prestadores,pid)}</td><td style="text-align:center">${r.fields.Critico?'⚠️':''}</td></tr>`;
+      }).join('')}</tbody></table>`
+    :'<div class="empty"><i class="ti ti-tool"></i><p>Nenhuma manutenção cadastrada</p></div>';
+
+  document.getElementById('tbl-hist').innerHTML=hF.length
+    ?`<table><thead><tr><th>Título</th><th>Ativo</th><th>Data Realizada</th><th>Tipo</th><th>Prestador</th><th>Obs.</th></tr></thead><tbody>${[...hF].reverse().map(r=>{
+        const aid=(r.fields.Ativo||[])[0]; const pid=(r.fields.Prestador||[])[0];
+        return `<tr><td><strong>${r.fields.Titulo||'—'}</strong></td><td>${C.ativos[aid]?.name||'—'}</td><td>${fDate(r.fields['Data Realizada'])}</td><td>${r.fields.Tipo||'—'}</td><td>${rName(C.prestadores,pid)}</td><td style="font-size:10px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.fields.Observacoes||'—'}</td></tr>`;
+      }).join('')}</tbody></table>`
+    :'<div class="empty"><i class="ti ti-history"></i><p>Nenhum histórico registrado</p></div>';
+}
+
+// Chamados
+async function loadChamados(){
+  const filter=document.getElementById('cham-filter')?.value||'';
+  let recs=await fetchAll(TBL.chamados);
+  if(currentUnit!=='Ambas') recs=recs.filter(r=>ambUnit((r.fields.Ambiente||[])[0])===currentUnit||!r.fields.Ambiente?.length);
+  if(filter) recs=recs.filter(r=>r.fields.Status===filter);
+  document.getElementById('tbl-cham').innerHTML=recs.length
+    ?`<table><thead><tr><th>Descrição</th><th>Local</th><th>Ativo</th><th>Tipo</th><th>Solicitante</th><th>Prestador</th><th>Abertura</th><th>Conclusão</th><th>Status</th></tr></thead><tbody>${recs.map(r=>{
+        const amid=(r.fields.Ambiente||[])[0]; const acid=(r.fields.Ativo||[])[0]; const pid=(r.fields.Prestador||[])[0];
+        return `<tr><td><strong>${r.fields.Descricao||'—'}</strong></td><td style="font-size:10px">${ambLocal(amid)}</td><td>${C.ativos[acid]?.name||'—'}</td><td>${r.fields.Tipo||'—'}</td><td>${r.fields.Solicitante||'—'}</td><td>${rName(C.prestadores,pid)}</td><td>${fDate(r.fields['Data Abertura'])}</td><td>${fDate(r.fields['Data Conclusao'])}</td><td>${chip(r.fields.Status)}</td></tr>`;
+      }).join('')}</tbody></table>`
+    :'<div class="empty"><i class="ti ti-clipboard-list"></i><p>Nenhum chamado encontrado</p></div>';
+}
+
+// Prestadores
+async function loadPrest(){
+  const recs=await fetchAll(TBL.prestadores);
+  document.getElementById('tbl-prest').innerHTML=recs.length
+    ?`<table><thead><tr><th>Nome / Empresa</th><th>Especialidade</th><th>Contato</th></tr></thead><tbody>${recs.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${r.fields.Especialidade||'—'}</td><td>${r.fields.Contato?`<a href="tel:${r.fields.Contato}" style="color:var(--green)">${r.fields.Contato}</a>`:'—'}</td></tr>`).join('')}</tbody></table>`
+    :'<div class="empty"><i class="ti ti-users"></i><p>Nenhum prestador cadastrado</p></div>';
+}
+
+// Compras
+async function loadComp(){
+  const recs=await fetchAll(TBL.compras);
+  document.getElementById('tbl-comp').innerHTML=recs.length
+    ?`<table><thead><tr><th>Item</th><th>Fornecedor</th><th>Qtd</th><th>Vlr. Unit.</th><th>Total</th><th>Pedido</th><th>Entrega</th><th>Status</th></tr></thead><tbody>${recs.map(r=>`<tr><td><strong>${r.fields.Item||'—'}</strong></td><td>${r.fields.Fornecedor||'—'}</td><td>${r.fields.Quantidade||'—'}</td><td>${fCur(r.fields['Valor Unitario'])}</td><td style="color:var(--green);font-weight:600">${fCur(r.fields['Valor Total'])}</td><td>${fDate(r.fields['Data Pedido'])}</td><td>${fDate(r.fields['Data Entrega'])}</td><td>${chip(r.fields.Status)}</td></tr>`).join('')}</tbody></table>`
+    :'<div class="empty"><i class="ti ti-shopping-cart"></i><p>Nenhuma compra registrada</p></div>';
+}
+
+// Despesas
+async function loadDesp(){
+  const recs=filterUnit(await fetchAll(TBL.despesas));
+  const total=recs.reduce((s,r)=>s+(Number(r.fields.Valor)||0),0);
+  document.getElementById('tbl-desp').innerHTML=recs.length
+    ?`<div style="padding:10px 14px;background:#f9fafb;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:11px;color:var(--txt3)">Total registrado</span><span style="font-size:14px;font-weight:700;color:var(--green)">${fCur(total)}</span></div><table><thead><tr><th>Descrição</th><th>Valor</th><th>Data</th><th>Categoria</th><th>Fornecedor</th></tr></thead><tbody>${[...recs].reverse().map(r=>`<tr><td><strong>${r.fields.Descricao||'—'}</strong></td><td style="color:var(--green);font-weight:600">${fCur(r.fields.Valor)}</td><td>${fDate(r.fields.Data)}</td><td>${r.fields.Categoria||'—'}</td><td>${r.fields.Fornecedor||'—'}</td></tr>`).join('')}</tbody></table>`
+    :'<div class="empty"><i class="ti ti-cash"></i><p>Nenhuma despesa registrada</p></div>';
+}
+
+// Relatórios
+async function loadRel(){
+  const [man,desp,atv,cham]=await Promise.all([fetchAll(TBL.manutencoes),fetchAll(TBL.despesas),fetchAll(TBL.ativos),fetchAll(TBL.chamados)]);
+  const mF=filterUnit(man); const dF=filterUnit(desp);
+
+  // Manutenções por status
+  const sc={};
+  mF.forEach(r=>{
+    const d=r.fields['Proxima Data']; let s='Sem data';
+    if(d){ const diff=daysDiff(d); s=diff<=0?'Vencida':diff<=7?'Próxima':'Em dia'; }
+    sc[s]=(sc[s]||0)+1;
+  });
+  document.getElementById('rel-man').innerHTML=Object.keys(sc).length
+    ?Object.entries(sc).map(([s,c])=>`<div class="bar-row">${chip(s)}<div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/mF.length*100)}%;background:var(--green)"></div></div><div class="bar-val">${c} manutenção${c>1?'ões':''}</div></div>`).join('')
+    :'<p style="font-size:12px;color:var(--txt3)">Sem dados</p>';
+
+  // Despesas por mês
+  const mc={};
+  dF.forEach(r=>{ const d=r.fields.Data; if(!d) return; const dt=new Date(d); const k=`${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}`; mc[k]=(mc[k]||0)+(Number(r.fields.Valor)||0); });
+  const ms=Object.entries(mc).sort(([a],[b])=>a.localeCompare(b)).slice(-6);
+  const mx=Math.max(...ms.map(([,v])=>v),1);
+  document.getElementById('rel-desp').innerHTML=ms.length
+    ?ms.map(([k,v])=>{ const[ano,mes]=k.split('-'); const nm=new Date(+ano,+mes-1,1).toLocaleString('pt-BR',{month:'short'}); return`<div class="bar-row"><div class="bar-lbl">${nm}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(v/mx*100)}%;background:var(--teal)"></div></div><div class="bar-val">${fCur(v)}</div></div>`; }).join('')
+    :'<p style="font-size:12px;color:var(--txt3)">Sem dados de despesas</p>';
+
+  const tot=dF.reduce((s,r)=>s+(Number(r.fields.Valor)||0),0);
+  const abrCham=filterUnit(cham).filter(r=>['Aberto','Em andamento'].includes(r.fields.Status)).length;
+  document.getElementById('rel-resumo').innerHTML=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+    <div style="text-align:center;padding:12px;background:#f9fafb;border-radius:7px;border:1px solid var(--border)"><div style="font-size:20px;font-weight:700;color:var(--teal)">${mF.length}</div><div style="font-size:10px;color:var(--txt3);margin-top:3px">Manutenções</div></div>
+    <div style="text-align:center;padding:12px;background:#fef2f2;border-radius:7px;border:1px solid #fca5a5"><div style="font-size:20px;font-weight:700;color:var(--red)">${mF.filter(r=>r.fields['Proxima Data']&&daysDiff(r.fields['Proxima Data'])<=0).length}</div><div style="font-size:10px;color:var(--txt3);margin-top:3px">Vencidas</div></div>
+    <div style="text-align:center;padding:12px;background:#fffbeb;border-radius:7px;border:1px solid #fbbf24"><div style="font-size:20px;font-weight:700;color:var(--amber)">${abrCham}</div><div style="font-size:10px;color:var(--txt3);margin-top:3px">Chamados Abertos</div></div>
+    <div style="text-align:center;padding:12px;background:#f0fdf4;border-radius:7px;border:1px solid #86efac"><div style="font-size:15px;font-weight:700;color:var(--green)">${fCur(tot)}</div><div style="font-size:10px;color:var(--txt3);margin-top:3px">Total Despesas</div></div>
+  </div>`;
+
+  // Ativos por ambiente
+  const amb={};
+  atv.forEach(r=>{ const aid=(r.fields.Ambiente||[])[0]; const lbl=ambLocal(aid); amb[lbl]=(amb[lbl]||0)+1; });
+  const ams=Object.entries(amb).sort(([,a],[,b])=>b-a).slice(0,8);
+  const mxA=Math.max(...ams.map(([,v])=>v),1);
+  document.getElementById('rel-ativos').innerHTML=ams.length
+    ?`<div style="padding:14px">${ams.map(([l,c])=>`<div class="bar-row"><div class="bar-lbl" style="width:140px;text-align:left;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${l}">${l}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/mxA*100)}%;background:var(--teal)"></div></div><div class="bar-val" style="min-width:50px">${c} ativo${c>1?'s':''}</div></div>`).join('')}</div>`
+    :'<div class="empty"><i class="ti ti-chart-bar"></i><p>Sem dados</p></div>';
+}
+
+// Mobiliário
+let mobData=[];
+async function loadMob(){
+  const recs=await fetchAll(TBL.ativos);
+  mobData=currentUnit==='Ambas'?recs:recs.filter(r=>ambUnit((r.fields.Ambiente||[])[0])===currentUnit);
+
+  // KPIs por categoria
+  const cats={'Ar Condicionado':0,'Nobreak':0,'Extintor':0,'Impressora':0};
+  mobData.forEach(r=>{ const c=r.fields.Categoria; if(c in cats) cats[c]++; });
+  document.getElementById('mob-kpi').innerHTML=`
+    <div class="kpi"><div class="kpi-top"><div class="kpi-ic tel"><i class="ti ti-wind"></i></div></div><div class="kpi-val">${cats['Ar Condicionado']}</div><div class="kpi-lbl">Ar-condicionados</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-ic amb"><i class="ti ti-battery-charging"></i></div></div><div class="kpi-val">${cats['Nobreak']}</div><div class="kpi-lbl">Nobreaks</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-ic red"><i class="ti ti-flame"></i></div></div><div class="kpi-val">${cats['Extintor']}</div><div class="kpi-lbl">Extintores</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-ic grn"><i class="ti ti-printer"></i></div></div><div class="kpi-val">${cats['Impressora']}</div><div class="kpi-lbl">Impressoras</div></div>`;
+  renderMob(mobData);
+}
+function filtroMob(cat){ renderMob(cat?mobData.filter(r=>r.fields.Categoria===cat):mobData); }
+function renderMob(data){
+  document.getElementById('tbl-mob').innerHTML=data.length
+    ?`<table><thead><tr><th>Equipamento</th><th>Categoria</th><th>Local</th><th>Marca/Modelo</th><th>Data Compra</th><th>Status</th><th>Crítico</th></tr></thead><tbody>${data.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${r.fields.Categoria||'—'}</td><td style="font-size:10px">${ambLocal((r.fields.Ambiente||[])[0])}</td><td>${r.fields['Marca/Modelo']||'—'}</td><td>${fDate(r.fields['Data Compra'])}</td><td>${chip(r.fields.Status)}</td><td style="text-align:center">${r.fields.Crítico?'⚠️':''}</td></tr>`).join('')}</tbody></table>`
+    :'<div class="empty"><i class="ti ti-armchair"></i><p>Nenhum item encontrado</p></div>';
+}
+
+// ══════════════════════════════════════════
+//  MODAIS
+// ══════════════════════════════════════════
+function openM(id){ document.getElementById(id).classList.add('on'); }
+function closeM(id){ document.getElementById(id).classList.remove('on'); }
+document.querySelectorAll('.mo').forEach(m=>m.addEventListener('click',e=>{if(e.target===m) m.classList.remove('on');}));
+
+// ══════════════════════════════════════════
+//  SAVES
+// ══════════════════════════════════════════
+function toast(msg,err=false){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='on'+(err?' err':'');
+  setTimeout(()=>t.className='',3200);
+}
+
+async function saveAndar(){
+  const nome=v('f-and-nome'); const uni=v('f-and-uni');
+  if(!nome||!uni){toast('Preencha todos os campos.',true);return;}
+  try{ await create(TBL.andares,{Nome:nome,Unidade:[uni]}); closeM('m-andar'); toast('✓ Andar criado!'); loadLocais(); }
+  catch(e){toast(e.message,true);}
+}
+async function saveAmbiente(){
+  const nome=v('f-amb-nome'); const andar=v('f-amb-andar');
+  if(!nome||!andar){toast('Preencha todos os campos.',true);return;}
+  try{ await create(TBL.ambientes,{Nome:nome,Andar:[andar]}); closeM('m-ambiente'); toast('✓ Ambiente criado!'); loadLocais(); }
+  catch(e){toast(e.message,true);}
+}
+async function saveAtivo(){
+  const nome=v('f-at-nome');
+  if(!nome){toast('Informe o nome do equipamento.',true);return;}
+  const fields={Nome:nome,Categoria:v('f-at-cat'),Crítico:document.getElementById('f-at-crit').checked};
+  if(v('f-at-amb')) fields.Ambiente=[v('f-at-amb')];
+  if(v('f-at-marca')) fields['Marca/Modelo']=v('f-at-marca');
+  if(v('f-at-data')) fields['Data Compra']=v('f-at-data');
+  if(v('f-at-status')) fields.Status=v('f-at-status');
+  try{ await create(TBL.ativos,fields); closeM('m-ativo'); toast('✓ Ativo cadastrado!'); currentTab==='ativos'?loadAtivos():loadMob(); }
+  catch(e){toast(e.message,true);}
+}
+async function saveMan(){
+  const tit=v('f-man-tit'); const at=v('f-man-at');
+  if(!tit||!at){toast('Informe título e ativo.',true);return;}
+  const fields={Titulo:tit,Tipo:v('f-man-tipo'),Critico:document.getElementById('f-man-crit').checked};
+  fields.Ativo=[at];
+  if(v('f-man-prox')) fields['Proxima Data']=v('f-man-prox');
+  if(v('f-man-ult')) fields['Ultima Data']=v('f-man-ult');
+  if(v('f-man-prest')) fields.Prestador=[v('f-man-prest')];
+  if(v('f-man-obs')) fields.Observacoes=v('f-man-obs');
+  try{ await create(TBL.manutencoes,fields); closeM('m-man'); toast('✓ Manutenção cadastrada!'); loadMan(); }
+  catch(e){toast(e.message,true);}
+}
+async function saveHist(){
+  const tit=v('f-hist-tit'); const at=v('f-hist-at'); const data=v('f-hist-data');
+  if(!tit||!at||!data){toast('Preencha título, ativo e data.',true);return;}
+  const fields={Titulo:tit,'Data Realizada':data,Tipo:v('f-hist-tipo'),Ativo:[at]};
+  if(v('f-hist-prest')) fields.Prestador=[v('f-hist-prest')];
+  if(v('f-hist-obs')) fields.Observacoes=v('f-hist-obs');
+  try{ await create(TBL.historico,fields); closeM('m-hist'); toast('✓ Histórico registrado!'); loadMan(); }
+  catch(e){toast(e.message,true);}
+}
+async function saveCham(){
+  const desc=v('f-ch-desc'); const amb=v('f-ch-amb');
+  if(!desc||!amb){toast('Informe descrição e ambiente.',true);return;}
+  const fields={Descricao:desc,Tipo:v('f-ch-tipo'),Status:v('f-ch-status'),Ambiente:[amb]};
+  if(v('f-ch-at')) fields.Ativo=[v('f-ch-at')];
+  if(v('f-ch-sol')) fields.Solicitante=v('f-ch-sol');
+  if(v('f-ch-prest')) fields.Prestador=[v('f-ch-prest')];
+  if(v('f-ch-obs')) fields.Observacoes=v('f-ch-obs');
+  fields['Data Abertura']=today();
+  try{ await create(TBL.chamados,fields); closeM('m-cham'); toast('✓ Chamado aberto!'); loadChamados(); }
+  catch(e){toast(e.message,true);}
+}
+async function savePrest(){
+  const nome=v('f-pr-nome');
+  if(!nome){toast('Informe o nome do prestador.',true);return;}
+  const fields={Nome:nome};
+  if(v('f-pr-esp')) fields.Especialidade=v('f-pr-esp');
+  if(v('f-pr-cont')) fields.Contato=v('f-pr-cont');
+  try{ await create(TBL.prestadores,fields); closeM('m-prest'); toast('✓ Prestador cadastrado!'); loadPrest(); }
+  catch(e){toast(e.message,true);}
+}
+async function saveComp(){
+  const item=v('f-cp-item');
+  if(!item){toast('Informe o item.',true);return;}
+  const fields={Item:item,Status:v('f-cp-status')};
+  if(v('f-cp-forn')) fields.Fornecedor=v('f-cp-forn');
+  if(v('f-cp-qtd')) fields.Quantidade=Number(v('f-cp-qtd'));
+  if(v('f-cp-vl')) fields['Valor Unitario']=Number(v('f-cp-vl'));
+  if(v('f-cp-dp')) fields['Data Pedido']=v('f-cp-dp');
+  if(v('f-cp-de')) fields['Data Entrega']=v('f-cp-de');
+  if(v('f-cp-obs')) fields.Observacoes=v('f-cp-obs');
+  try{ await create(TBL.compras,fields); closeM('m-comp'); toast('✓ Compra registrada!'); loadComp(); }
+  catch(e){toast(e.message,true);}
+}
+async function saveDesp(){
+  const desc=v('f-dp-desc'); const vl=v('f-dp-vl'); const data=v('f-dp-data');
+  if(!desc||!vl){toast('Informe descrição e valor.',true);return;}
+  const fields={Descricao:desc,Valor:Number(vl),Categoria:v('f-dp-cat')};
+  if(data) fields.Data=data;
+  if(v('f-dp-uni')) fields.Unidade=[v('f-dp-uni')];
+  if(v('f-dp-forn')) fields.Fornecedor=v('f-dp-forn');
+  try{ await create(TBL.despesas,fields); closeM('m-desp'); toast('✓ Despesa lançada!'); loadDesp(); }
+  catch(e){toast(e.message,true);}
+}
+
+function v(id){ const el=document.getElementById(id); return el?el.value.trim():''; }
+
+// ══════════════════════════════════════════
+//  BUSCA
+// ══════════════════════════════════════════
+document.getElementById('srch').addEventListener('input',function(){
+  const q=this.value.toLowerCase();
+  document.querySelectorAll('tbody tr').forEach(tr=>{ tr.style.display=tr.textContent.toLowerCase().includes(q)?'':'none'; });
+  document.querySelectorAll('.li').forEach(li=>{ li.style.display=li.textContent.toLowerCase().includes(q)?'':'none'; });
+});
+
+// ══════════════════════════════════════════
+//  EXPORT EXCEL
+// ══════════════════════════════════════════
+async function exportExcel(){
+  toast('Preparando exportação...');
+  try{
+    const [man,desp,cham,atv]=await Promise.all([fetchAll(TBL.manutencoes),fetchAll(TBL.despesas),fetchAll(TBL.chamados),fetchAll(TBL.ativos)]);
+    let csv='SISTEMA CAMPO INCORPORADORA - EXPORTAÇÃO\n\n';
+    csv+='=== MANUTENÇÕES ===\nTítulo,Ativo,Próxima Data,Prestador,Crítico\n';
+    man.forEach(r=>{ const aid=(r.fields.Ativo||[])[0]; const pid=(r.fields.Prestador||[])[0]; csv+=`"${r.fields.Titulo||''}","${C.ativos[aid]?.name||''}","${r.fields['Proxima Data']||''}","${C.prestadores[pid]?.name||''}","${r.fields.Critico?'SIM':'NÃO'}"\n`; });
+    csv+='\n=== DESPESAS ===\nDescrição,Valor,Data,Categoria,Fornecedor\n';
+    desp.forEach(r=>{ csv+=`"${r.fields.Descricao||''}","${r.fields.Valor||0}","${r.fields.Data||''}","${r.fields.Categoria||''}","${r.fields.Fornecedor||''}"\n`; });
+    csv+='\n=== CHAMADOS ===\nDescrição,Status,Tipo,Solicitante,Abertura\n';
+    cham.forEach(r=>{ csv+=`"${r.fields.Descricao||''}","${r.fields.Status||''}","${r.fields.Tipo||''}","${r.fields.Solicitante||''}","${r.fields['Data Abertura']||''}"\n`; });
+
+    const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a'); a.href=url;
+    a.download='Campo_Incorporadora_'+new Date().toISOString().split('T')[0]+'.csv';
+    a.click(); URL.revokeObjectURL(url);
+    toast('✓ Exportado com sucesso!');
+  } catch(e){ toast('Erro na exportação.',true); }
+}
+</script>
 </body>
 </html>
