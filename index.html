@@ -7,49 +7,55 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
 :root{
-  --teal:#094752;--teal-d:#063038;--teal-l:rgba(9,71,82,.08);
+  --teal:#094752;--teal-d:#063038;
   --green:#23B368;--green-l:#e8f8ef;--green-d:#1a9057;
-  --red:#ef4444;--amber:#f59e0b;--blue:#3b82f6;
+  --red:#ef4444;--amber:#f59e0b;--blue:#3b82f6;--orange:#f97316;
   --bg:#f2f4f7;--white:#fff;--border:#e5e7eb;
   --txt:#111827;--txt2:#6b7280;--txt3:#9ca3af;
   --r:8px;--sw:240px;--th:54px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--txt);height:100vh;overflow:hidden;font-size:14px}
+@media print{
+  .sb,.topbar,.tab:not(#tab-relatorios),.tab-section:not(#tab-relatorios),.btn,.edit-btn,.del-btn,.no-print{display:none!important}
+  #tab-relatorios,.cw{display:block!important;overflow:visible!important;height:auto!important}
+  body{overflow:visible!important;height:auto!important;font-size:12px}
+  .card{break-inside:avoid;box-shadow:none;border:1px solid #ccc}
+}
 
-/* ── LOGIN ── */
+/* LOGIN */
 #login-screen{position:fixed;inset:0;background:var(--teal);display:flex;align-items:center;justify-content:center;z-index:999}
 .login-box{background:#fff;border-radius:14px;padding:36px 40px;width:440px;max-width:92vw;box-shadow:0 24px 60px rgba(0,0,0,.2)}
-.login-logo{display:flex;justify-content:center;margin-bottom:24px}
-.login-logo img{height:44px}
-.login-logo-fb{font-size:22px;font-weight:800;color:var(--teal);letter-spacing:-.5px;display:none}
+.login-logo{text-align:center;margin-bottom:20px}
+.login-logo img{height:46px;filter:invert(1) sepia(1) saturate(0)}
+.login-logo-fb{font-size:22px;font-weight:800;color:var(--teal);display:none}
 .login-title{font-size:17px;font-weight:600;color:var(--teal);text-align:center;margin-bottom:4px}
 .login-sub{font-size:13px;color:var(--txt3);text-align:center;margin-bottom:24px}
+.login-err{background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:8px 12px;font-size:12px;color:#b91c1c;margin-bottom:12px;display:none}
 .login-label{font-size:12px;font-weight:500;color:var(--txt2);margin-bottom:4px;display:block}
 .login-input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:7px;font-size:14px;outline:none;margin-bottom:14px;font-family:inherit;transition:border-color .15s}
 .login-input:focus{border-color:var(--green)}
-.login-btn{width:100%;padding:11px;background:var(--green);color:#fff;border:none;border-radius:7px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .15s}
+.login-btn{width:100%;padding:11px;background:var(--green);color:#fff;border:none;border-radius:7px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
 .login-btn:hover{background:var(--green-d)}
 .login-btn:disabled{opacity:.6;cursor:not-allowed}
 .login-info{font-size:11px;color:var(--txt3);text-align:center;margin-top:12px;line-height:1.5}
-.login-error{background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:8px 12px;font-size:12px;color:#b91c1c;margin-bottom:12px;display:none}
 
-/* ── APP ── */
+/* APP */
 #app{display:none;height:100vh;overflow:hidden}
 .layout{display:flex;height:100vh}
 
-/* ── SIDEBAR ── */
+/* SIDEBAR */
 .sb{width:var(--sw);background:var(--teal);display:flex;flex-direction:column;flex-shrink:0}
-.sb-logo{padding:20px 18px 15px;border-bottom:1px solid rgba(255,255,255,.08)}
-.sb-logo img{width:152px;height:auto;display:block}
-.sb-logo-fb{color:#fff;font-size:19px;font-weight:800;letter-spacing:-.5px;display:none}
-.sb-tag{font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#4da8b8;margin-top:7px}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.08);text-align:center}
+.sb-logo img{width:170px;height:auto;display:block;margin:0 auto}
+.sb-logo-fb{color:#fff;font-size:20px;font-weight:800;letter-spacing:-.5px;display:none}
 .sb-units{padding:10px 13px;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.12)}
 .sb-units-lbl{font-size:9px;color:#4da8b8;letter-spacing:1px;text-transform:uppercase;font-weight:600;margin-bottom:6px}
-.sb-units-row{display:flex;gap:5px}
-.uBtn{flex:1;padding:5px 0;border-radius:5px;border:1px solid rgba(255,255,255,.15);color:#9fc8d2;font-size:10px;font-weight:500;text-align:center;cursor:pointer;background:transparent;transition:all .15s;font-family:inherit}
+.sb-units-row{display:flex;flex-wrap:wrap;gap:4px}
+.uBtn{padding:4px 7px;border-radius:5px;border:1px solid rgba(255,255,255,.15);color:#9fc8d2;font-size:10px;font-weight:500;cursor:pointer;background:transparent;transition:all .15s;font-family:inherit;white-space:nowrap}
 .uBtn:hover{background:rgba(255,255,255,.08);color:#fff}
 .uBtn.on{background:var(--green);border-color:var(--green);color:#fff}
+.uBtn.fut{opacity:.5}
 .sb-nav{flex:1;overflow-y:auto;padding:8px 0}
 .sb-nav::-webkit-scrollbar{width:3px}
 .sb-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:2px}
@@ -60,15 +66,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .nav-item.on{background:rgba(35,179,104,.13);border-left-color:var(--green);color:var(--green);font-weight:500}
 .nav-item.on i{color:var(--green)}
 .nbadge{margin-left:auto;background:var(--red);color:#fff;font-size:9px;padding:2px 7px;border-radius:20px;font-weight:700;min-width:20px;text-align:center}
-.nbadge.a{background:var(--amber)}.nbadge.g{background:var(--green)}
+.nbadge.a{background:var(--amber)}.nbadge.g{background:var(--green)}.nbadge.o{background:var(--orange)}
 .sb-foot{padding:12px 13px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
 .sb-av{width:30px;height:30px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
 .sb-nm{color:#cde8ee;font-size:12px;font-weight:500}
 .sb-rl{color:#4da8b8;font-size:10px;margin-top:1px}
-.sb-logout{margin-left:auto;color:#4da8b8;cursor:pointer;opacity:.7;font-size:17px}
-.sb-logout:hover{opacity:1}
+.sb-out{margin-left:auto;color:#4da8b8;cursor:pointer;font-size:17px;opacity:.7}
+.sb-out:hover{opacity:1}
 
-/* ── MAIN ── */
+/* MAIN */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .topbar{background:var(--white);border-bottom:1px solid var(--border);padding:0 22px;height:var(--th);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .topbar-l{display:flex;flex-direction:column}
@@ -82,18 +88,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .tbtn{width:34px;height:34px;border:1px solid var(--border);border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--white);color:var(--txt2);position:relative}
 .tbtn i{font-size:17px}
 .tbtn:hover{background:#f9fafb}
-.rdot{position:absolute;top:7px;right:7px;width:6px;height:6px;background:var(--red);border-radius:50%;border:1.5px solid #fff;display:none}
+.rdot{position:absolute;top:7px;right:7px;width:8px;height:8px;background:var(--red);border-radius:50%;border:1.5px solid #fff;display:none;font-size:8px;color:#fff;align-items:center;justify-content:center;font-weight:700}
+.rdot.show{display:flex}
 
-/* ── CONTENT ── */
+/* CONTENT */
 .cw{flex:1;overflow-y:auto}
 .cw::-webkit-scrollbar{width:4px}
 .cw::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 .tab{display:none;padding:16px 22px}
 .tab.on{display:block}
 
-/* ── COMPONENTS ── */
-.alert-bar{background:#fff;border:1px solid #fbbf24;border-left:4px solid var(--amber);border-radius:var(--r);padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;font-size:13px;color:#92400e}
+/* COMPONENTS */
+.alert-bar{background:var(--white);border:1px solid #fbbf24;border-left:4px solid var(--amber);border-radius:var(--r);padding:10px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px;font-size:13px;color:#92400e}
 .alert-bar i{color:var(--amber);font-size:17px;flex-shrink:0}
+.alert-bar.red{border-color:var(--red);border-left-color:var(--red);color:#7f1d1d}
+.alert-bar.red i{color:var(--red)}
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
 .kpi{background:var(--white);border-radius:var(--r);padding:14px;border:1px solid var(--border)}
 .kpi-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
@@ -103,28 +112,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .kpi-ic.amb{background:#fffbeb}.kpi-ic.amb i{color:var(--amber)}
 .kpi-ic.grn{background:#f0fdf4}.kpi-ic.grn i{color:var(--green)}
 .kpi-ic.tel{background:#f0f9fa}.kpi-ic.tel i{color:var(--teal)}
+.kpi-ic.ora{background:#fff7ed}.kpi-ic.ora i{color:var(--orange)}
 .kpi-val{font-size:24px;font-weight:700;color:var(--txt);line-height:1}
-.kpi-val.red{color:var(--red)}.kpi-val.amb{color:var(--amber)}.kpi-val.grn{color:var(--green)}
+.kpi-val.red{color:var(--red)}.kpi-val.amb{color:var(--amber)}.kpi-val.grn{color:var(--green)}.kpi-val.ora{color:var(--orange)}
 .kpi-lbl{font-size:11px;color:var(--txt3);margin-top:3px}
 .kpi-hint{font-size:10px;color:#d1d5db;margin-top:2px}
 .g2{display:grid;grid-template-columns:3fr 2fr;gap:10px;margin-bottom:10px}
 .g2e{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
 .card{background:var(--white);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;margin-bottom:10px}
 .ch{padding:12px 14px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .ct{font-size:13px;font-weight:600;color:var(--txt)}
 .ca{font-size:11px;color:var(--green);cursor:pointer;font-weight:500}
 .ca:hover{text-decoration:underline}
 table{width:100%;border-collapse:collapse}
-th{font-size:10px;color:var(--txt3);padding:8px 14px;text-align:left;background:#fafafa;border-bottom:1px solid #f3f4f6;font-weight:600;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap}
-td{font-size:13px;color:var(--txt2);padding:9px 14px;border-bottom:1px solid #f9fafb;vertical-align:middle}
+th{font-size:10px;color:var(--txt3);padding:8px 12px;text-align:left;background:#fafafa;border-bottom:1px solid #f3f4f6;font-weight:600;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap}
+td{font-size:13px;color:var(--txt2);padding:9px 12px;border-bottom:1px solid #f9fafb;vertical-align:middle}
 tr:last-child td{border-bottom:none}
 tbody tr:hover td{background:#fafafa}
-.chip{display:inline-block;padding:2px 10px;border-radius:20px;font-size:10px;font-weight:600;white-space:nowrap}
+.chip{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:600;white-space:nowrap}
 .chip.red{background:#fef2f2;color:#b91c1c}
 .chip.grn{background:#f0fdf4;color:#166534}
 .chip.amb{background:#fffbeb;color:#92400e}
 .chip.blu{background:#eff6ff;color:#1d4ed8}
 .chip.gry{background:#f9fafb;color:#374151}
+.chip.ora{background:#fff7ed;color:#c2410c}
 .li{padding:10px 14px;border-bottom:1px solid #f9fafb;display:flex;align-items:center;gap:10px}
 .li:last-child{border-bottom:none}
 .lav{width:32px;height:32px;border-radius:7px;background:#e0f2fe;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--teal);flex-shrink:0}
@@ -138,14 +150,49 @@ tbody tr:hover td{background:#fafafa}
 .btn{padding:8px 14px;border-radius:7px;border:none;font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s;font-family:inherit}
 .btn-p{background:var(--green);color:#fff}.btn-p:hover{background:var(--green-d)}
 .btn-s{background:var(--white);color:var(--txt);border:1px solid var(--border)}.btn-s:hover{background:#f9fafb}
+.btn-d{background:#fef2f2;color:var(--red);border:1px solid #fca5a5}.btn-d:hover{background:#fee2e2}
 
-/* ── EDIT BTN ── */
-.edit-btn{width:28px;height:28px;border-radius:6px;background:#f0f9fa;border:1px solid #d1e9ed;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;flex-shrink:0}
+/* EDIT + DELETE BTNS */
+.edit-btn,.del-btn{width:28px;height:28px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;flex-shrink:0;border:none}
+.edit-btn{background:#f0f9fa;border:1px solid #d1e9ed}
 .edit-btn:hover{background:var(--teal);border-color:var(--teal)}
 .edit-btn:hover i{color:#fff}
 .edit-btn i{font-size:13px;color:var(--teal)}
+.del-btn{background:#fef2f2;border:1px solid #fca5a5;margin-left:4px}
+.del-btn:hover{background:var(--red);border-color:var(--red)}
+.del-btn:hover i{color:#fff}
+.del-btn i{font-size:13px;color:var(--red)}
+.act-cell{display:flex;align-items:center;justify-content:center;gap:0}
 
-/* ── LOADING / EMPTY ── */
+/* URGENCY CHIPS */
+.urg-0{background:#fef2f2;color:#b91c1c;border:1px solid #fca5a5}
+.urg-1{background:#fff7ed;color:#c2410c;border:1px solid #fdba74}
+.urg-2{background:#fffbeb;color:#92400e;border:1px solid #fcd34d}
+.urg-3{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+
+/* UNIT GROUP HEADERS */
+.unit-group-header{padding:8px 12px;background:var(--teal);color:#7fb8c4;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.unit-group-header i{font-size:14px;color:#23B368}
+
+/* AGENDA */
+.agenda-col{padding:12px 14px}
+.agenda-month{font-size:11px;font-weight:700;color:var(--txt);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid var(--green)}
+.agenda-item{border-radius:5px;padding:6px 9px;margin-bottom:5px;border-left:3px solid transparent}
+.agenda-item.vencida{background:#fef2f2;border-left-color:var(--red)}
+.agenda-item.proxima{background:#fffbeb;border-left-color:var(--amber)}
+.agenda-item.ok{background:#f0fdf4;border-left-color:var(--green)}
+.agenda-item-data{font-size:10px;font-weight:600;margin-bottom:1px}
+.agenda-item.vencida .agenda-item-data{color:var(--red)}
+.agenda-item.proxima .agenda-item-data{color:#92400e}
+.agenda-item.ok .agenda-item-data{color:var(--green-d)}
+.agenda-item-nome{font-size:12px;color:var(--txt);font-weight:500}
+.agenda-item-local{font-size:10px;color:var(--txt3)}
+.agenda-empty{text-align:center;padding:20px;color:var(--txt3);font-size:12px}
+
+/* PROTOCOLO */
+.proto-tag{font-family:monospace;font-size:11px;background:#f0f9fa;color:var(--teal);padding:2px 8px;border-radius:4px;border:1px solid #d1e9ed;font-weight:600}
+
+/* LOADING / EMPTY */
 .loading{display:flex;align-items:center;justify-content:center;padding:40px;color:var(--txt3);font-size:13px;gap:10px}
 .spin{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -153,17 +200,24 @@ tbody tr:hover td{background:#fafafa}
 .empty i{font-size:36px;margin-bottom:10px;display:block;opacity:.35}
 .empty p{font-size:13px}
 .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.bar-lbl{font-size:11px;color:var(--txt3);width:40px;text-align:right;flex-shrink:0}
+.bar-lbl{font-size:10px;color:var(--txt3);width:40px;text-align:right;flex-shrink:0}
 .bar-track{flex:1;background:#f0f0f0;border-radius:4px;height:8px}
 .bar-fill{height:8px;border-radius:4px;transition:width .4s}
 .bar-val{font-size:12px;font-weight:600;color:var(--txt);min-width:90px;text-align:right;flex-shrink:0}
 
-/* ── TOAST ── */
-#toast{position:fixed;bottom:20px;right:20px;background:var(--teal);color:#fff;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:500;z-index:1000;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
+/* TOAST */
+#toast{position:fixed;bottom:20px;right:20px;background:var(--teal);color:#fff;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:500;z-index:1000;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:340px}
 #toast.on{opacity:1;transform:translateY(0)}
 #toast.err{background:#b91c1c}
 
-/* ── MODAL ── */
+/* PROTOCOL POPUP */
+#proto-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);background:var(--white);border-radius:12px;padding:28px 32px;z-index:500;box-shadow:0 20px 60px rgba(0,0,0,.15);text-align:center;display:none;min-width:320px}
+#proto-popup.show{display:block;animation:popIn .25s ease forwards}
+@keyframes popIn{from{opacity:0;transform:translate(-50%,-50%) scale(.85)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.proto-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:499;display:none}
+.proto-overlay.show{display:block}
+
+/* MODAL */
 .mo{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:none;align-items:center;justify-content:center}
 .mo.on{display:flex}
 .mb{background:var(--white);border-radius:10px;width:530px;max-width:92vw;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.15)}
@@ -176,7 +230,7 @@ tbody tr:hover td{background:#fafafa}
 .fl{font-size:12px;font-weight:500;color:var(--txt2);margin-bottom:4px;display:block}
 .fi,.fs,.ft{width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:6px;font-size:13px;color:var(--txt);background:var(--white);outline:none;transition:border-color .15s;font-family:inherit}
 .fi:focus,.fs:focus,.ft:focus{border-color:var(--green)}
-.ft{resize:vertical;min-height:72px}
+.ft{resize:vertical;min-height:68px}
 .fr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .cb-row{display:flex;align-items:center;gap:8px}
 .cb-row input[type=checkbox]{width:15px;height:15px;accent-color:var(--green)}
@@ -188,17 +242,17 @@ tbody tr:hover td{background:#fafafa}
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">
-      <img src="https://campoincorporadora.com.br/wp-content/uploads/2026/03/logo_white.svg" id="logo-l" alt="Campo"
-        style="filter:invert(1) sepia(1) saturate(0)" onerror="this.style.display='none';document.getElementById('logo-l-fb').style.display='block'">
+      <img src="https://campoincorporadora.com.br/wp-content/uploads/2026/03/logo_white.svg" id="logo-l" alt="Campo Incorporadora"
+        onerror="this.style.display='none';document.getElementById('logo-l-fb').style.display='block'">
       <div class="login-logo-fb" id="logo-l-fb">Campo Incorporadora</div>
     </div>
     <div class="login-title">Sistema de Gestão Integrada</div>
     <div class="login-sub">Insira seu Personal Access Token do Airtable</div>
-    <div class="login-error" id="login-err"></div>
+    <div class="login-err" id="login-err"></div>
     <label class="login-label">Personal Access Token *</label>
     <input class="login-input" id="pat-input" type="password" placeholder="pat-na-...">
     <button class="login-btn" id="login-btn" onclick="doLogin()"><span id="login-txt">Conectar e Entrar</span></button>
-    <div class="login-info">O token fica salvo apenas neste navegador.<br>Cada colaborador usa seu próprio token de acesso.</div>
+    <div class="login-info">Token salvo neste navegador · Cada colaborador usa o seu próprio</div>
   </div>
 </div>
 
@@ -212,16 +266,21 @@ tbody tr:hover td{background:#fafafa}
       <img src="https://campoincorporadora.com.br/wp-content/uploads/2026/03/logo_white.svg" alt="Campo Incorporadora" id="sb-logo"
         onerror="this.style.display='none';document.getElementById('sb-logo-fb').style.display='block'">
       <div class="sb-logo-fb" id="sb-logo-fb">campo</div>
-      <div class="sb-tag">Sistema de Gestão</div>
     </div>
+
     <div class="sb-units">
       <div class="sb-units-lbl">Unidade</div>
-      <div class="sb-units-row">
-        <button class="uBtn on" onclick="setUnit('Buritis',this)">Buritis</button>
-        <button class="uBtn" onclick="setUnit('Administrativa',this)">Adm.</button>
-        <button class="uBtn" onclick="setUnit('Ambas',this)">Ambas</button>
+      <div class="sb-units-row" id="unit-btns">
+        <button class="uBtn on" onclick="setUnit('ADM Matriz',this)">ADM Matriz</button>
+        <button class="uBtn" onclick="setUnit('Und. Buritis',this)">Und. Buritis</button>
+        <button class="uBtn" onclick="setUnit('Apartamento PVA',this)">Apto. PVA</button>
+        <button class="uBtn" onclick="setUnit('Apartamento Sinop',this)">Apto. Sinop</button>
+        <button class="uBtn fut" onclick="setUnit('Campo C.V.',this)" title="Em breve">Campo C.V.</button>
+        <button class="uBtn fut" onclick="setUnit('Sinop',this)" title="Em breve">Sinop</button>
+        <button class="uBtn" onclick="setUnit('Geral',this)">Geral</button>
       </div>
     </div>
+
     <nav class="sb-nav">
       <div class="sb-sec">Principal</div>
       <div class="nav-item on" data-tab="dashboard" onclick="goTab('dashboard',this)"><i class="ti ti-layout-dashboard"></i>Dashboard</div>
@@ -229,16 +288,17 @@ tbody tr:hover td{background:#fafafa}
       <div class="nav-item" data-tab="ativos" onclick="goTab('ativos',this)"><i class="ti ti-device-desktop"></i>Ativos</div>
       <div class="nav-item" data-tab="manutencao" onclick="goTab('manutencao',this)"><i class="ti ti-tool"></i>Manutenção<span class="nbadge" id="nb-man"></span></div>
       <div class="sb-sec">Operacional</div>
-      <div class="nav-item" data-tab="chamados" onclick="goTab('chamados',this)"><i class="ti ti-clipboard-list"></i>Chamados / OS<span class="nbadge a" id="nb-cham"></span></div>
+      <div class="nav-item" data-tab="chamados" onclick="goTab('chamados',this)"><i class="ti ti-clipboard-list"></i>Chamados / OS<span class="nbadge o" id="nb-cham"></span></div>
       <div class="nav-item" data-tab="prestadores" onclick="goTab('prestadores',this)"><i class="ti ti-users"></i>Prestadores</div>
       <div class="sb-sec">Análise</div>
       <div class="nav-item" data-tab="relatorios" onclick="goTab('relatorios',this)"><i class="ti ti-chart-bar"></i>Relatórios</div>
       <div class="nav-item" data-tab="mobiliario" onclick="goTab('mobiliario',this)"><i class="ti ti-armchair"></i>Mobiliário<span class="nbadge g">Novo</span></div>
     </nav>
+
     <div class="sb-foot">
       <div class="sb-av">JR</div>
       <div><div class="sb-nm">Júnior Rocha</div><div class="sb-rl">Supervisão de Manutenção</div></div>
-      <i class="ti ti-logout sb-logout" title="Sair" onclick="doLogout()"></i>
+      <i class="ti ti-logout sb-out" title="Sair" onclick="doLogout()"></i>
     </div>
   </aside>
 
@@ -247,11 +307,14 @@ tbody tr:hover td{background:#fafafa}
     <header class="topbar">
       <div class="topbar-l">
         <div class="topbar-title" id="ttitle">Dashboard</div>
-        <div class="topbar-sub">Visão geral · <span id="ulabel">Buritis</span></div>
+        <div class="topbar-sub">Visão geral · <span id="ulabel">ADM Matriz</span></div>
       </div>
       <div class="topbar-r">
         <div class="sw"><i class="ti ti-search"></i><input class="search" id="srch" placeholder="Buscar..."></div>
-        <div class="tbtn" title="Alertas"><i class="ti ti-bell"></i><div class="rdot" id="rdot"></div></div>
+        <div class="tbtn no-print" title="Chamados urgentes" onclick="goTab('chamados',document.querySelector('[data-tab=chamados]'))">
+          <i class="ti ti-bell"></i>
+          <div class="rdot" id="rdot"></div>
+        </div>
       </div>
     </header>
 
@@ -259,41 +322,52 @@ tbody tr:hover td{background:#fafafa}
 
       <!-- DASHBOARD -->
       <div class="tab on" id="tab-dashboard">
-        <div id="dash-alert"></div>
+        <div id="dash-alerts"></div>
         <div class="kpi-grid" id="dash-kpi">
           <div class="kpi"><div class="loading"><div class="spin"></div></div></div>
           <div class="kpi"><div class="loading"><div class="spin"></div></div></div>
           <div class="kpi"><div class="loading"><div class="spin"></div></div></div>
           <div class="kpi"><div class="loading"><div class="spin"></div></div></div>
         </div>
-        <div class="g2">
-          <div class="card"><div class="ch"><span class="ct">Alertas de Manutenção (7 dias)</span><span class="ca" onclick="navTo('manutencao')">Ver todas →</span></div><div id="dash-man"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
-          <div class="card"><div class="ch"><span class="ct">Prestadores</span><span class="ca" onclick="navTo('prestadores')">Ver todos →</span></div><div id="dash-prest"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+        <div class="card">
+          <div class="ch"><span class="ct"><i class="ti ti-calendar" style="font-size:14px;margin-right:6px;vertical-align:-2px;color:var(--txt3)"></i>Agenda de Manutenções — Próximos 3 Meses</span>
+            <div style="display:flex;gap:6px">
+              <span class="chip red" style="font-size:9px">Vencida</span>
+              <span class="chip amb" style="font-size:9px">≤15 dias</span>
+              <span class="chip grn" style="font-size:9px">Programada</span>
+            </div>
+          </div>
+          <div class="g3" style="padding:0;margin:0" id="dash-agenda">
+            <div class="loading"><div class="spin"></div>Carregando agenda...</div>
+          </div>
         </div>
-        <div class="card"><div class="ch"><span class="ct">Chamados Abertos</span><span class="ca" onclick="navTo('chamados')">Ver todos →</span></div><div id="dash-cham"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+        <div class="g2">
+          <div class="card"><div class="ch"><span class="ct"><i class="ti ti-clipboard-list" style="font-size:13px;margin-right:5px;vertical-align:-2px;color:var(--txt3)"></i>Chamados Urgentes / Abertos</span><span class="ca" onclick="navTo('chamados')">Ver todos →</span></div><div id="dash-cham"><div class="loading"><div class="spin"></div></div></div></div>
+          <div class="card"><div class="ch"><span class="ct"><i class="ti ti-users" style="font-size:13px;margin-right:5px;vertical-align:-2px;color:var(--txt3)"></i>Prestadores</span><span class="ca" onclick="navTo('prestadores')">Ver todos →</span></div><div id="dash-prest"><div class="loading"><div class="spin"></div></div></div></div>
+        </div>
       </div>
 
       <!-- LOCAIS -->
       <div class="tab" id="tab-locais">
-        <div class="ph"><div><h2>Locais</h2><p>Unidades, andares e ambientes cadastrados</p></div>
+        <div class="ph"><div><h2>Locais</h2><p>Ambientes agrupados por unidade</p></div>
           <div style="display:flex;gap:8px">
-            <button class="btn btn-s" onclick="openM('m-andar')"><i class="ti ti-plus"></i>Andar</button>
-            <button class="btn btn-p" onclick="openM('m-ambiente')"><i class="ti ti-plus"></i>Ambiente</button>
+            <button class="btn btn-s" onclick="openNew('m-andar')"><i class="ti ti-plus"></i>Andar</button>
+            <button class="btn btn-p" onclick="openNew('m-ambiente')"><i class="ti ti-plus"></i>Ambiente</button>
           </div>
         </div>
-        <div class="card"><div class="ch"><span class="ct">Ambientes Cadastrados</span></div><div id="tbl-ambientes"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+        <div class="card"><div class="ch"><span class="ct">Ambientes por Unidade</span></div><div id="tbl-ambientes"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
         <div class="g2e">
-          <div class="card"><div class="ch"><span class="ct">Andares</span></div><div id="tbl-andares"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
-          <div class="card"><div class="ch"><span class="ct">Unidades</span></div><div id="tbl-unidades"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+          <div class="card"><div class="ch"><span class="ct">Andares</span></div><div id="tbl-andares"><div class="loading"><div class="spin"></div></div></div></div>
+          <div class="card"><div class="ch"><span class="ct">Unidades</span></div><div id="tbl-unidades"><div class="loading"><div class="spin"></div></div></div></div>
         </div>
       </div>
 
       <!-- ATIVOS -->
       <div class="tab" id="tab-ativos">
-        <div class="ph"><div><h2>Ativos / Equipamentos</h2><p>Equipamentos vinculados a ambientes</p></div>
+        <div class="ph"><div><h2>Ativos / Equipamentos</h2><p>Todos os equipamentos cadastrados</p></div>
           <button class="btn btn-p" onclick="openNew('m-ativo')"><i class="ti ti-plus"></i>Novo Ativo</button>
         </div>
-        <div class="card"><div class="ch"><span class="ct">Todos os Ativos</span>
+        <div class="card"><div class="ch"><span class="ct">Inventário</span>
           <div style="display:flex;gap:5px;flex-wrap:wrap">
             <span class="chip grn" style="cursor:pointer" onclick="filtroAtivos('')">Todos</span>
             <span class="chip blu" style="cursor:pointer;opacity:.65" onclick="filtroAtivos('Ar Condicionado')">Ar-cond.</span>
@@ -309,25 +383,36 @@ tbody tr:hover td{background:#fafafa}
         <div class="ph"><div><h2>Manutenção</h2><p>Cronograma preventivo por equipamento</p></div>
           <button class="btn btn-p" onclick="openNew('m-man')"><i class="ti ti-plus"></i>Nova Manutenção</button>
         </div>
-        <div class="card"><div class="ch"><span class="ct">Cronograma</span>
-          <div style="display:flex;gap:5px"><span class="chip red">Vencida</span><span class="chip amb">Próxima</span><span class="chip grn">Em dia</span></div>
-        </div><div id="tbl-man"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
-        <div class="card"><div class="ch"><span class="ct">Histórico de Manutenções Realizadas</span><span class="ca" onclick="openNew('m-hist')"><i class="ti ti-plus" style="font-size:11px"></i> Registrar</span></div><div id="tbl-hist"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+        <div class="card"><div class="ch"><span class="ct">Cronograma</span><div style="display:flex;gap:5px"><span class="chip red">Vencida</span><span class="chip amb">≤15 dias</span><span class="chip grn">Em dia</span></div></div><div id="tbl-man"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
+        <div class="card"><div class="ch"><span class="ct">Histórico Realizado</span><span class="ca" onclick="openNew('m-hist')"><i class="ti ti-plus" style="font-size:11px"></i> Registrar</span></div><div id="tbl-hist"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
       </div>
 
       <!-- CHAMADOS -->
       <div class="tab" id="tab-chamados">
-        <div class="ph"><div><h2>Chamados / OS</h2><p>Ordens de serviço e ocorrências</p></div>
+        <div class="ph"><div><h2>Chamados / OS</h2><p>Ordens de serviço · ordenados por urgência e chegada</p></div>
           <button class="btn btn-p" onclick="openNew('m-cham')"><i class="ti ti-plus"></i>Novo Chamado</button>
+        </div>
+        <div style="background:#f0f9fa;border:1px solid #d1e9ed;border-radius:var(--r);padding:10px 14px;margin-bottom:10px;font-size:12px;color:var(--teal)">
+          <i class="ti ti-info-circle" style="font-size:14px;vertical-align:-2px;margin-right:6px"></i>
+          Para consultar o status de um chamado pelo protocolo, use a busca acima ↑
         </div>
         <div class="card">
           <div class="ch"><span class="ct">Todos os Chamados</span>
-            <select class="fs" style="width:auto;padding:4px 8px;font-size:12px" id="cham-filter" onchange="loadChamados()">
-              <option value="">Todos os Status</option>
-              <option value="Aberto">Aberto</option>
-              <option value="Em andamento">Em andamento</option>
-              <option value="Concluído">Concluído</option>
-            </select>
+            <div style="display:flex;gap:8px;align-items:center">
+              <select class="fs" style="width:auto;padding:4px 8px;font-size:12px" id="cham-filter" onchange="loadChamados()">
+                <option value="">Todos os Status</option>
+                <option value="Aberto">Aberto</option>
+                <option value="Em andamento">Em andamento</option>
+                <option value="Concluído">Concluído</option>
+              </select>
+              <select class="fs" style="width:auto;padding:4px 8px;font-size:12px" id="cham-urg-filter" onchange="loadChamados()">
+                <option value="">Todas as Urgências</option>
+                <option value="Urgente">🔴 Urgente</option>
+                <option value="Alta">🟠 Alta</option>
+                <option value="Normal">🟡 Normal</option>
+                <option value="Baixa">🟢 Baixa</option>
+              </select>
+            </div>
           </div>
           <div id="tbl-cham"><div class="loading"><div class="spin"></div>Carregando...</div></div>
         </div>
@@ -344,40 +429,37 @@ tbody tr:hover td{background:#fafafa}
       <!-- RELATÓRIOS -->
       <div class="tab" id="tab-relatorios">
         <div class="ph"><div><h2>Relatórios</h2><p>Análises e indicadores de desempenho</p></div>
-          <button class="btn btn-s" onclick="exportCSV()"><i class="ti ti-file-spreadsheet"></i>Exportar CSV</button>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-s no-print" onclick="window.print()"><i class="ti ti-printer"></i>Imprimir / PDF</button>
+            <button class="btn btn-s no-print" onclick="exportCSV()"><i class="ti ti-file-spreadsheet"></i>Exportar CSV</button>
+          </div>
         </div>
+        <div class="kpi-grid" id="rel-kpi"><div class="kpi"><div class="loading"><div class="spin"></div></div></div><div class="kpi"><div class="loading"><div class="spin"></div></div></div><div class="kpi"><div class="loading"><div class="spin"></div></div></div><div class="kpi"><div class="loading"><div class="spin"></div></div></div></div>
         <div class="g2e">
           <div class="card"><div class="ch"><span class="ct">Manutenções por Status</span></div><div id="rel-man" style="padding:14px"><div class="loading"><div class="spin"></div></div></div></div>
           <div class="card"><div class="ch"><span class="ct">Chamados por Status</span></div><div id="rel-cham" style="padding:14px"><div class="loading"><div class="spin"></div></div></div></div>
         </div>
-        <div class="card"><div class="ch"><span class="ct">Resumo Geral</span></div><div id="rel-resumo" style="padding:14px"><div class="loading"><div class="spin"></div></div></div></div>
+        <div class="card"><div class="ch"><span class="ct">Tempo de Resposta por Prestador</span></div><div id="rel-tempo" style="padding:14px"><div class="loading"><div class="spin"></div></div></div></div>
         <div class="card"><div class="ch"><span class="ct">Ativos por Local</span></div><div id="rel-ativos" style="padding:14px"><div class="loading"><div class="spin"></div></div></div></div>
+        <div class="card"><div class="ch"><span class="ct">Resumo por Categoria de Equipamento</span></div><div id="rel-cat" style="padding:14px"><div class="loading"><div class="spin"></div></div></div></div>
       </div>
 
       <!-- MOBILIÁRIO -->
       <div class="tab" id="tab-mobiliario">
-        <div class="ph"><div><h2>Mobiliário / Infraestrutura</h2><p>Inventário completo de ativos por local e categoria</p></div>
+        <div class="ph"><div><h2>Mobiliário / Infraestrutura</h2><p>Inventário completo por categoria</p></div>
           <button class="btn btn-p" onclick="openNew('m-ativo')"><i class="ti ti-plus"></i>Novo Item</button>
         </div>
-        <div class="kpi-grid" id="mob-kpi">
-          <div class="kpi"><div class="loading"><div class="spin"></div></div></div>
-          <div class="kpi"><div class="loading"><div class="spin"></div></div></div>
-          <div class="kpi"><div class="loading"><div class="spin"></div></div></div>
-          <div class="kpi"><div class="loading"><div class="spin"></div></div></div>
-        </div>
-        <div class="card">
-          <div class="ch"><span class="ct">Inventário</span>
-            <div style="display:flex;gap:5px;flex-wrap:wrap">
-              <span class="chip grn" style="cursor:pointer" onclick="filtroMob('')">Todos</span>
-              <span class="chip blu" style="cursor:pointer;opacity:.65" onclick="filtroMob('Ar Condicionado')">Ar-cond.</span>
-              <span class="chip amb" style="cursor:pointer;opacity:.65" onclick="filtroMob('Nobreak')">Nobreak</span>
-              <span class="chip red" style="cursor:pointer;opacity:.65" onclick="filtroMob('Extintor')">Extintor</span>
-              <span class="chip gry" style="cursor:pointer;opacity:.65" onclick="filtroMob('Impressora')">Impressora</span>
-              <span class="chip gry" style="cursor:pointer;opacity:.65" onclick="filtroMob('Câmera')">Câmera</span>
-            </div>
+        <div class="kpi-grid" id="mob-kpi"><div class="kpi"><div class="loading"><div class="spin"></div></div></div><div class="kpi"><div class="loading"><div class="spin"></div></div></div><div class="kpi"><div class="loading"><div class="spin"></div></div></div><div class="kpi"><div class="loading"><div class="spin"></div></div></div></div>
+        <div class="card"><div class="ch"><span class="ct">Inventário</span>
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
+            <span class="chip grn" style="cursor:pointer" onclick="filtroMob('')">Todos</span>
+            <span class="chip blu" style="cursor:pointer;opacity:.65" onclick="filtroMob('Ar Condicionado')">Ar-cond.</span>
+            <span class="chip amb" style="cursor:pointer;opacity:.65" onclick="filtroMob('Nobreak')">Nobreak</span>
+            <span class="chip red" style="cursor:pointer;opacity:.65" onclick="filtroMob('Extintor')">Extintor</span>
+            <span class="chip gry" style="cursor:pointer;opacity:.65" onclick="filtroMob('Impressora')">Impressora</span>
+            <span class="chip gry" style="cursor:pointer;opacity:.65" onclick="filtroMob('Câmera')">Câmera</span>
           </div>
-          <div id="tbl-mob"><div class="loading"><div class="spin"></div>Carregando...</div></div>
-        </div>
+        </div><div id="tbl-mob"><div class="loading"><div class="spin"></div>Carregando...</div></div></div>
       </div>
 
     </div>
@@ -385,72 +467,68 @@ tbody tr:hover td{background:#fafafa}
 </div>
 </div>
 
+<!-- TOAST -->
 <div id="toast"></div>
 
-<!-- MODAIS -->
-
-<!-- Andar -->
-<div class="mo" id="m-andar"><div class="mb">
-  <div class="mh"><span class="mt" id="m-andar-titulo">Novo Andar</span><span class="mx" onclick="closeM('m-andar')">×</span></div>
-  <div class="mbd">
-    <div class="fr">
-      <div class="fg"><label class="fl">Unidade *</label><select class="fs" id="f-and-uni"></select></div>
-      <div class="fg"><label class="fl">Nome do Andar *</label><input class="fi" id="f-and-nome" placeholder="ex: Térreo, 1° Andar"></div>
-    </div>
+<!-- PROTOCOL POPUP -->
+<div class="proto-overlay" id="proto-overlay" onclick="closeProto()"></div>
+<div id="proto-popup">
+  <div style="width:50px;height:50px;background:var(--green-l);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
+    <i class="ti ti-circle-check" style="font-size:26px;color:var(--green)"></i>
   </div>
+  <div style="font-size:15px;font-weight:600;color:var(--txt);margin-bottom:6px">Chamado Aberto!</div>
+  <div style="font-size:12px;color:var(--txt3);margin-bottom:14px">Protocolo para acompanhamento:</div>
+  <div id="proto-num" style="font-family:monospace;font-size:20px;font-weight:700;color:var(--teal);background:#f0f9fa;padding:10px 20px;border-radius:8px;border:2px solid #d1e9ed;letter-spacing:1px;margin-bottom:14px"></div>
+  <button onclick="copyProto()" class="btn btn-s" style="width:100%;margin-bottom:8px"><i class="ti ti-copy"></i>Copiar Protocolo</button>
+  <button onclick="closeProto()" class="btn btn-p" style="width:100%">Fechar</button>
+</div>
+
+<!-- MODAIS -->
+<div class="mo" id="m-andar"><div class="mb">
+  <div class="mh"><span class="mt" id="m-andar-t">Novo Andar</span><span class="mx" onclick="closeM('m-andar')">×</span></div>
+  <div class="mbd"><div class="fr">
+    <div class="fg"><label class="fl">Unidade *</label><select class="fs" id="f-and-uni"></select></div>
+    <div class="fg"><label class="fl">Nome do Andar *</label><input class="fi" id="f-and-nome" placeholder="ex: Térreo, 1° Andar"></div>
+  </div></div>
   <div class="mf"><button class="btn btn-s" onclick="closeM('m-andar')">Cancelar</button><button class="btn btn-p" onclick="saveAndar()"><i class="ti ti-check"></i>Salvar</button></div>
 </div></div>
 
-<!-- Ambiente -->
 <div class="mo" id="m-ambiente"><div class="mb">
-  <div class="mh"><span class="mt" id="m-ambiente-titulo">Novo Ambiente</span><span class="mx" onclick="closeM('m-ambiente')">×</span></div>
-  <div class="mbd">
-    <div class="fr">
-      <div class="fg"><label class="fl">Andar *</label><select class="fs" id="f-amb-andar"></select></div>
-      <div class="fg"><label class="fl">Nome do Ambiente *</label><input class="fi" id="f-amb-nome" placeholder="ex: Sala de Reuniões"></div>
-    </div>
-  </div>
+  <div class="mh"><span class="mt" id="m-ambiente-t">Novo Ambiente</span><span class="mx" onclick="closeM('m-ambiente')">×</span></div>
+  <div class="mbd"><div class="fr">
+    <div class="fg"><label class="fl">Andar *</label><select class="fs" id="f-amb-andar"></select></div>
+    <div class="fg"><label class="fl">Nome do Ambiente *</label><input class="fi" id="f-amb-nome" placeholder="ex: Sala de Reuniões"></div>
+  </div></div>
   <div class="mf"><button class="btn btn-s" onclick="closeM('m-ambiente')">Cancelar</button><button class="btn btn-p" onclick="saveAmbiente()"><i class="ti ti-check"></i>Salvar</button></div>
 </div></div>
 
-<!-- Ativo -->
 <div class="mo" id="m-ativo"><div class="mb">
-  <div class="mh"><span class="mt" id="m-ativo-titulo">Novo Ativo / Equipamento</span><span class="mx" onclick="closeM('m-ativo')">×</span></div>
+  <div class="mh"><span class="mt" id="m-ativo-t">Novo Ativo</span><span class="mx" onclick="closeM('m-ativo')">×</span></div>
   <div class="mbd">
-    <div class="fg"><label class="fl">Nome do Equipamento *</label><input class="fi" id="f-at-nome" placeholder="ex: AC Split 12.000 BTU Electrolux"></div>
+    <div class="fg"><label class="fl">Nome *</label><input class="fi" id="f-at-nome" placeholder="ex: AC Split 12.000 BTU Electrolux"></div>
     <div class="fr">
-      <div class="fg"><label class="fl">Categoria</label>
-        <select class="fs" id="f-at-cat">
-          <option>Ar Condicionado</option><option>Nobreak</option><option>Extintor</option>
-          <option>Impressora</option><option>Câmera</option><option>Mobiliário</option>
-          <option>Elétrico</option><option>Hidráulico</option><option>Outros</option>
-        </select></div>
+      <div class="fg"><label class="fl">Categoria</label><select class="fs" id="f-at-cat"><option>Ar Condicionado</option><option>Nobreak</option><option>Extintor</option><option>Impressora</option><option>Câmera</option><option>Mobiliário</option><option>Elétrico</option><option>Hidráulico</option><option>Outros</option></select></div>
       <div class="fg"><label class="fl">Ambiente</label><select class="fs" id="f-at-amb"></select></div>
     </div>
     <div class="fr">
-      <div class="fg"><label class="fl">Marca / Modelo</label><input class="fi" id="f-at-marca" placeholder="ex: Electrolux VI12F"></div>
-      <div class="fg"><label class="fl">Data de Compra</label><input class="fi" id="f-at-data" type="date"></div>
+      <div class="fg"><label class="fl">Marca / Modelo</label><input class="fi" id="f-at-marca"></div>
+      <div class="fg"><label class="fl">Data Compra</label><input class="fi" id="f-at-data" type="date"></div>
     </div>
     <div class="fr">
-      <div class="fg"><label class="fl">Status</label>
-        <select class="fs" id="f-at-status"><option>Ativo</option><option>Inativo</option><option>Em manutenção</option></select></div>
-      <div class="fg" style="display:flex;align-items:flex-end;padding-bottom:2px">
-        <div class="cb-row"><input type="checkbox" id="f-at-crit"><label class="fl" for="f-at-crit" style="margin:0;cursor:pointer">Equipamento Crítico</label></div>
-      </div>
+      <div class="fg"><label class="fl">Status</label><select class="fs" id="f-at-status"><option>Ativo</option><option>Inativo</option><option>Em manutenção</option></select></div>
+      <div class="fg" style="display:flex;align-items:flex-end;padding-bottom:2px"><div class="cb-row"><input type="checkbox" id="f-at-crit"><label class="fl" for="f-at-crit" style="margin:0;cursor:pointer">Equipamento Crítico</label></div></div>
     </div>
   </div>
   <div class="mf"><button class="btn btn-s" onclick="closeM('m-ativo')">Cancelar</button><button class="btn btn-p" onclick="saveAtivo()"><i class="ti ti-check"></i>Salvar</button></div>
 </div></div>
 
-<!-- Manutenção -->
 <div class="mo" id="m-man"><div class="mb">
-  <div class="mh"><span class="mt" id="m-man-titulo">Nova Manutenção Programada</span><span class="mx" onclick="closeM('m-man')">×</span></div>
+  <div class="mh"><span class="mt" id="m-man-t">Nova Manutenção</span><span class="mx" onclick="closeM('m-man')">×</span></div>
   <div class="mbd">
     <div class="fg"><label class="fl">Título *</label><input class="fi" id="f-man-tit" placeholder="ex: Limpeza filtros AC Split"></div>
     <div class="fr">
       <div class="fg"><label class="fl">Ativo *</label><select class="fs" id="f-man-at"></select></div>
-      <div class="fg"><label class="fl">Tipo</label>
-        <select class="fs" id="f-man-tipo"><option>Preventiva</option><option>Corretiva</option><option>Preditiva</option></select></div>
+      <div class="fg"><label class="fl">Tipo</label><select class="fs" id="f-man-tipo"><option>Preventiva</option><option>Corretiva</option><option>Preditiva</option></select></div>
     </div>
     <div class="fr">
       <div class="fg"><label class="fl">Última Manutenção</label><input class="fi" id="f-man-ult" type="date"></div>
@@ -458,18 +536,15 @@ tbody tr:hover td{background:#fafafa}
     </div>
     <div class="fr">
       <div class="fg"><label class="fl">Prestador</label><select class="fs" id="f-man-prest"></select></div>
-      <div class="fg" style="display:flex;align-items:flex-end;padding-bottom:2px">
-        <div class="cb-row"><input type="checkbox" id="f-man-crit"><label class="fl" for="f-man-crit" style="margin:0;cursor:pointer">Crítico</label></div>
-      </div>
+      <div class="fg" style="display:flex;align-items:flex-end;padding-bottom:2px"><div class="cb-row"><input type="checkbox" id="f-man-crit"><label class="fl" for="f-man-crit" style="margin:0;cursor:pointer">Crítico</label></div></div>
     </div>
     <div class="fg"><label class="fl">Observações</label><textarea class="ft" id="f-man-obs"></textarea></div>
   </div>
   <div class="mf"><button class="btn btn-s" onclick="closeM('m-man')">Cancelar</button><button class="btn btn-p" onclick="saveMan()"><i class="ti ti-check"></i>Salvar</button></div>
 </div></div>
 
-<!-- Histórico -->
 <div class="mo" id="m-hist"><div class="mb">
-  <div class="mh"><span class="mt" id="m-hist-titulo">Registrar Manutenção Realizada</span><span class="mx" onclick="closeM('m-hist')">×</span></div>
+  <div class="mh"><span class="mt" id="m-hist-t">Registrar Manutenção</span><span class="mx" onclick="closeM('m-hist')">×</span></div>
   <div class="mbd">
     <div class="fg"><label class="fl">Título *</label><input class="fi" id="f-hist-tit" placeholder="ex: Limpeza e revisão AC"></div>
     <div class="fr">
@@ -477,8 +552,7 @@ tbody tr:hover td{background:#fafafa}
       <div class="fg"><label class="fl">Data Realizada *</label><input class="fi" id="f-hist-data" type="date"></div>
     </div>
     <div class="fr">
-      <div class="fg"><label class="fl">Tipo</label>
-        <select class="fs" id="f-hist-tipo"><option>Preventiva</option><option>Corretiva</option><option>Preditiva</option></select></div>
+      <div class="fg"><label class="fl">Tipo</label><select class="fs" id="f-hist-tipo"><option>Preventiva</option><option>Corretiva</option><option>Preditiva</option></select></div>
       <div class="fg"><label class="fl">Prestador</label><select class="fs" id="f-hist-prest"></select></div>
     </div>
     <div class="fg"><label class="fl">Observações</label><textarea class="ft" id="f-hist-obs"></textarea></div>
@@ -486,38 +560,47 @@ tbody tr:hover td{background:#fafafa}
   <div class="mf"><button class="btn btn-s" onclick="closeM('m-hist')">Cancelar</button><button class="btn btn-p" onclick="saveHist()"><i class="ti ti-check"></i>Registrar</button></div>
 </div></div>
 
-<!-- Chamado -->
 <div class="mo" id="m-cham"><div class="mb">
-  <div class="mh"><span class="mt" id="m-cham-titulo">Novo Chamado / OS</span><span class="mx" onclick="closeM('m-cham')">×</span></div>
+  <div class="mh"><span class="mt" id="m-cham-t">Novo Chamado</span><span class="mx" onclick="closeM('m-cham')">×</span></div>
   <div class="mbd">
     <div class="fg"><label class="fl">Descrição *</label><input class="fi" id="f-ch-desc" placeholder="ex: Vazamento na torneira da copa"></div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Urgência *</label>
+        <select class="fs" id="f-ch-urg">
+          <option value="Normal">🟡 Normal</option>
+          <option value="Alta">🟠 Alta</option>
+          <option value="Urgente">🔴 Urgente</option>
+          <option value="Baixa">🟢 Baixa</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">Tipo</label>
+        <select class="fs" id="f-ch-tipo"><option>Corretiva</option><option>Preventiva</option><option>Melhoria</option><option>Urgência</option></select>
+      </div>
+    </div>
     <div class="fr">
       <div class="fg"><label class="fl">Ambiente</label><select class="fs" id="f-ch-amb"></select></div>
       <div class="fg"><label class="fl">Ativo (opcional)</label><select class="fs" id="f-ch-at"><option value="">— nenhum —</option></select></div>
     </div>
     <div class="fr">
-      <div class="fg"><label class="fl">Tipo</label>
-        <select class="fs" id="f-ch-tipo"><option>Corretiva</option><option>Preventiva</option><option>Melhoria</option><option>Urgência</option></select></div>
-      <div class="fg"><label class="fl">Status</label>
-        <select class="fs" id="f-ch-status"><option>Aberto</option><option>Em andamento</option><option>Concluído</option></select></div>
+      <div class="fg"><label class="fl">Status</label><select class="fs" id="f-ch-status"><option>Aberto</option><option>Em andamento</option><option>Concluído</option></select></div>
+      <div class="fg"><label class="fl">Solicitante</label><input class="fi" id="f-ch-sol" placeholder="Nome de quem abriu"></div>
     </div>
     <div class="fr">
-      <div class="fg"><label class="fl">Solicitante</label><input class="fi" id="f-ch-sol" placeholder="Nome de quem abriu"></div>
       <div class="fg"><label class="fl">Prestador</label><select class="fs" id="f-ch-prest"></select></div>
+      <div class="fg"><label class="fl">Data Conclusão</label><input class="fi" id="f-ch-conc" type="date"></div>
     </div>
     <div class="fg"><label class="fl">Observações</label><textarea class="ft" id="f-ch-obs"></textarea></div>
   </div>
   <div class="mf"><button class="btn btn-s" onclick="closeM('m-cham')">Cancelar</button><button class="btn btn-p" onclick="saveCham()"><i class="ti ti-check"></i>Salvar</button></div>
 </div></div>
 
-<!-- Prestador -->
 <div class="mo" id="m-prest"><div class="mb">
-  <div class="mh"><span class="mt" id="m-prest-titulo">Novo Prestador</span><span class="mx" onclick="closeM('m-prest')">×</span></div>
+  <div class="mh"><span class="mt" id="m-prest-t">Novo Prestador</span><span class="mx" onclick="closeM('m-prest')">×</span></div>
   <div class="mbd">
     <div class="fg"><label class="fl">Nome / Empresa *</label><input class="fi" id="f-pr-nome" placeholder="ex: Refrigeração Pinguim"></div>
     <div class="fr">
       <div class="fg"><label class="fl">Especialidade</label><input class="fi" id="f-pr-esp" placeholder="ex: Ar-condicionado"></div>
-      <div class="fg"><label class="fl">Contato (tel/email)</label><input class="fi" id="f-pr-cont" placeholder="(66) 9 9999-9999"></div>
+      <div class="fg"><label class="fl">Contato</label><input class="fi" id="f-pr-cont" placeholder="(66) 9 9999-9999"></div>
     </div>
   </div>
   <div class="mf"><button class="btn btn-s" onclick="closeM('m-prest')">Cancelar</button><button class="btn btn-p" onclick="savePrest()"><i class="ti ti-check"></i>Salvar</button></div>
@@ -532,7 +615,9 @@ const TBL={
   ativos:'tbl1SsWbJE3l5xutZ',manutencoes:'tblgjuSTgEqifxRwE',
   historico:'tblV9JbbgltZ50ygp',chamados:'tblNNI1ODUUncxPM1',
 };
-let PAT='',currentUnit='Buritis',currentTab='dashboard';
+const UNIT_ORDER=['ADM Matriz','Und. Buritis','Apartamento PVA','Apartamento Sinop','Campo C.V.','Sinop'];
+const URG_ORDER={'Urgente':0,'Alta':1,'Normal':2,'Baixa':3};
+let PAT='',currentUnit='ADM Matriz',currentTab='dashboard';
 let editId=null,editModal=null;
 const C={unidades:{},andares:{},ambientes:{},prestadores:{},ativos:{}};
 const DC={};
@@ -540,7 +625,7 @@ const DC={};
 function hdrs(){return{'Authorization':'Bearer '+PAT,'Content-Type':'application/json'};}
 function atURL(t,qs=''){return`https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(t)}${qs}`;}
 
-// ══ LOGIN ══
+// ── LOGIN ──
 window.addEventListener('DOMContentLoaded',()=>{
   const s=localStorage.getItem('campo_pat');
   if(s){PAT=s;showApp();}
@@ -548,16 +633,15 @@ window.addEventListener('DOMContentLoaded',()=>{
 });
 async function doLogin(){
   const pat=document.getElementById('pat-input').value.trim();
-  if(!pat){showErr('Insira o Personal Access Token.');return;}
-  PAT=pat;
-  const btn=document.getElementById('login-btn');
+  if(!pat){showErr('Insira o token.');return;}
+  PAT=pat;const btn=document.getElementById('login-btn');
   btn.disabled=true;document.getElementById('login-txt').textContent='Conectando...';
   document.getElementById('login-err').style.display='none';
   try{
-    const res=await fetch(atURL(TBL.unidades,'?maxRecords=1'),{headers:hdrs()});
-    if(!res.ok)throw new Error('Token inválido ('+res.status+')');
+    const r=await fetch(atURL(TBL.unidades,'?maxRecords=1'),{headers:hdrs()});
+    if(!r.ok)throw new Error('Token inválido ('+r.status+')');
     localStorage.setItem('campo_pat',PAT);showApp();
-  }catch(e){showErr(e.message||'Erro de conexão.');PAT='';btn.disabled=false;document.getElementById('login-txt').textContent='Conectar e Entrar';}
+  }catch(e){showErr(e.message);PAT='';btn.disabled=false;document.getElementById('login-txt').textContent='Conectar e Entrar';}
 }
 function showErr(m){const e=document.getElementById('login-err');e.textContent=m;e.style.display='block';}
 async function showApp(){
@@ -573,38 +657,43 @@ function doLogout(){
   document.getElementById('pat-input').value='';
 }
 
-// ══ CACHE ══
+// ── CACHE ──
 async function buildCache(){
   const[unis,ands,ambs,prest,atv]=await Promise.all([
-    fetchAll(TBL.unidades),fetchAll(TBL.andares),
-    fetchAll(TBL.ambientes),fetchAll(TBL.prestadores),fetchAll(TBL.ativos),
+    fetchAll(TBL.unidades),fetchAll(TBL.andares),fetchAll(TBL.ambientes),fetchAll(TBL.prestadores),fetchAll(TBL.ativos)
   ]);
   unis.forEach(r=>{C.unidades[r.id]={name:r.fields.Nome||'—'};});
   ands.forEach(r=>{C.andares[r.id]={name:r.fields.Nome||'—',uni:(r.fields.Unidade||[])[0]||''};});
-  ambs.forEach(r=>{C.ambientes[r.id]={name:cleanName(r.fields.Nome||'—'),andar:(r.fields.Andar||[])[0]||''};});
+  ambs.forEach(r=>{C.ambientes[r.id]={name:cleanName(r.fields.Nome||'—'),raw:r.fields.Nome||'',andar:(r.fields.Andar||[])[0]||''};});
   prest.forEach(r=>{C.prestadores[r.id]={name:r.fields.Nome||'—',esp:r.fields.Especialidade||'—',cont:r.fields.Contato||'—'};});
   atv.forEach(r=>{C.ativos[r.id]={name:r.fields.Nome||'—',cat:r.fields.Categoria||'—',amb:(r.fields.Ambiente||[])[0]||''};});
 }
 
-// ══ CLEAN NAME ── remove prefixos [Interno], [Externo], [Estrutural] etc.
-function cleanName(n){return(n||'').replace(/^\[(interno|externo|estrutural|predial|externo)\]\s*/i,'').trim();}
-
+function cleanName(n){return(n||'').replace(/^\[(interno|externo|estrutural|predial)\]\s*/i,'').trim();}
 function rName(c,id){return c[id]?.name||'—';}
 function ambLocal(aid){
   const a=C.ambientes[aid];if(!a)return'—';
   const and=C.andares[a.andar];if(!and)return a.name;
-  const uni=C.unidades[and.uni];if(!uni)return and.name+' / '+a.name;
-  return uni.name+' · '+and.name+' · '+a.name;
+  const uni=C.unidades[and.uni];
+  return(uni?uni.name+' · ':'')+and.name+' · '+a.name;
 }
 function ambUnit(aid){
   const a=C.ambientes[aid];if(!a)return'';
   const and=C.andares[a.andar];if(!and)return'';
   return C.unidades[and.uni]?.name||'';
 }
+function andarOrd(name){
+  const n=(name||'').toLowerCase();
+  if(n.includes('térreo')||n.includes('terreo'))return 0;
+  if(n.includes('piso')||n.includes('1°')||n.includes('1o')||n.includes('andar'))return 1;
+  if(n.includes('apartamento')||n.includes('apto'))return 2;
+  if(n.includes('ext')||n.includes('pátio')||n.includes('jardim'))return 3;
+  return 4;
+}
 
-// ══ SELECTS ══
+// ── SELECTS ──
 function populateSelects(){
-  const unis=Object.entries(C.unidades);
+  const unis=Object.entries(C.unidades).sort((a,b)=>UNIT_ORDER.indexOf(a[1].name)-UNIT_ORDER.indexOf(b[1].name));
   const ands=Object.entries(C.andares).sort((a,b)=>a[1].name.localeCompare(b[1].name,'pt-BR'));
   const ambs=Object.entries(C.ambientes).sort((a,b)=>a[1].name.localeCompare(b[1].name,'pt-BR'));
   const prests=Object.entries(C.prestadores).sort((a,b)=>a[1].name.localeCompare(b[1].name,'pt-BR'));
@@ -623,7 +712,7 @@ function populateSelects(){
 function sel(id,items){const e=document.getElementById(id);if(!e)return;e.innerHTML=items.map(x=>`<option value="${x.id}">${x.name}</option>`).join('');}
 function selOpt(id,items){const e=document.getElementById(id);if(!e)return;e.innerHTML=items.map(x=>x?`<option value="${x.id}">${x.name}</option>`:`<option value="">— nenhum —</option>`).join('');}
 
-// ══ FETCH ══
+// ── FETCH / CRUD ──
 async function fetchAll(tbl,filter=''){
   const key=tbl+filter+currentUnit;
   if(DC[key]&&Date.now()-DC[key].ts<60000)return DC[key].d;
@@ -631,28 +720,33 @@ async function fetchAll(tbl,filter=''){
   try{
     do{
       let qs='?pageSize=100'+(filter?'&filterByFormula='+encodeURIComponent(filter):'')+(off?'&offset='+off:'');
-      const res=await fetch(atURL(tbl,qs),{headers:hdrs()});
-      const j=await res.json();all=[...all,...(j.records||[])];off=j.offset||'';
+      const r=await fetch(atURL(tbl,qs),{headers:hdrs()});
+      const j=await r.json();all=[...all,...(j.records||[])];off=j.offset||'';
     }while(off);
     DC[key]={d:all,ts:Date.now()};
   }catch(e){console.error(tbl,e);}
   return all;
 }
 async function create(tbl,fields){
-  const res=await fetch(atURL(tbl),{method:'POST',headers:hdrs(),body:JSON.stringify({records:[{fields}],typecast:true})});
-  if(!res.ok){const j=await res.json();throw new Error(j.error?.message||'Erro '+res.status);}
-  clearCache(tbl);await buildCache();populateSelects();return res.json();
+  const r=await fetch(atURL(tbl),{method:'POST',headers:hdrs(),body:JSON.stringify({records:[{fields}],typecast:true})});
+  if(!r.ok){const j=await r.json();throw new Error(j.error?.message||'Erro '+r.status);}
+  clearCache(tbl);await buildCache();populateSelects();return r.json();
 }
 async function update(tbl,id,fields){
-  const res=await fetch(atURL(tbl,'/'+id),{method:'PATCH',headers:hdrs(),body:JSON.stringify({fields,typecast:true})});
-  if(!res.ok){const j=await res.json();throw new Error(j.error?.message||'Erro '+res.status);}
-  clearCache(tbl);await buildCache();populateSelects();return res.json();
+  const r=await fetch(atURL(tbl,'/'+id),{method:'PATCH',headers:hdrs(),body:JSON.stringify({fields,typecast:true})});
+  if(!r.ok){const j=await r.json();throw new Error(j.error?.message||'Erro '+r.status);}
+  clearCache(tbl);await buildCache();populateSelects();return r.json();
+}
+async function deleteRec(tbl,id){
+  const r=await fetch(atURL(tbl,'/'+id),{method:'DELETE',headers:hdrs()});
+  if(!r.ok)throw new Error('Erro '+r.status);
+  clearCache(tbl);await buildCache();populateSelects();return r.json();
 }
 function clearCache(tbl){Object.keys(DC).forEach(k=>{if(k.startsWith(tbl))delete DC[k];});}
 
-// ══ UTILS ══
+// ── UTILS ──
 function filterUnit(recs){
-  if(currentUnit==='Ambas')return recs;
+  if(currentUnit==='Geral')return recs;
   return recs.filter(r=>{
     const ids=r.fields.Unidade||r.fields.Ambiente||[];
     if(!ids.length)return true;
@@ -661,26 +755,43 @@ function filterUnit(recs){
   });
 }
 function chip(s){
-  const m={'Vencida':'red','Aberto':'red','Urgência':'red','Corretiva':'red','Pendente':'amb','Em andamento':'blu','Em manutenção':'amb','Próxima':'amb','Concluída':'grn','Concluído':'grn','Ativo':'grn','Em dia':'grn','Alta':'red','Média':'amb','Baixa':'grn','Bom':'grn','Regular':'amb','Ruim':'red','Inativo':'gry','Preventiva':'blu','Preditiva':'gry'};
+  const m={'Vencida':'red','Aberto':'red','Corretiva':'ora','Urgência':'red','Pendente':'amb','Em andamento':'blu','Em manutenção':'amb','Próxima':'amb','Concluída':'grn','Concluído':'grn','Ativo':'grn','Em dia':'grn','Alta':'ora','Média':'amb','Baixa':'grn','Bom':'grn','Regular':'amb','Ruim':'red','Inativo':'gry','Preventiva':'blu','Preditiva':'gry','Melhoria':'blu','Normal':'amb'};
   return`<span class="chip ${m[s]||'gry'}">${s||'—'}</span>`;
 }
+function urgChip(u){
+  const icons={'Urgente':'🔴','Alta':'🟠','Normal':'🟡','Baixa':'🟢'};
+  const cls={'Urgente':'urg-0','Alta':'urg-1','Normal':'urg-2','Baixa':'urg-3'};
+  return`<span class="chip ${cls[u]||'gry'}">${icons[u]||''} ${u||'—'}</span>`;
+}
 function fDate(d){if(!d)return'—';return new Date(d+'T12:00:00').toLocaleDateString('pt-BR');}
+function fDateTime(d){if(!d)return'—';return new Date(d).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});}
 function fCur(v){if(!v&&v!==0)return'—';return'R$ '+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2});}
 function inits(n){if(!n)return'?';return n.trim().split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase();}
 function today(){return new Date().toISOString().split('T')[0];}
-function daysDiff(d){return Math.ceil((new Date(d+'T12:00:00')-new Date())/(864e5));}
-function editBtn(onclick){return`<td style="width:40px;text-align:center"><div class="edit-btn" onclick="${onclick}" title="Editar"><i class="ti ti-pencil"></i></div></td>`;}
+function daysDiff(d){return d?Math.ceil((new Date(d+'T12:00:00')-new Date())/(864e5)):null;}
+function nowISO(){return new Date().toISOString();}
+function genProtocolo(){
+  const n=new Date();
+  const d=n.toISOString().split('T')[0].replace(/-/g,'');
+  const t=n.toTimeString().slice(0,5).replace(':','');
+  return`CH-${d}-${t}`;
+}
+function actBtns(editFn,delFn){
+  return`<td style="width:70px;text-align:center;white-space:nowrap">
+    <button class="edit-btn" onclick="${editFn}" title="Editar"><i class="ti ti-pencil"></i></button>
+    <button class="del-btn" onclick="${delFn}" title="Excluir"><i class="ti ti-trash"></i></button>
+  </td>`;
+}
 
+// ── NAV ──
 const TITLES={dashboard:'Dashboard',locais:'Locais',ativos:'Ativos',manutencao:'Manutenção',chamados:'Chamados / OS',prestadores:'Prestadores',relatorios:'Relatórios',mobiliario:'Mobiliário / Infraestrutura'};
-
-// ══ NAV ══
 function goTab(tab,el){
   document.querySelectorAll('.tab').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('on'));
   document.getElementById('tab-'+tab).classList.add('on');
   if(el)el.classList.add('on');
   document.getElementById('ttitle').textContent=TITLES[tab]||tab;
-  document.getElementById('topbar-sub'||'tsub') && (document.querySelector('.topbar-sub').innerHTML=TITLES[tab]+' · <span id="ulabel">'+currentUnit+'</span>');
+  document.querySelector('.topbar-sub').innerHTML=TITLES[tab]+' · <span id="ulabel">'+currentUnit+'</span>';
   currentTab=tab;loadTab(tab);
 }
 function navTo(tab){goTab(tab,document.querySelector(`[data-tab="${tab}"]`));}
@@ -691,162 +802,355 @@ function setUnit(u,el){
   Object.keys(DC).forEach(k=>delete DC[k]);loadTab(currentTab);
 }
 
-// ══ LOADERS ══
+// ── LOADERS ──
 async function loadTab(tab){
   const m={dashboard:loadDash,locais:loadLocais,ativos:loadAtivos,manutencao:loadMan,chamados:loadChamados,prestadores:loadPrest,relatorios:loadRel,mobiliario:loadMob};
   if(m[tab])await m[tab]();
 }
 
-// Dashboard
+// DASHBOARD
 async function loadDash(){
   const[man,cham,prest]=await Promise.all([fetchAll(TBL.manutencoes),fetchAll(TBL.chamados),fetchAll(TBL.prestadores)]);
   const mF=filterUnit(man),cF=filterUnit(cham);
-  const alertas=mF.filter(r=>{const d=r.fields['Proxima Data'];return d&&daysDiff(d)<=7;}).sort((a,b)=>daysDiff(a.fields['Proxima Data'])-daysDiff(b.fields['Proxima Data']));
-  const venc=alertas.filter(r=>daysDiff(r.fields['Proxima Data'])<=0).length;
-  const abr=cF.filter(r=>['Aberto','Em andamento'].includes(r.fields.Status)).length;
+  const urgOpen=cF.filter(r=>['Aberto','Em andamento'].includes(r.fields.Status)&&['Urgente','Alta'].includes(r.fields.Urgencia));
+  const allOpen=cF.filter(r=>['Aberto','Em andamento'].includes(r.fields.Status));
+  const venc=mF.filter(r=>r.fields['Proxima Data']&&daysDiff(r.fields['Proxima Data'])<=0).length;
+  const prox15=mF.filter(r=>{const d=daysDiff(r.fields['Proxima Data']);return d!==null&&d>0&&d<=15;}).length;
+
+  // Badges
   document.getElementById('nb-man').textContent=venc||'✓';
-  document.getElementById('nb-cham').textContent=abr||'0';
-  document.getElementById('rdot').style.display=venc>0?'block':'none';
-  const aw=document.getElementById('dash-alert');
+  document.getElementById('nb-cham').textContent=allOpen.length||'0';
+  const rd=document.getElementById('rdot');
+  if(urgOpen.length>0){rd.classList.add('show');rd.textContent=urgOpen.length;}
+  else rd.classList.remove('show');
+
+  // Alerts
+  const aw=document.getElementById('dash-alerts');
+  let alerts='';
   if(venc>0){
-    const ns=alertas.filter(r=>daysDiff(r.fields['Proxima Data'])<=0).slice(0,3).map(r=>C.ativos[(r.fields.Ativo||[])[0]]?.name||r.fields.Titulo||'—').join(', ');
-    aw.innerHTML=`<div class="alert-bar"><i class="ti ti-alert-triangle"></i><span><strong>${venc} manutenção${venc>1?'ões':''} vencida${venc>1?'s':''}</strong> — ${ns}</span></div>`;
-  }else aw.innerHTML='';
-  const now=new Date();
+    const ns=mF.filter(r=>daysDiff(r.fields['Proxima Data'])<=0).slice(0,3).map(r=>C.ativos[(r.fields.Ativo||[])[0]]?.name||r.fields.Titulo||'—').join(', ');
+    alerts+=`<div class="alert-bar red"><i class="ti ti-alert-circle"></i><span><strong>${venc} manutenção${venc>1?'ões':''} vencida${venc>1?'s':''}</strong> — ${ns}</span></div>`;
+  }
+  if(prox15>0){alerts+=`<div class="alert-bar"><i class="ti ti-bell-ringing"></i><span><strong>${prox15} manutenção${prox15>1?'ões':''}</strong> vencem nos próximos 15 dias — verifique a agenda abaixo</span></div>`;}
+  if(urgOpen.length>0){alerts+=`<div class="alert-bar red"><i class="ti ti-urgent"></i><span><strong>${urgOpen.length} chamado${urgOpen.length>1?'s':''} urgente${urgOpen.length>1?'s':''}</strong> — requer atenção imediata</span></div>`;}
+  aw.innerHTML=alerts;
+
+  // KPIs
   document.getElementById('dash-kpi').innerHTML=`
     <div class="kpi"><div class="kpi-top"><div class="kpi-ic red"><i class="ti ti-tool"></i></div></div><div class="kpi-val red">${venc}</div><div class="kpi-lbl">Manutenções Vencidas</div><div class="kpi-hint">${venc>0?'⚠ Ação necessária':'✓ Tudo em dia'}</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-ic amb"><i class="ti ti-clipboard-list"></i></div></div><div class="kpi-val amb">${abr}</div><div class="kpi-lbl">Chamados Abertos</div><div class="kpi-hint">${abr} pendente${abr!==1?'s':''}</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-ic tel"><i class="ti ti-device-desktop"></i></div></div><div class="kpi-val">${Object.keys(C.ativos).length}</div><div class="kpi-lbl">Ativos Cadastrados</div><div class="kpi-hint">2 unidades</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-ic grn"><i class="ti ti-users"></i></div></div><div class="kpi-val grn">${prest.length}</div><div class="kpi-lbl">Prestadores</div><div class="kpi-hint">Cadastrados</div></div>`;
-  document.getElementById('dash-man').innerHTML=alertas.length
-    ?`<table><thead><tr><th>Equipamento</th><th>Local</th><th>Próxima Manut.</th><th>Dias</th><th>Status</th></tr></thead><tbody>${alertas.slice(0,6).map(r=>{
+    <div class="kpi"><div class="kpi-top"><div class="kpi-ic amb"><i class="ti ti-bell"></i></div></div><div class="kpi-val amb">${prox15}</div><div class="kpi-lbl">Vencem em 15 dias</div><div class="kpi-hint">Preventivo</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-ic ora"><i class="ti ti-clipboard-list"></i></div></div><div class="kpi-val ora">${allOpen.length}</div><div class="kpi-lbl">Chamados Abertos</div><div class="kpi-hint">${urgOpen.length} urgente${urgOpen.length!==1?'s':''}</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-ic tel"><i class="ti ti-device-desktop"></i></div></div><div class="kpi-val">${Object.keys(C.ativos).length}</div><div class="kpi-lbl">Ativos Cadastrados</div><div class="kpi-hint">${prest.length} prestadores</div></div>`;
+
+  // Agenda 3 meses
+  const now=new Date();
+  const months=[0,1,2].map(i=>{
+    const d=new Date(now.getFullYear(),now.getMonth()+i,1);
+    return{year:d.getFullYear(),month:d.getMonth(),label:d.toLocaleString('pt-BR',{month:'long',year:'numeric'})};
+  });
+  const agenda=document.getElementById('dash-agenda');
+  const relevant=mF.filter(r=>{
+    const d=r.fields['Proxima Data'];if(!d)return false;
+    const dt=new Date(d+'T12:00:00');
+    const end=new Date(now.getFullYear(),now.getMonth()+3,1);
+    return dt<end;
+  }).sort((a,b)=>(a.fields['Proxima Data']||'').localeCompare(b.fields['Proxima Data']||''));
+
+  agenda.innerHTML='<div class="g3" style="padding:0;margin:0;border-top:1px solid var(--border)">';
+  let html='';
+  months.forEach((m,mi)=>{
+    const items=relevant.filter(r=>{
+      const dt=new Date(r.fields['Proxima Data']+'T12:00:00');
+      if(mi===0&&dt<now)return true; // vencidas no primeiro mês
+      return dt.getMonth()===m.month&&dt.getFullYear()===m.year&&dt>=now;
+    });
+    html+=`<div class="agenda-col"${mi<2?'style="border-right:1px solid var(--border)"':''}>
+      <div class="agenda-month">${m.label}</div>`;
+    if(!items.length){html+=`<div class="agenda-empty">Nenhuma manutenção</div>`;}
+    else{
+      items.forEach(r=>{
         const aid=(r.fields.Ativo||[])[0];const atv=C.ativos[aid];
         const diff=daysDiff(r.fields['Proxima Data']);
-        const st=diff<=0?'Vencida':diff<=3?'Crítica':'Próxima';
-        return`<tr><td><strong>${atv?.name||r.fields.Titulo||'—'}</strong></td><td style="font-size:11px">${ambLocal(atv?.amb)}</td><td>${fDate(r.fields['Proxima Data'])}</td><td style="font-weight:600;color:${diff<=0?'var(--red)':diff<=3?'var(--amber)':'var(--green)'}"><span>${diff<=0?Math.abs(diff)+'d atrás':diff+'d'}</span></td><td>${chip(st)}</td></tr>`;
+        const cls=diff<=0?'vencida':diff<=15?'proxima':'ok';
+        const dataStr=fDate(r.fields['Proxima Data'])+(diff<=0?` (${Math.abs(diff)}d atrás)`:diff<=15?` (${diff}d)`:'');
+        html+=`<div class="agenda-item ${cls}">
+          <div class="agenda-item-data">${dataStr}</div>
+          <div class="agenda-item-nome">${atv?.name||r.fields.Titulo||'—'}</div>
+          <div class="agenda-item-local">${ambLocal(atv?.amb)}</div>
+        </div>`;
+      });
+    }
+    html+='</div>';
+  });
+  agenda.outerHTML=`<div class="g3" style="padding:0;margin:0;border-top:1px solid var(--border)">${html}</div>`;
+
+  // Chamados urgentes
+  const sorted=[...allOpen].sort((a,b)=>{
+    const ua=URG_ORDER[a.fields.Urgencia]??9,ub=URG_ORDER[b.fields.Urgencia]??9;
+    if(ua!==ub)return ua-ub;
+    return(a.fields['Data Hora Abertura']||a.fields['Data Abertura']||'').localeCompare(b.fields['Data Hora Abertura']||b.fields['Data Abertura']||'');
+  });
+  document.getElementById('dash-cham').innerHTML=sorted.length
+    ?`<table><thead><tr><th>Protocolo</th><th>Descrição</th><th>Local</th><th>Urgência</th><th>Abertura</th><th>Status</th></tr></thead><tbody>${sorted.slice(0,6).map(r=>{
+        const amid=(r.fields.Ambiente||[])[0];
+        return`<tr><td><span class="proto-tag">${r.fields.Protocolo||'—'}</span></td><td><strong>${r.fields.Descricao||'—'}</strong></td><td style="font-size:11px">${ambLocal(amid)}</td><td>${urgChip(r.fields.Urgencia)}</td><td style="font-size:11px">${fDateTime(r.fields['Data Hora Abertura'])||fDate(r.fields['Data Abertura'])}</td><td>${chip(r.fields.Status)}</td></tr>`;
       }).join('')}</tbody></table>`
-    :'<div class="empty"><i class="ti ti-circle-check"></i><p>Nenhuma manutenção próxima</p></div>';
+    :'<div class="empty"><i class="ti ti-circle-check"></i><p>Nenhum chamado aberto</p></div>';
+
   document.getElementById('dash-prest').innerHTML=prest.length
     ?prest.slice(0,5).map(r=>`<div class="li"><div class="lav">${inits(r.fields.Nome)}</div><div><div class="ln">${r.fields.Nome||'—'}</div><div class="ls">${r.fields.Especialidade||'—'}</div></div>${r.fields.Contato?`<a class="la" href="tel:${r.fields.Contato}"><i class="ti ti-phone"></i></a>`:''}</div>`).join('')
-    :'<div class="empty"><i class="ti ti-users"></i><p>Nenhum prestador cadastrado</p></div>';
-  const abrCham=cF.filter(r=>['Aberto','Em andamento'].includes(r.fields.Status)).slice(0,6);
-  document.getElementById('dash-cham').innerHTML=abrCham.length
-    ?`<table><thead><tr><th>Descrição</th><th>Local</th><th>Tipo</th><th>Status</th></tr></thead><tbody>${abrCham.map(r=>{const aid=(r.fields.Ambiente||[])[0];return`<tr><td><strong>${r.fields.Descricao||'—'}</strong></td><td style="font-size:11px">${ambLocal(aid)}</td><td>${r.fields.Tipo||'—'}</td><td>${chip(r.fields.Status)}</td></tr>`;}).join('')}</tbody></table>`
-    :'<div class="empty"><i class="ti ti-circle-check"></i><p>Nenhum chamado aberto</p></div>';
+    :'<div class="empty"><i class="ti ti-users"></i><p>Nenhum prestador</p></div>';
 }
 
-// Locais
+// LOCAIS - agrupado por unidade
 async function loadLocais(){
   const[unis,ands,ambs]=await Promise.all([fetchAll(TBL.unidades),fetchAll(TBL.andares),fetchAll(TBL.ambientes)]);
-  const andsSorted=[...ands].sort((a,b)=>(a.fields.Nome||'').localeCompare(b.fields.Nome||'','pt-BR'));
-  const ambsSorted=[...ambs].sort((a,b)=>cleanName(a.fields.Nome||'').localeCompare(cleanName(b.fields.Nome||''),'pt-BR'));
+  // Ambientes agrupados por unidade
+  let html='';
+  UNIT_ORDER.forEach(uname=>{
+    const uEntry=Object.entries(C.unidades).find(([,v])=>v.name===uname);
+    if(!uEntry)return;
+    const uid=uEntry[0];
+    // Andares desta unidade ordenados
+    const uAnds=Object.entries(C.andares).filter(([,v])=>v.uni===uid).sort((a,b)=>andarOrd(a[1].name)-andarOrd(b[1].name));
+    // Ambientes desta unidade
+    const uAmbs=Object.entries(C.ambientes).filter(([,v])=>{
+      const and=C.andares[v.andar];return and&&and.uni===uid;
+    });
+    if(!uAmbs.length)return;
+    html+=`<tr><td colspan="4" class="unit-group-header"><i class="ti ti-building"></i>${uname}</td></tr>`;
+    // Sort por andar e depois alfabético
+    const sorted=uAmbs.sort((a,b)=>{
+      const ao=andarOrd(C.andares[a[1].andar]?.name||'');
+      const bo=andarOrd(C.andares[b[1].andar]?.name||'');
+      if(ao!==bo)return ao-bo;
+      return a[1].name.localeCompare(b[1].name,'pt-BR');
+    });
+    sorted.forEach(([id,v])=>{
+      const and=C.andares[v.andar];
+      html+=`<tr>
+        <td><strong>${v.name}</strong></td>
+        <td>${and?.name||'—'}</td>
+        <td>${uname}</td>
+        <td style="width:80px;text-align:center;white-space:nowrap">
+          <button class="edit-btn" onclick="editAmbiente('${id}')" title="Editar"><i class="ti ti-pencil"></i></button>
+          <button class="del-btn" onclick="confirmDel('${TBL.ambientes}','${id}','${v.name.replace(/'/g,"\\'")}',loadLocais)" title="Excluir"><i class="ti ti-trash"></i></button>
+        </td>
+      </tr>`;
+    });
+  });
+  document.getElementById('tbl-ambientes').innerHTML=html
+    ?`<table><thead><tr><th>Ambiente</th><th>Andar</th><th>Unidade</th><th></th></tr></thead><tbody>${html}</tbody></table>`
+    :'<div class="empty"><i class="ti ti-door"></i><p>Nenhum ambiente cadastrado</p></div>';
+
+  // Andares
+  const andsSorted=[...ands].sort((a,b)=>{
+    const ao=UNIT_ORDER.indexOf(C.unidades[a.fields.Unidade?.[0]]?.name??'');
+    const bo=UNIT_ORDER.indexOf(C.unidades[b.fields.Unidade?.[0]]?.name??'');
+    if(ao!==bo)return ao-bo;
+    return andarOrd(a.fields.Nome)-andarOrd(b.fields.Nome);
+  });
+  document.getElementById('tbl-andares').innerHTML=andsSorted.length
+    ?`<table><thead><tr><th>Andar</th><th>Unidade</th><th></th></tr></thead><tbody>${andsSorted.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${rName(C.unidades,(r.fields.Unidade||[])[0])}</td><td style="width:80px;text-align:center;white-space:nowrap"><button class="edit-btn" onclick="editAndar('${r.id}')" title="Editar"><i class="ti ti-pencil"></i></button><button class="del-btn" onclick="confirmDel('${TBL.andares}','${r.id}','${(r.fields.Nome||'').replace(/'/g,"\\'")}',loadLocais)" title="Excluir"><i class="ti ti-trash"></i></button></td></tr>`).join('')}</tbody></table>`
+    :'<div class="empty"><i class="ti ti-layers"></i><p>Nenhum andar</p></div>';
+
   document.getElementById('tbl-unidades').innerHTML=unis.length
     ?`<table><thead><tr><th>Unidade</th></tr></thead><tbody>${unis.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td></tr>`).join('')}</tbody></table>`
     :'<div class="empty"><i class="ti ti-building"></i><p>Nenhuma unidade</p></div>';
-  document.getElementById('tbl-andares').innerHTML=andsSorted.length
-    ?`<table><thead><tr><th>Andar</th><th>Unidade</th><th></th></tr></thead><tbody>${andsSorted.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${rName(C.unidades,(r.fields.Unidade||[])[0])}</td>${editBtn(`editAndar('${r.id}')`)}</tr>`).join('')}</tbody></table>`
-    :'<div class="empty"><i class="ti ti-layers"></i><p>Nenhum andar</p></div>';
-  document.getElementById('tbl-ambientes').innerHTML=ambsSorted.length
-    ?`<table><thead><tr><th>Ambiente</th><th>Andar</th><th>Unidade</th><th></th></tr></thead><tbody>${ambsSorted.map(r=>`<tr><td><strong>${cleanName(r.fields.Nome||'—')}</strong></td><td>${rName(C.andares,(r.fields.Andar||[])[0])}</td><td>${ambUnit(r.id)||'—'}</td>${editBtn(`editAmbiente('${r.id}')`)}</tr>`).join('')}</tbody></table>`
-    :'<div class="empty"><i class="ti ti-door"></i><p>Nenhum ambiente</p></div>';
 }
 
-// Ativos
+// ATIVOS
 let ativosData=[];
 async function loadAtivos(){
   const recs=await fetchAll(TBL.ativos);
-  ativosData=currentUnit==='Ambas'?recs:recs.filter(r=>ambUnit((r.fields.Ambiente||[])[0])===currentUnit||!r.fields.Ambiente?.length);
+  ativosData=currentUnit==='Geral'?recs:recs.filter(r=>ambUnit((r.fields.Ambiente||[])[0])===currentUnit||!r.fields.Ambiente?.length);
   ativosData.sort((a,b)=>(a.fields.Nome||'').localeCompare(b.fields.Nome||'','pt-BR'));
   renderAtivos(ativosData);
 }
 function filtroAtivos(cat){renderAtivos(cat?ativosData.filter(r=>r.fields.Categoria===cat):ativosData);}
 function renderAtivos(data){
   document.getElementById('tbl-ativos').innerHTML=data.length
-    ?`<table><thead><tr><th>Equipamento</th><th>Categoria</th><th>Local</th><th>Marca/Modelo</th><th>Compra</th><th>Status</th><th>Crítico</th><th></th></tr></thead><tbody>${data.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${r.fields.Categoria||'—'}</td><td style="font-size:11px">${ambLocal((r.fields.Ambiente||[])[0])}</td><td>${r.fields['Marca/Modelo']||'—'}</td><td>${fDate(r.fields['Data Compra'])}</td><td>${chip(r.fields.Status)}</td><td style="text-align:center">${r.fields.Crítico?'⚠️':''}</td>${editBtn(`editAtivo('${r.id}')`)}</tr>`).join('')}</tbody></table>`
+    ?`<table><thead><tr><th>Equipamento</th><th>Categoria</th><th>Local</th><th>Marca/Modelo</th><th>Compra</th><th>Status</th><th>Crítico</th><th></th></tr></thead><tbody>${data.map(r=>`<tr>
+      <td><strong>${r.fields.Nome||'—'}</strong></td><td>${r.fields.Categoria||'—'}</td>
+      <td style="font-size:11px">${ambLocal((r.fields.Ambiente||[])[0])}</td>
+      <td>${r.fields['Marca/Modelo']||'—'}</td><td>${fDate(r.fields['Data Compra'])}</td>
+      <td>${chip(r.fields.Status)}</td><td style="text-align:center">${r.fields.Crítico?'⚠️':''}</td>
+      <td style="width:80px;text-align:center;white-space:nowrap">
+        <button class="edit-btn" onclick="editAtivo('${r.id}')" title="Editar"><i class="ti ti-pencil"></i></button>
+        <button class="del-btn" onclick="confirmDel('${TBL.ativos}','${r.id}','${(r.fields.Nome||'').replace(/'/g,"\\'")}',loadAtivos)" title="Excluir"><i class="ti ti-trash"></i></button>
+      </td></tr>`).join('')}</tbody></table>`
     :'<div class="empty"><i class="ti ti-device-desktop"></i><p>Nenhum ativo cadastrado</p></div>';
 }
 
-// Manutenção
+// MANUTENÇÃO
 async function loadMan(){
   const[man,hist]=await Promise.all([fetchAll(TBL.manutencoes),fetchAll(TBL.historico)]);
-  const mF=currentUnit==='Ambas'?man:man.filter(r=>{const aid=(r.fields.Ativo||[])[0];return!aid||ambUnit(C.ativos[aid]?.amb)===currentUnit;});
-  const hF=currentUnit==='Ambas'?hist:hist.filter(r=>{const aid=(r.fields.Ativo||[])[0];return!aid||ambUnit(C.ativos[aid]?.amb)===currentUnit;});
-  const sorted=[...mF].sort((a,b)=>daysDiff(a.fields['Proxima Data'])-daysDiff(b.fields['Proxima Data']));
+  const mF=currentUnit==='Geral'?man:man.filter(r=>{const aid=(r.fields.Ativo||[])[0];return!aid||ambUnit(C.ativos[aid]?.amb)===currentUnit;});
+  const hF=currentUnit==='Geral'?hist:hist.filter(r=>{const aid=(r.fields.Ativo||[])[0];return!aid||ambUnit(C.ativos[aid]?.amb)===currentUnit;});
+  const sorted=[...mF].sort((a,b)=>daysDiff(a.fields['Proxima Data']??'9999-12-31')-daysDiff(b.fields['Proxima Data']??'9999-12-31'));
   document.getElementById('tbl-man').innerHTML=sorted.length
-    ?`<table><thead><tr><th>Título</th><th>Ativo</th><th>Local</th><th>Tipo</th><th>Última</th><th>Próxima</th><th>Prestador</th><th>Crit.</th><th></th></tr></thead><tbody>${sorted.map(r=>{
+    ?`<table><thead><tr><th>Título</th><th>Ativo</th><th>Local</th><th>Tipo</th><th>Última</th><th>Próxima</th><th>Prazo</th><th>Prestador</th><th>Crit.</th><th></th></tr></thead><tbody>${sorted.map(r=>{
         const aid=(r.fields.Ativo||[])[0];const atv=C.ativos[aid]||{};
         const diff=r.fields['Proxima Data']?daysDiff(r.fields['Proxima Data']):null;
-        const st=diff===null?'—':diff<=0?'Vencida':diff<=7?'Próxima':'Em dia';
+        const st=diff===null?'—':diff<=0?'Vencida':diff<=15?'Próxima':'Em dia';
         const pid=(r.fields.Prestador||[])[0];
-        return`<tr><td><strong>${r.fields.Titulo||'—'}</strong></td><td>${atv.name||'—'}</td><td style="font-size:11px">${ambLocal(atv.amb)}</td><td>${r.fields.Tipo||'—'}</td><td>${fDate(r.fields['Ultima Data'])}</td><td>${fDate(r.fields['Proxima Data'])}${diff!==null?` <span style="font-size:10px;color:${diff<=0?'var(--red)':diff<=7?'var(--amber)':'var(--green)'}">(${diff<=0?Math.abs(diff)+'d atrás':diff+'d'})</span>`:''}</td><td>${rName(C.prestadores,pid)}</td><td style="text-align:center">${r.fields.Critico?'⚠️':''}</td>${editBtn(`editMan('${r.id}')`)}</tr>`;
+        const prazoColor=diff===null?'var(--txt3)':diff<=0?'var(--red)':diff<=15?'var(--amber)':'var(--green)';
+        return`<tr>
+          <td><strong>${r.fields.Titulo||'—'}</strong></td>
+          <td>${atv.name||'—'}</td>
+          <td style="font-size:11px">${ambLocal(atv.amb)}</td>
+          <td>${r.fields.Tipo||'—'}</td>
+          <td>${fDate(r.fields['Ultima Data'])}</td>
+          <td>${fDate(r.fields['Proxima Data'])}</td>
+          <td style="font-weight:600;color:${prazoColor}">${diff===null?'—':diff<=0?Math.abs(diff)+'d atrás':diff+'d'}</td>
+          <td>${rName(C.prestadores,pid)}</td>
+          <td style="text-align:center">${r.fields.Critico?'⚠️':''}</td>
+          <td style="width:80px;text-align:center;white-space:nowrap">
+            <button class="edit-btn" onclick="editMan('${r.id}')" title="Editar"><i class="ti ti-pencil"></i></button>
+            <button class="del-btn" onclick="confirmDel('${TBL.manutencoes}','${r.id}','${(r.fields.Titulo||'').replace(/'/g,"\\'")}',loadMan)" title="Excluir"><i class="ti ti-trash"></i></button>
+          </td></tr>`;
       }).join('')}</tbody></table>`
     :'<div class="empty"><i class="ti ti-tool"></i><p>Nenhuma manutenção cadastrada</p></div>';
+
   document.getElementById('tbl-hist').innerHTML=hF.length
     ?`<table><thead><tr><th>Título</th><th>Ativo</th><th>Data Realizada</th><th>Tipo</th><th>Prestador</th><th>Obs.</th><th></th></tr></thead><tbody>${[...hF].reverse().map(r=>{
         const aid=(r.fields.Ativo||[])[0];const pid=(r.fields.Prestador||[])[0];
-        return`<tr><td><strong>${r.fields.Titulo||'—'}</strong></td><td>${C.ativos[aid]?.name||'—'}</td><td>${fDate(r.fields['Data Realizada'])}</td><td>${r.fields.Tipo||'—'}</td><td>${rName(C.prestadores,pid)}</td><td style="font-size:11px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.fields.Observacoes||'—'}</td>${editBtn(`editHist('${r.id}')`)}</tr>`;
+        return`<tr>
+          <td><strong>${r.fields.Titulo||'—'}</strong></td>
+          <td>${C.ativos[aid]?.name||'—'}</td>
+          <td>${fDate(r.fields['Data Realizada'])}</td>
+          <td>${r.fields.Tipo||'—'}</td>
+          <td>${rName(C.prestadores,pid)}</td>
+          <td style="font-size:11px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.fields.Observacoes||'—'}</td>
+          <td style="width:80px;text-align:center;white-space:nowrap">
+            <button class="edit-btn" onclick="editHist('${r.id}')" title="Editar"><i class="ti ti-pencil"></i></button>
+            <button class="del-btn" onclick="confirmDel('${TBL.historico}','${r.id}','${(r.fields.Titulo||'').replace(/'/g,"\\'")}',loadMan)" title="Excluir"><i class="ti ti-trash"></i></button>
+          </td></tr>`;
       }).join('')}</tbody></table>`
     :'<div class="empty"><i class="ti ti-history"></i><p>Nenhum histórico registrado</p></div>';
 }
 
-// Chamados
+// CHAMADOS
 async function loadChamados(){
-  const filter=document.getElementById('cham-filter')?.value||'';
+  const fStatus=document.getElementById('cham-filter')?.value||'';
+  const fUrg=document.getElementById('cham-urg-filter')?.value||'';
   let recs=await fetchAll(TBL.chamados);
-  if(currentUnit!=='Ambas')recs=recs.filter(r=>ambUnit((r.fields.Ambiente||[])[0])===currentUnit||!r.fields.Ambiente?.length);
-  if(filter)recs=recs.filter(r=>r.fields.Status===filter);
+  if(currentUnit!=='Geral')recs=recs.filter(r=>ambUnit((r.fields.Ambiente||[])[0])===currentUnit||!r.fields.Ambiente?.length);
+  if(fStatus)recs=recs.filter(r=>r.fields.Status===fStatus);
+  if(fUrg)recs=recs.filter(r=>r.fields.Urgencia===fUrg);
+  // Ordenar: Urgência → Data Hora Abertura
+  recs.sort((a,b)=>{
+    const ua=URG_ORDER[a.fields.Urgencia]??9,ub=URG_ORDER[b.fields.Urgencia]??9;
+    if(ua!==ub)return ua-ub;
+    return(a.fields['Data Hora Abertura']||a.fields['Data Abertura']||'').localeCompare(b.fields['Data Hora Abertura']||b.fields['Data Abertura']||'');
+  });
   document.getElementById('tbl-cham').innerHTML=recs.length
-    ?`<table><thead><tr><th>Descrição</th><th>Local</th><th>Ativo</th><th>Tipo</th><th>Solicitante</th><th>Prestador</th><th>Abertura</th><th>Conclusão</th><th>Status</th><th></th></tr></thead><tbody>${recs.map(r=>{
+    ?`<table><thead><tr><th>#</th><th>Protocolo</th><th>Descrição</th><th>Local</th><th>Urgência</th><th>Tipo</th><th>Solicitante</th><th>Prestador</th><th>Abertura</th><th>Conclusão</th><th>Status</th><th></th></tr></thead><tbody>${recs.map((r,i)=>{
         const amid=(r.fields.Ambiente||[])[0];const acid=(r.fields.Ativo||[])[0];const pid=(r.fields.Prestador||[])[0];
-        return`<tr><td><strong>${r.fields.Descricao||'—'}</strong></td><td style="font-size:11px">${ambLocal(amid)}</td><td>${C.ativos[acid]?.name||'—'}</td><td>${r.fields.Tipo||'—'}</td><td>${r.fields.Solicitante||'—'}</td><td>${rName(C.prestadores,pid)}</td><td>${fDate(r.fields['Data Abertura'])}</td><td>${fDate(r.fields['Data Conclusao'])}</td><td>${chip(r.fields.Status)}</td>${editBtn(`editCham('${r.id}')`)}</tr>`;
+        const rowBg=r.fields.Urgencia==='Urgente'?'background:#fffafa':r.fields.Urgencia==='Alta'?'background:#fffbf0':'';
+        return`<tr style="${rowBg}">
+          <td style="color:var(--txt3);font-size:11px">${i+1}</td>
+          <td><span class="proto-tag">${r.fields.Protocolo||'—'}</span></td>
+          <td><strong>${r.fields.Descricao||'—'}</strong></td>
+          <td style="font-size:11px">${ambLocal(amid)}</td>
+          <td>${urgChip(r.fields.Urgencia)}</td>
+          <td>${r.fields.Tipo||'—'}</td>
+          <td>${r.fields.Solicitante||'—'}</td>
+          <td>${rName(C.prestadores,pid)}</td>
+          <td style="font-size:11px">${fDateTime(r.fields['Data Hora Abertura'])||fDate(r.fields['Data Abertura'])}</td>
+          <td>${fDate(r.fields['Data Conclusao'])}</td>
+          <td>${chip(r.fields.Status)}</td>
+          <td style="width:80px;text-align:center;white-space:nowrap">
+            <button class="edit-btn" onclick="editCham('${r.id}')" title="Editar"><i class="ti ti-pencil"></i></button>
+            <button class="del-btn" onclick="confirmDel('${TBL.chamados}','${r.id}','${(r.fields.Descricao||'').replace(/'/g,"\\'")}',loadChamados)" title="Excluir"><i class="ti ti-trash"></i></button>
+          </td></tr>`;
       }).join('')}</tbody></table>`
     :'<div class="empty"><i class="ti ti-clipboard-list"></i><p>Nenhum chamado encontrado</p></div>';
 }
 
-// Prestadores
+// PRESTADORES
 async function loadPrest(){
-  const recs=await fetchAll(TBL.prestadores);
-  const sorted=[...recs].sort((a,b)=>(a.fields.Nome||'').localeCompare(b.fields.Nome||'','pt-BR'));
-  document.getElementById('tbl-prest').innerHTML=sorted.length
-    ?`<table><thead><tr><th>Nome / Empresa</th><th>Especialidade</th><th>Contato</th><th></th></tr></thead><tbody>${sorted.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${r.fields.Especialidade||'—'}</td><td>${r.fields.Contato?`<a href="tel:${r.fields.Contato}" style="color:var(--green)">${r.fields.Contato}</a>`:'—'}</td>${editBtn(`editPrest('${r.id}')`)}</tr>`).join('')}</tbody></table>`
+  const recs=[...await fetchAll(TBL.prestadores)].sort((a,b)=>(a.fields.Nome||'').localeCompare(b.fields.Nome||'','pt-BR'));
+  document.getElementById('tbl-prest').innerHTML=recs.length
+    ?`<table><thead><tr><th>Nome / Empresa</th><th>Especialidade</th><th>Contato</th><th></th></tr></thead><tbody>${recs.map(r=>`<tr>
+      <td><strong>${r.fields.Nome||'—'}</strong></td>
+      <td>${r.fields.Especialidade||'—'}</td>
+      <td>${r.fields.Contato?`<a href="tel:${r.fields.Contato}" style="color:var(--green)">${r.fields.Contato}</a>`:'—'}</td>
+      <td style="width:80px;text-align:center;white-space:nowrap">
+        <button class="edit-btn" onclick="editPrest('${r.id}')" title="Editar"><i class="ti ti-pencil"></i></button>
+        <button class="del-btn" onclick="confirmDel('${TBL.prestadores}','${r.id}','${(r.fields.Nome||'').replace(/'/g,"\\'")}',loadPrest)" title="Excluir"><i class="ti ti-trash"></i></button>
+      </td></tr>`).join('')}</tbody></table>`
     :'<div class="empty"><i class="ti ti-users"></i><p>Nenhum prestador cadastrado</p></div>';
 }
 
-// Relatórios
+// RELATÓRIOS
 async function loadRel(){
   const[man,atv,cham]=await Promise.all([fetchAll(TBL.manutencoes),fetchAll(TBL.ativos),fetchAll(TBL.chamados)]);
-  const mF=filterUnit(man);const cF=filterUnit(cham);
-  const sc={};
-  mF.forEach(r=>{const d=r.fields['Proxima Data'];let s='Sem data';if(d){const diff=daysDiff(d);s=diff<=0?'Vencida':diff<=7?'Próxima':'Em dia';}sc[s]=(sc[s]||0)+1;});
-  document.getElementById('rel-man').innerHTML=Object.keys(sc).length
-    ?Object.entries(sc).map(([s,c])=>`<div class="bar-row">${chip(s)}<div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/mF.length*100)}%;background:var(--green)"></div></div><div class="bar-val">${c} item${c>1?'s':''}</div></div>`).join('')
+  const mF=filterUnit(man),cF=filterUnit(cham);
+  const venc=mF.filter(r=>r.fields['Proxima Data']&&daysDiff(r.fields['Proxima Data'])<=0).length;
+  const abrC=cF.filter(r=>['Aberto','Em andamento'].includes(r.fields.Status)).length;
+  const concC=cF.filter(r=>r.fields.Status==='Concluído').length;
+  document.getElementById('rel-kpi').innerHTML=`
+    <div class="kpi"><div class="kpi-top"><div class="kpi-ic red"><i class="ti ti-tool"></i></div></div><div class="kpi-val red">${venc}</div><div class="kpi-lbl">Manutenções Vencidas</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-ic amb"><i class="ti ti-clipboard-list"></i></div></div><div class="kpi-val amb">${abrC}</div><div class="kpi-lbl">Chamados Abertos</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-ic grn"><i class="ti ti-circle-check"></i></div></div><div class="kpi-val grn">${concC}</div><div class="kpi-lbl">Chamados Concluídos</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-ic tel"><i class="ti ti-device-desktop"></i></div></div><div class="kpi-val">${Object.keys(C.ativos).length}</div><div class="kpi-lbl">Total de Ativos</div></div>`;
+
+  // Manutenções por status
+  const msc={};
+  mF.forEach(r=>{const d=r.fields['Proxima Data'];let s='Sem data';if(d){const diff=daysDiff(d);s=diff<=0?'Vencida':diff<=15?'Próxima (≤15d)':'Em dia';}msc[s]=(msc[s]||0)+1;});
+  document.getElementById('rel-man').innerHTML=Object.keys(msc).length
+    ?Object.entries(msc).map(([s,c])=>`<div class="bar-row">${chip(s==='Próxima (≤15d)'?'Próxima':s)}<div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/mF.length*100)}%;background:var(--green)"></div></div><div class="bar-val">${c} item${c>1?'s':''}</div></div>`).join('')
     :'<p style="font-size:13px;color:var(--txt3)">Sem dados</p>';
-  const cs={};
-  cF.forEach(r=>{const s=r.fields.Status||'Sem status';cs[s]=(cs[s]||0)+1;});
-  document.getElementById('rel-cham').innerHTML=Object.keys(cs).length
-    ?Object.entries(cs).map(([s,c])=>`<div class="bar-row">${chip(s)}<div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/cF.length*100)}%;background:var(--teal)"></div></div><div class="bar-val">${c} item${c>1?'s':''}</div></div>`).join('')
+
+  // Chamados por status
+  const csc={};
+  cF.forEach(r=>{const s=r.fields.Status||'—';csc[s]=(csc[s]||0)+1;});
+  document.getElementById('rel-cham').innerHTML=Object.keys(csc).length
+    ?Object.entries(csc).map(([s,c])=>`<div class="bar-row">${chip(s)}<div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/cF.length*100)}%;background:var(--teal)"></div></div><div class="bar-val">${c} item${c>1?'s':''}</div></div>`).join('')
     :'<p style="font-size:13px;color:var(--txt3)">Sem dados</p>';
-  const abrCham=cF.filter(r=>['Aberto','Em andamento'].includes(r.fields.Status)).length;
-  document.getElementById('rel-resumo').innerHTML=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
-    <div style="text-align:center;padding:12px;background:#f9fafb;border-radius:7px;border:1px solid var(--border)"><div style="font-size:22px;font-weight:700;color:var(--teal)">${mF.length}</div><div style="font-size:11px;color:var(--txt3);margin-top:3px">Manutenções</div></div>
-    <div style="text-align:center;padding:12px;background:#fef2f2;border-radius:7px;border:1px solid #fca5a5"><div style="font-size:22px;font-weight:700;color:var(--red)">${mF.filter(r=>r.fields['Proxima Data']&&daysDiff(r.fields['Proxima Data'])<=0).length}</div><div style="font-size:11px;color:var(--txt3);margin-top:3px">Vencidas</div></div>
-    <div style="text-align:center;padding:12px;background:#fffbeb;border-radius:7px;border:1px solid #fbbf24"><div style="font-size:22px;font-weight:700;color:var(--amber)">${abrCham}</div><div style="font-size:11px;color:var(--txt3);margin-top:3px">Chamados Abertos</div></div>
-    <div style="text-align:center;padding:12px;background:#f0f9fa;border-radius:7px;border:1px solid #a5d6e0"><div style="font-size:22px;font-weight:700;color:var(--teal)">${Object.keys(C.ativos).length}</div><div style="font-size:11px;color:var(--txt3);margin-top:3px">Ativos</div></div>
-  </div>`;
+
+  // Tempo de resposta por prestador
+  const concluidos=cF.filter(r=>r.fields.Status==='Concluído'&&r.fields['Data Hora Abertura']&&r.fields['Data Conclusao']);
+  const tempos={};
+  concluidos.forEach(r=>{
+    const pid=(r.fields.Prestador||[])[0];if(!pid)return;
+    const pname=C.prestadores[pid]?.name||'—';
+    const ab=new Date(r.fields['Data Hora Abertura']);
+    const conc=new Date(r.fields['Data Conclusao']+'T23:59:59');
+    const dias=Math.max(0,Math.ceil((conc-ab)/(864e5)));
+    if(!tempos[pname])tempos[pname]={total:0,count:0};
+    tempos[pname].total+=dias;tempos[pname].count++;
+  });
+  const tempoArr=Object.entries(tempos).map(([n,v])=>({nome:n,media:Math.round(v.total/v.count),count:v.count})).sort((a,b)=>a.media-b.media);
+  document.getElementById('rel-tempo').innerHTML=tempoArr.length
+    ?`<table><thead><tr><th>Prestador</th><th>Chamados Concluídos</th><th>Tempo Médio de Resolução</th></tr></thead><tbody>${tempoArr.map(t=>`<tr><td><strong>${t.nome}</strong></td><td>${t.count}</td><td style="color:${t.media<=3?'var(--green)':t.media<=7?'var(--amber)':'var(--red)'};font-weight:600">${t.media} dia${t.media!==1?'s':''}</td></tr>`).join('')}</tbody></table>`
+    :'<div class="empty"><i class="ti ti-clock"></i><p>Sem dados de tempo de resposta ainda</p></div>';
+
+  // Ativos por local
   const amb={};
   atv.forEach(r=>{const aid=(r.fields.Ambiente||[])[0];const lbl=ambLocal(aid);amb[lbl]=(amb[lbl]||0)+1;});
   const ams=Object.entries(amb).sort(([,a],[,b])=>b-a).slice(0,8);
   const mxA=Math.max(...ams.map(([,v])=>v),1);
   document.getElementById('rel-ativos').innerHTML=ams.length
-    ?`<div style="padding:14px">${ams.map(([l,c])=>`<div class="bar-row"><div class="bar-lbl" style="width:160px;text-align:left;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${l}">${l}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/mxA*100)}%;background:var(--teal)"></div></div><div class="bar-val" style="min-width:50px">${c} ativo${c>1?'s':''}</div></div>`).join('')}</div>`
+    ?`<div style="padding:14px">${ams.map(([l,c])=>`<div class="bar-row"><div class="bar-lbl" style="width:160px;text-align:left;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${l}">${l}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/mxA*100)}%;background:var(--teal)"></div></div><div class="bar-val" style="min-width:60px">${c} ativo${c>1?'s':''}</div></div>`).join('')}</div>`
     :'<div class="empty"><i class="ti ti-chart-bar"></i><p>Sem dados</p></div>';
+
+  // Resumo por categoria
+  const cats={};
+  atv.forEach(r=>{const c=r.fields.Categoria||'Outros';cats[c]=(cats[c]||0)+1;});
+  const catSort=Object.entries(cats).sort(([,a],[,b])=>b-a);
+  const totAtv=atv.length||1;
+  document.getElementById('rel-cat').innerHTML=catSort.length
+    ?`<div style="padding:14px">${catSort.map(([c,n])=>`<div class="bar-row"><div class="bar-lbl" style="width:120px;text-align:left;font-size:12px">${c}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(n/totAtv*100)}%;background:var(--green)"></div></div><div class="bar-val" style="min-width:60px">${n} unid.</div></div>`).join('')}</div>`
+    :'<div class="empty"><i class="ti ti-chart-pie"></i><p>Sem dados</p></div>';
 }
 
-// Mobiliário
+// MOBILIÁRIO
 let mobData=[];
 async function loadMob(){
   const recs=await fetchAll(TBL.ativos);
-  mobData=currentUnit==='Ambas'?recs:recs.filter(r=>ambUnit((r.fields.Ambiente||[])[0])===currentUnit);
+  mobData=currentUnit==='Geral'?recs:recs.filter(r=>ambUnit((r.fields.Ambiente||[])[0])===currentUnit);
   mobData.sort((a,b)=>(a.fields.Nome||'').localeCompare(b.fields.Nome||'','pt-BR'));
   const cats={'Ar Condicionado':0,'Nobreak':0,'Extintor':0,'Impressora':0};
   mobData.forEach(r=>{const c=r.fields.Categoria;if(c in cats)cats[c]++;});
@@ -860,126 +1164,110 @@ async function loadMob(){
 function filtroMob(cat){renderMob(cat?mobData.filter(r=>r.fields.Categoria===cat):mobData);}
 function renderMob(data){
   document.getElementById('tbl-mob').innerHTML=data.length
-    ?`<table><thead><tr><th>Equipamento</th><th>Categoria</th><th>Local</th><th>Marca/Modelo</th><th>Data Compra</th><th>Status</th><th>Crítico</th><th></th></tr></thead><tbody>${data.map(r=>`<tr><td><strong>${r.fields.Nome||'—'}</strong></td><td>${r.fields.Categoria||'—'}</td><td style="font-size:11px">${ambLocal((r.fields.Ambiente||[])[0])}</td><td>${r.fields['Marca/Modelo']||'—'}</td><td>${fDate(r.fields['Data Compra'])}</td><td>${chip(r.fields.Status)}</td><td style="text-align:center">${r.fields.Crítico?'⚠️':''}</td>${editBtn(`editAtivo('${r.id}')`)}</tr>`).join('')}</tbody></table>`
+    ?`<table><thead><tr><th>Equipamento</th><th>Categoria</th><th>Local</th><th>Marca/Modelo</th><th>Compra</th><th>Status</th><th>Crítico</th><th></th></tr></thead><tbody>${data.map(r=>`<tr>
+      <td><strong>${r.fields.Nome||'—'}</strong></td><td>${r.fields.Categoria||'—'}</td>
+      <td style="font-size:11px">${ambLocal((r.fields.Ambiente||[])[0])}</td>
+      <td>${r.fields['Marca/Modelo']||'—'}</td><td>${fDate(r.fields['Data Compra'])}</td>
+      <td>${chip(r.fields.Status)}</td><td style="text-align:center">${r.fields.Crítico?'⚠️':''}</td>
+      <td style="width:80px;text-align:center;white-space:nowrap">
+        <button class="edit-btn" onclick="editAtivo('${r.id}')" title="Editar"><i class="ti ti-pencil"></i></button>
+        <button class="del-btn" onclick="confirmDel('${TBL.ativos}','${r.id}','${(r.fields.Nome||'').replace(/'/g,"\\'")}',loadMob)" title="Excluir"><i class="ti ti-trash"></i></button>
+      </td></tr>`).join('')}</tbody></table>`
     :'<div class="empty"><i class="ti ti-armchair"></i><p>Nenhum item encontrado</p></div>';
 }
 
-// ══ MODAIS ══
+// ── CONFIRM DELETE ──
+async function confirmDel(tbl,id,name,reloadFn){
+  if(!confirm(`Excluir "${name}"?\n\nEsta ação não pode ser desfeita.`))return;
+  try{await deleteRec(tbl,id);toast('✓ Excluído com sucesso!');reloadFn();}
+  catch(e){toast('Erro ao excluir: '+e.message,true);}
+}
+
+// ── MODAIS ──
 function openM(id){document.getElementById(id).classList.add('on');}
 function closeM(id){document.getElementById(id).classList.remove('on');editId=null;editModal=null;}
+const MODAL_TITLES={'m-ativo':'Novo Ativo','m-man':'Nova Manutenção','m-hist':'Registrar Manutenção','m-cham':'Novo Chamado','m-prest':'Novo Prestador','m-andar':'Novo Andar','m-ambiente':'Novo Ambiente'};
 function openNew(id){
   editId=null;editModal=null;
-  const titles={
-    'm-ativo':'Novo Ativo / Equipamento','m-man':'Nova Manutenção Programada',
-    'm-hist':'Registrar Manutenção Realizada','m-cham':'Novo Chamado / OS',
-    'm-prest':'Novo Prestador','m-andar':'Novo Andar','m-ambiente':'Novo Ambiente'
-  };
-  const tEl=document.getElementById(id+'-titulo');
-  if(tEl)tEl.textContent=titles[id]||'Novo Registro';
-  // Limpar campos
-  document.querySelectorAll(`#${id} .fi, #${id} .ft`).forEach(el=>{el.value='';});
-  document.querySelectorAll(`#${id} input[type=checkbox]`).forEach(el=>{el.checked=false;});
-  // Data padrão
+  const t=document.getElementById(id+'-t');if(t)t.textContent=MODAL_TITLES[id]||'Novo';
+  document.querySelectorAll(`#${id} .fi, #${id} .ft`).forEach(e=>e.value='');
+  document.querySelectorAll(`#${id} input[type=checkbox]`).forEach(e=>e.checked=false);
   const df=document.querySelector(`#${id} input[type=date]`);if(df)df.value=today();
   openM(id);
 }
 document.querySelectorAll('.mo').forEach(m=>m.addEventListener('click',e=>{if(e.target===m){m.classList.remove('on');editId=null;editModal=null;}}));
 
-// ══ EDIT FUNCTIONS ══
-function setField(id,val){const e=document.getElementById(id);if(e&&val!==undefined&&val!==null)e.value=val;}
-function setCheck(id,val){const e=document.getElementById(id);if(e)e.checked=!!val;}
-function setSelect(id,val){const e=document.getElementById(id);if(e&&val){const op=[...e.options].find(o=>o.value===val||o.text===val);if(op)op.selected=true;}}
+// ── EDIT FUNCTIONS ──
+function sv(id,val){const e=document.getElementById(id);if(e&&val!=null)e.value=val;}
+function sc(id,val){const e=document.getElementById(id);if(e)e.checked=!!val;}
+function ss(id,val){const e=document.getElementById(id);if(e&&val){const o=[...e.options].find(x=>x.value===val||x.text===val||x.text.includes(val));if(o)o.selected=true;}}
 
 function editAtivo(id){
   const all=[...ativosData,...mobData];
   const r=all.find(x=>x.id===id);if(!r)return;
-  editId=id;editModal='m-ativo';
-  document.getElementById('m-ativo-titulo').textContent='Editar Ativo';
-  setField('f-at-nome',r.fields.Nome);
-  setSelect('f-at-cat',r.fields.Categoria);
-  setSelect('f-at-amb',(r.fields.Ambiente||[])[0]);
-  setField('f-at-marca',r.fields['Marca/Modelo']);
-  setField('f-at-data',r.fields['Data Compra']);
-  setSelect('f-at-status',r.fields.Status);
-  setCheck('f-at-crit',r.fields.Crítico);
-  openM('m-ativo');
+  editId=id;
+  const t=document.getElementById('m-ativo-t');if(t)t.textContent='Editar Ativo';
+  sv('f-at-nome',r.fields.Nome);ss('f-at-cat',r.fields.Categoria);ss('f-at-amb',(r.fields.Ambiente||[])[0]);
+  sv('f-at-marca',r.fields['Marca/Modelo']);sv('f-at-data',r.fields['Data Compra']);
+  ss('f-at-status',r.fields.Status);sc('f-at-crit',r.fields.Crítico);openM('m-ativo');
 }
 async function editMan(id){
-  const all=await fetchAll(TBL.manutencoes);
-  const r=all.find(x=>x.id===id);if(!r)return;
-  editId=id;editModal='m-man';
-  document.getElementById('m-man-titulo').textContent='Editar Manutenção';
-  setField('f-man-tit',r.fields.Titulo);
-  setSelect('f-man-at',(r.fields.Ativo||[])[0]);
-  setSelect('f-man-tipo',r.fields.Tipo);
-  setField('f-man-ult',r.fields['Ultima Data']);
-  setField('f-man-prox',r.fields['Proxima Data']);
-  setSelect('f-man-prest',(r.fields.Prestador||[])[0]);
-  setCheck('f-man-crit',r.fields.Critico);
-  setField('f-man-obs',r.fields.Observacoes);
-  openM('m-man');
+  const all=await fetchAll(TBL.manutencoes);const r=all.find(x=>x.id===id);if(!r)return;
+  editId=id;const t=document.getElementById('m-man-t');if(t)t.textContent='Editar Manutenção';
+  sv('f-man-tit',r.fields.Titulo);ss('f-man-at',(r.fields.Ativo||[])[0]);ss('f-man-tipo',r.fields.Tipo);
+  sv('f-man-ult',r.fields['Ultima Data']);sv('f-man-prox',r.fields['Proxima Data']);
+  ss('f-man-prest',(r.fields.Prestador||[])[0]);sc('f-man-crit',r.fields.Critico);sv('f-man-obs',r.fields.Observacoes);openM('m-man');
 }
 async function editHist(id){
-  const all=await fetchAll(TBL.historico);
-  const r=all.find(x=>x.id===id);if(!r)return;
-  editId=id;editModal='m-hist';
-  document.getElementById('m-hist-titulo').textContent='Editar Histórico';
-  setField('f-hist-tit',r.fields.Titulo);
-  setSelect('f-hist-at',(r.fields.Ativo||[])[0]);
-  setField('f-hist-data',r.fields['Data Realizada']);
-  setSelect('f-hist-tipo',r.fields.Tipo);
-  setSelect('f-hist-prest',(r.fields.Prestador||[])[0]);
-  setField('f-hist-obs',r.fields.Observacoes);
-  openM('m-hist');
+  const all=await fetchAll(TBL.historico);const r=all.find(x=>x.id===id);if(!r)return;
+  editId=id;const t=document.getElementById('m-hist-t');if(t)t.textContent='Editar Histórico';
+  sv('f-hist-tit',r.fields.Titulo);ss('f-hist-at',(r.fields.Ativo||[])[0]);sv('f-hist-data',r.fields['Data Realizada']);
+  ss('f-hist-tipo',r.fields.Tipo);ss('f-hist-prest',(r.fields.Prestador||[])[0]);sv('f-hist-obs',r.fields.Observacoes);openM('m-hist');
 }
 async function editCham(id){
-  const all=await fetchAll(TBL.chamados);
-  const r=all.find(x=>x.id===id);if(!r)return;
-  editId=id;editModal='m-cham';
-  document.getElementById('m-cham-titulo').textContent='Editar Chamado';
-  setField('f-ch-desc',r.fields.Descricao);
-  setSelect('f-ch-amb',(r.fields.Ambiente||[])[0]);
-  setSelect('f-ch-at',(r.fields.Ativo||[])[0]||'');
-  setSelect('f-ch-tipo',r.fields.Tipo);
-  setSelect('f-ch-status',r.fields.Status);
-  setField('f-ch-sol',r.fields.Solicitante);
-  setSelect('f-ch-prest',(r.fields.Prestador||[])[0]);
-  setField('f-ch-obs',r.fields.Observacoes);
-  openM('m-cham');
+  const all=await fetchAll(TBL.chamados);const r=all.find(x=>x.id===id);if(!r)return;
+  editId=id;const t=document.getElementById('m-cham-t');if(t)t.textContent='Editar Chamado';
+  sv('f-ch-desc',r.fields.Descricao);ss('f-ch-urg',r.fields.Urgencia||'Normal');ss('f-ch-tipo',r.fields.Tipo);
+  ss('f-ch-amb',(r.fields.Ambiente||[])[0]);ss('f-ch-at',(r.fields.Ativo||[])[0]||'');
+  ss('f-ch-status',r.fields.Status);sv('f-ch-sol',r.fields.Solicitante);
+  ss('f-ch-prest',(r.fields.Prestador||[])[0]);sv('f-ch-conc',r.fields['Data Conclusao']);sv('f-ch-obs',r.fields.Observacoes);openM('m-cham');
 }
 async function editPrest(id){
-  const all=await fetchAll(TBL.prestadores);
-  const r=all.find(x=>x.id===id);if(!r)return;
-  editId=id;editModal='m-prest';
-  document.getElementById('m-prest-titulo').textContent='Editar Prestador';
-  setField('f-pr-nome',r.fields.Nome);
-  setField('f-pr-esp',r.fields.Especialidade);
-  setField('f-pr-cont',r.fields.Contato);
-  openM('m-prest');
+  const all=await fetchAll(TBL.prestadores);const r=all.find(x=>x.id===id);if(!r)return;
+  editId=id;const t=document.getElementById('m-prest-t');if(t)t.textContent='Editar Prestador';
+  sv('f-pr-nome',r.fields.Nome);sv('f-pr-esp',r.fields.Especialidade);sv('f-pr-cont',r.fields.Contato);openM('m-prest');
 }
 async function editAndar(id){
-  const all=await fetchAll(TBL.andares);
-  const r=all.find(x=>x.id===id);if(!r)return;
-  editId=id;editModal='m-andar';
-  document.getElementById('m-andar-titulo').textContent='Editar Andar';
-  setSelect('f-and-uni',(r.fields.Unidade||[])[0]);
-  setField('f-and-nome',r.fields.Nome);
-  openM('m-andar');
+  const all=await fetchAll(TBL.andares);const r=all.find(x=>x.id===id);if(!r)return;
+  editId=id;const t=document.getElementById('m-andar-t');if(t)t.textContent='Editar Andar';
+  ss('f-and-uni',(r.fields.Unidade||[])[0]);sv('f-and-nome',r.fields.Nome);openM('m-andar');
 }
 async function editAmbiente(id){
-  const all=await fetchAll(TBL.ambientes);
-  const r=all.find(x=>x.id===id);if(!r)return;
-  editId=id;editModal='m-ambiente';
-  document.getElementById('m-ambiente-titulo').textContent='Editar Ambiente';
-  setSelect('f-amb-andar',(r.fields.Andar||[])[0]);
-  setField('f-amb-nome',r.fields.Nome);
-  openM('m-ambiente');
+  const all=await fetchAll(TBL.ambientes);const r=all.find(x=>x.id===id);if(!r)return;
+  editId=id;const t=document.getElementById('m-ambiente-t');if(t)t.textContent='Editar Ambiente';
+  ss('f-amb-andar',(r.fields.Andar||[])[0]);sv('f-amb-nome',r.fields.Nome);openM('m-ambiente');
 }
 
-// ══ TOAST ══
-function toast(msg,err=false){const t=document.getElementById('toast');t.textContent=msg;t.className='on'+(err?' err':'');setTimeout(()=>t.className='',3200);}
+// ── TOAST ──
+function toast(msg,err=false){const t=document.getElementById('toast');t.textContent=msg;t.className='on'+(err?' err':'');setTimeout(()=>t.className='',3500);}
 
-// ══ SAVES ══
+// ── PROTOCOL POPUP ──
+let lastProto='';
+function showProto(p){
+  lastProto=p;
+  document.getElementById('proto-num').textContent=p;
+  document.getElementById('proto-overlay').classList.add('show');
+  document.getElementById('proto-popup').classList.add('show');
+}
+function closeProto(){
+  document.getElementById('proto-overlay').classList.remove('show');
+  document.getElementById('proto-popup').classList.remove('show');
+}
+function copyProto(){
+  navigator.clipboard.writeText(lastProto).then(()=>toast('✓ Protocolo copiado!')).catch(()=>{});
+}
+
+// ── SAVES ──
 function v(id){const e=document.getElementById(id);return e?e.value.trim():'';}
 
 async function saveAndar(){
@@ -1001,8 +1289,7 @@ async function saveAmbiente(){
   }catch(e){toast(e.message,true);}
 }
 async function saveAtivo(){
-  const nome=v('f-at-nome');
-  if(!nome){toast('Informe o nome do equipamento.',true);return;}
+  const nome=v('f-at-nome');if(!nome){toast('Informe o nome.',true);return;}
   const fields={Nome:nome,Categoria:v('f-at-cat'),Crítico:document.getElementById('f-at-crit').checked};
   if(v('f-at-amb'))fields.Ambiente=[v('f-at-amb')];
   if(v('f-at-marca'))fields['Marca/Modelo']=v('f-at-marca');
@@ -1044,21 +1331,28 @@ async function saveHist(){
 async function saveCham(){
   const desc=v('f-ch-desc'),amb=v('f-ch-amb');
   if(!desc||!amb){toast('Informe descrição e ambiente.',true);return;}
-  const fields={Descricao:desc,Tipo:v('f-ch-tipo'),Status:v('f-ch-status'),Ambiente:[amb]};
+  const proto=editId?null:genProtocolo();
+  const fields={
+    Descricao:desc,Tipo:v('f-ch-tipo'),Status:v('f-ch-status'),
+    Urgencia:v('f-ch-urg')||'Normal',Ambiente:[amb]
+  };
   if(v('f-ch-at'))fields.Ativo=[v('f-ch-at')];
   if(v('f-ch-sol'))fields.Solicitante=v('f-ch-sol');
   if(v('f-ch-prest'))fields.Prestador=[v('f-ch-prest')];
   if(v('f-ch-obs'))fields.Observacoes=v('f-ch-obs');
-  if(!editId)fields['Data Abertura']=today();
+  if(v('f-ch-conc'))fields['Data Conclusao']=v('f-ch-conc');
+  if(!editId){fields.Protocolo=proto;fields['Data Hora Abertura']=nowISO();fields['Data Abertura']=today();}
   try{
     if(editId)await update(TBL.chamados,editId,fields);
     else await create(TBL.chamados,fields);
-    closeM('m-cham');toast(editId?'✓ Chamado atualizado!':'✓ Chamado aberto!');loadChamados();
+    closeM('m-cham');
+    if(!editId&&proto)showProto(proto);
+    else toast('✓ Chamado atualizado!');
+    loadChamados();
   }catch(e){toast(e.message,true);}
 }
 async function savePrest(){
-  const nome=v('f-pr-nome');
-  if(!nome){toast('Informe o nome do prestador.',true);return;}
+  const nome=v('f-pr-nome');if(!nome){toast('Informe o nome.',true);return;}
   const fields={Nome:nome};
   if(v('f-pr-esp'))fields.Especialidade=v('f-pr-esp');
   if(v('f-pr-cont'))fields.Contato=v('f-pr-cont');
@@ -1069,31 +1363,29 @@ async function savePrest(){
   }catch(e){toast(e.message,true);}
 }
 
-// ══ BUSCA ══
+// ── BUSCA ──
 document.getElementById('srch').addEventListener('input',function(){
   const q=this.value.toLowerCase();
-  document.querySelectorAll('tbody tr').forEach(tr=>{tr.style.display=tr.textContent.toLowerCase().includes(q)?'':'none';});
-  document.querySelectorAll('.li').forEach(li=>{li.style.display=li.textContent.toLowerCase().includes(q)?'':'none';});
+  document.querySelectorAll('tbody tr').forEach(tr=>{tr.style.display=!q||tr.textContent.toLowerCase().includes(q)?'':'none';});
+  document.querySelectorAll('.li').forEach(li=>{li.style.display=!q||li.textContent.toLowerCase().includes(q)?'':'none';});
 });
 
-// ══ EXPORT ══
+// ── EXPORT CSV ──
 async function exportCSV(){
   toast('Preparando exportação...');
   try{
     const[man,cham,atv]=await Promise.all([fetchAll(TBL.manutencoes),fetchAll(TBL.chamados),fetchAll(TBL.ativos)]);
-    let csv='CAMPO INCORPORADORA — EXPORTAÇÃO DO SISTEMA\n\n';
+    let csv='CAMPO INCORPORADORA — EXPORTAÇÃO\n\n';
     csv+='=== MANUTENÇÕES ===\nTítulo,Ativo,Próxima Data,Prestador,Crítico\n';
     man.forEach(r=>{const aid=(r.fields.Ativo||[])[0];const pid=(r.fields.Prestador||[])[0];csv+=`"${r.fields.Titulo||''}","${C.ativos[aid]?.name||''}","${r.fields['Proxima Data']||''}","${C.prestadores[pid]?.name||''}","${r.fields.Critico?'SIM':'NÃO'}"\n`;});
-    csv+='\n=== CHAMADOS ===\nDescrição,Status,Tipo,Solicitante,Abertura\n';
-    cham.forEach(r=>{csv+=`"${r.fields.Descricao||''}","${r.fields.Status||''}","${r.fields.Tipo||''}","${r.fields.Solicitante||''}","${r.fields['Data Abertura']||''}"\n`;});
+    csv+='\n=== CHAMADOS ===\nProtocolo,Descrição,Urgência,Status,Tipo,Solicitante,Abertura\n';
+    cham.forEach(r=>{csv+=`"${r.fields.Protocolo||''}","${r.fields.Descricao||''}","${r.fields.Urgencia||''}","${r.fields.Status||''}","${r.fields.Tipo||''}","${r.fields.Solicitante||''}","${r.fields['Data Abertura']||''}"\n`;});
     csv+='\n=== ATIVOS ===\nEquipamento,Categoria,Marca/Modelo,Status\n';
     atv.forEach(r=>{csv+=`"${r.fields.Nome||''}","${r.fields.Categoria||''}","${r.fields['Marca/Modelo']||''}","${r.fields.Status||''}"\n`;});
     const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
     const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');a.href=url;
-    a.download='Campo_'+new Date().toISOString().split('T')[0]+'.csv';
-    a.click();URL.revokeObjectURL(url);
-    toast('✓ Exportado com sucesso!');
+    const a=document.createElement('a');a.href=url;a.download='Campo_'+new Date().toISOString().split('T')[0]+'.csv';
+    a.click();URL.revokeObjectURL(url);toast('✓ Exportado!');
   }catch(e){toast('Erro na exportação.',true);}
 }
 </script>
