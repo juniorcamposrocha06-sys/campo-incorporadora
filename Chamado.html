@@ -8,18 +8,12 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f2f4f7;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:30px 16px 60px}
-
-/* HEADER */
 .header{width:100%;max-width:560px;background:#094752;border-radius:12px 12px 0 0;padding:28px 32px 22px;text-align:center}
 .header img{height:46px;display:block;margin:0 auto 14px}
 .header-fb{color:#fff;font-size:22px;font-weight:800;margin-bottom:14px;display:none}
 .header-title{color:#fff;font-size:17px;font-weight:600;margin-bottom:4px}
 .header-sub{color:#7fb8c4;font-size:13px}
-
-/* FORM BOX */
 .form-box{width:100%;max-width:560px;background:#fff;border-radius:0 0 12px 12px;padding:28px 32px;box-shadow:0 8px 30px rgba(0,0,0,.10)}
-
-/* FIELDS */
 .fg{margin-bottom:16px}
 .fl{font-size:12px;font-weight:600;color:#374151;margin-bottom:5px;display:block}
 .fl span.req{color:#ef4444;margin-left:2px}
@@ -27,8 +21,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .fi:focus,.fs:focus,.ft:focus{border-color:#23B368;box-shadow:0 0 0 3px rgba(35,179,104,.1)}
 .ft{resize:none;height:90px}
 .fr{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-
-/* URGENCY SELECTOR */
 .urg-opts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:4px}
 .urg-opt{padding:8px 4px;border:1.5px solid #e5e7eb;border-radius:8px;text-align:center;cursor:pointer;transition:all .15s}
 .urg-opt:hover{border-color:#23B368}
@@ -39,13 +31,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .urg-opt.u-normal{color:#92400e}.urg-opt.u-normal.sel{border-color:#f59e0b;background:#fffbeb}
 .urg-opt.u-alta{color:#c2410c}.urg-opt.u-alta.sel{border-color:#f97316;background:#fff7ed}
 .urg-opt.u-urgente{color:#b91c1c}.urg-opt.u-urgente.sel{border-color:#ef4444;background:#fef2f2}
-
-/* SUBMIT */
 .btn-submit{width:100%;padding:14px;background:#23B368;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px}
 .btn-submit:hover{background:#1a9057}
 .btn-submit:disabled{opacity:.6;cursor:not-allowed}
-
-/* SUCCESS */
 #success{display:none;text-align:center;padding:20px 0}
 .success-icon{width:64px;height:64px;background:#f0fdf4;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
 .success-icon i{font-size:34px;color:#23B368}
@@ -59,21 +47,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .btn-copy:hover{background:#063038}
 .btn-novo{padding:9px 18px;background:#fff;color:#094752;border:1.5px solid #094752;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px}
 .btn-novo:hover{background:#f0f9fa}
-
-/* ERROR */
 .field-err{font-size:11px;color:#ef4444;margin-top:4px;display:none}
 .fi.err,.fs.err{border-color:#ef4444}
-
-/* FOOTER */
 .page-footer{margin-top:20px;text-align:center;font-size:11px;color:#9ca3af}
-
-/* LOADING */
 .spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* LOADING STATUS */
-.loading-status{font-size:11px;color:#6b7280;margin-top:6px;display:none}
-.loading-status.show{display:block}
 </style>
 </head>
 <body>
@@ -88,8 +66,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </div>
 
 <div class="form-box">
-
-  <!-- FORM -->
   <div id="form-area">
 
     <div class="fg">
@@ -102,14 +78,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
       <div class="fg">
         <label class="fl">Local de atendimento <span class="req">*</span></label>
         <select class="fs" id="f-local">
-          <option value="">— carregando —</option>
+          <option value="">— carregando... —</option>
         </select>
         <div class="field-err" id="err-local">Selecione o local.</div>
-        <div class="loading-status" id="status-local"></div>
       </div>
       <div class="fg">
         <label class="fl">Ambiente / Sala</label>
-        <select class="fs" id="f-amb">
+        <select class="fs" id="f-amb" disabled>
           <option value="">— selecione o local primeiro —</option>
         </select>
       </div>
@@ -165,7 +140,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     </div>
   </div>
 
-  <!-- SUCESSO -->
   <div id="success">
     <div class="success-icon"><i class="ti ti-circle-check"></i></div>
     <div class="success-title">Chamado enviado com sucesso!</div>
@@ -180,7 +154,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     </div>
     <button class="btn-novo" onclick="novoForm()"><i class="ti ti-plus"></i> Abrir Novo Chamado</button>
   </div>
-
 </div>
 
 <div class="page-footer">
@@ -188,47 +161,37 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </div>
 
 <script>
-// ══ CONFIG AIRTABLE ══
 const BASE_ID = 'app6FRO94lCtpAfXW';
-const TBL_CHAMADOS = 'tblNNI1ODUUncxPM1';
+const TOKEN   = 'patq9evuRQ1JnodrU.0a4996c84632753d78031f0315f94a17909b90a198a1a6899f5a750e4d7db4ae';
+const HDRS    = { 'Authorization': 'Bearer ' + TOKEN, 'Content-Type': 'application/json' };
+
+// Tabelas
+const TBL_UNIDADES  = 'tblQIiulLhGvSlc5j';
+const TBL_ANDARES   = 'tblnaqWSeDDKYQhcW';
 const TBL_AMBIENTES = 'tbljTc0rmF8RiOJkr';
-const TBL_ANDARES = 'tblnaqWSeDDKYQhcW';
-const TBL_UNIDADES = 'tblQIiulLhGvSlc5j';
+const TBL_CHAMADOS  = 'tblNNI1ODUUncxPM1';
 
-// IDs dos campos
-const UNIDADE_NOME_FIELD = 'fldSpPHD00EHNgUM4';
-const ANDAR_NOME_FIELD = 'fldguFiqTGr240sYn';
-const ANDAR_UNIDADE_FIELD = 'fldsaELThlLSDp3bg';
-const ANDAR_AMBIENTES_FIELD = 'fldpudIqEfDyn6rUn';
-const AMBIENTE_NOME_FIELD = 'fld3HDrdaC0r4JZGZ';
+// Campos Unidades
+const F_UNI_NOME   = 'fldSpPHD00EHNgUM4'; // Nome da unidade
+const F_UNI_ANDAR  = 'fldv6zzewjD934wjJ'; // Link para Andares
 
-// ⚠️ IMPORTANTE: fldBog4zPEXyV6cxY é para AMBIENTES, não unidades!
-const CHAMADOS_NOME_FIELD = 'fldL7WPgIYU6SStqL';
-const CHAMADOS_AMBIENTE_FIELD = 'fldBog4zPEXyV6cxY'; // ⬅️ Link para Ambientes
-const CHAMADOS_DESCRICAO_FIELD = 'fld8iYFondncRb894';
-const CHAMADOS_URGENCIA_FIELD = 'fldZIAHD1iMawqRYF';
-const CHAMADOS_OBSERVACOES_FIELD = 'fldeIb19xLleqv7sm';
+// Campos Andares
+const F_AND_NOME   = 'fldguFiqTGr240sYn'; // Nome do andar
+const F_AND_AMBS   = 'fldpudIqEfDyn6rUn'; // Link para Ambientes
 
-// TOKEN DO AIRTABLE
-// ⚠️ IMPORTANTE: Criar um token com permissões MÍNIMAS:
-// - data:records:read
-// - data:records:write
-// - schema:bases:read
-// 
-// Gerar em: https://airtable.com/account/tokens
-// 
-// Depois, SUBSTITUA o token abaixo pelo seu token pessoal
-// NÃO commit tokens no Git! Use variáveis de ambiente em produção.
-const TOKEN = 'patq9evuRQ1JnodrU.0a4996c84632753d78031f0315f94a17909b90a198a1a6899f5a750e4d7db4ae';
-const HDRS = { 'Authorization': 'Bearer ' + TOKEN, 'Content-Type': 'application/json' };
+// Campos Ambientes
+const F_AMB_NOME   = 'fld3HDrdaC0r4JZGZ'; // Nome do ambiente
 
-const AT = (tbl, qs='') => `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(tbl)}${qs}`;
+// Campos Chamados
+const F_CH_NOME    = 'fldL7WPgIYU6SStqL'; // Solicitante
+const F_CH_AMB     = 'fldBog4zPEXyV6cxY'; // Ambiente (link)
+const F_CH_DESC    = 'fld8iYFondncRb894'; // Descrição
+const F_CH_URG     = 'fldZIAHD1iMawqRYF'; // Urgência
+const F_CH_OBS     = 'fldeIb19xLleqv7sm'; // Observações/Protocolo
 
-// CACHE
-let unidades = [];
-let andares = [];
-let ambientes = [];
-let ambCache = {};
+const AT = tbl => `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(tbl)}`;
+
+let dadosUnidades = []; // [{id, nome, andares:[{id, nome, ambientes:[{id, nome}]}]}]
 let selectedUrg = 'Normal';
 let lastProto = '';
 
@@ -237,110 +200,109 @@ function selUrg(val, el) {
   selectedUrg = val;
   document.querySelectorAll('.urg-opt').forEach(o => o.classList.remove('sel'));
   el.classList.add('sel');
-  document.getElementById('f-urg').value = val;
 }
 
-// ── CARREGAR DADOS DO AIRTABLE ──
+// ── BUSCAR TODOS OS REGISTROS DE UMA TABELA (paginado) ──
+async function fetchAll(tbl) {
+  let records = [], offset = '';
+  do {
+    const url = AT(tbl) + '?pageSize=100' + (offset ? '&offset=' + offset : '');
+    const res = await fetch(url, { headers: HDRS });
+    if (!res.ok) throw new Error('Erro HTTP ' + res.status + ' em ' + tbl);
+    const json = await res.json();
+    records = records.concat(json.records || []);
+    offset = json.offset || '';
+  } while (offset);
+  return records;
+}
+
+// ── CARREGAR DADOS ──
 async function loadData() {
   try {
-    // Carregar Unidades
-    const uRes = await fetch(AT(TBL_UNIDADES), { headers: HDRS });
-    if (!uRes.ok) throw new Error('Erro ao carregar unidades');
-    unidades = (await uRes.json()).records || [];
+    const [recUnidades, recAndares, recAmbientes] = await Promise.all([
+      fetchAll(TBL_UNIDADES),
+      fetchAll(TBL_ANDARES),
+      fetchAll(TBL_AMBIENTES)
+    ]);
 
-    // Carregar Andares
-    const aRes = await fetch(AT(TBL_ANDARES, '?pageSize=100'), { headers: HDRS });
-    if (!aRes.ok) throw new Error('Erro ao carregar andares');
-    andares = (await aRes.json()).records || [];
+    // Montar mapa de ambientes por ID
+    const ambMap = {};
+    recAmbientes.forEach(r => {
+      ambMap[r.id] = {
+        id: r.id,
+        nome: cleanName(r.cellValuesByFieldId[F_AMB_NOME] || '—')
+      };
+    });
 
-    // Carregar Ambientes
-    let all = [], offset = '';
-    do {
-      const r = await fetch(AT(TBL_AMBIENTES, '?pageSize=100' + (offset ? '&offset=' + offset : '')), { headers: HDRS });
-      if (!r.ok) throw new Error('Erro ao carregar ambientes');
-      const j = await r.json();
-      all = [...all, ...(j.records || [])];
-      offset = j.offset || '';
-    } while (offset);
-    ambientes = all;
+    // Montar mapa de andares por ID
+    const andMap = {};
+    recAndares.forEach(r => {
+      const ambIds = r.cellValuesByFieldId[F_AND_AMBS] || [];
+      andMap[r.id] = {
+        id: r.id,
+        nome: r.cellValuesByFieldId[F_AND_NOME] || '—',
+        ambientes: ambIds.map(a => ambMap[a.id]).filter(Boolean)
+      };
+    });
+
+    // Montar lista de unidades com andares e ambientes
+    dadosUnidades = recUnidades.map(r => {
+      const andIds = r.cellValuesByFieldId[F_UNI_ANDAR] || [];
+      return {
+        id: r.id,
+        nome: r.cellValuesByFieldId[F_UNI_NOME] || '—',
+        andares: andIds.map(a => andMap[a.id]).filter(Boolean)
+      };
+    }).sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
 
     // Preencher select de unidades
-    const localSelect = document.getElementById('f-local');
-    localSelect.innerHTML = '<option value="">— selecione —</option>' +
-      unidades.map(u => `<option value="${u.id}">${u.fields[UNIDADE_NOME_FIELD] || '—'}</option>`).join('');
-
-    document.getElementById('status-local').classList.remove('show');
-    document.getElementById('status-local').textContent = `✅ ${unidades.length} unidade(s) carregada(s)`;
+    const sel = document.getElementById('f-local');
+    sel.innerHTML = '<option value="">— selecione —</option>' +
+      dadosUnidades.map(u => `<option value="${u.id}">${u.nome}</option>`).join('');
 
   } catch (e) {
     console.error('Erro ao carregar dados:', e);
-    document.getElementById('status-local').classList.add('show');
-    document.getElementById('status-local').textContent = '⚠️ Erro ao carregar dados. Recarregue a página.';
+    document.getElementById('f-local').innerHTML =
+      '<option value="">⚠️ Erro ao carregar. Recarregue.</option>';
   }
 }
 
 // ── ATUALIZAR AMBIENTES QUANDO UNIDADE MUDA ──
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('f-local').addEventListener('change', function() {
-    const unidadeId = this.value;
-    const ambSelect = document.getElementById('f-amb');
+document.getElementById('f-local').addEventListener('change', function () {
+  const unidadeId = this.value;
+  const ambSel = document.getElementById('f-amb');
 
-    if (!unidadeId) {
-      ambSelect.innerHTML = '<option value="">— selecione o local primeiro —</option>';
-      return;
-    }
+  if (!unidadeId) {
+    ambSel.innerHTML = '<option value="">— selecione o local primeiro —</option>';
+    ambSel.disabled = true;
+    return;
+  }
 
-    // Encontrar andares da unidade
-    const andaresUnidade = andares.filter(andar => {
-      const unidadesAndar = andar.fields[ANDAR_UNIDADE_FIELD] || [];
-      return unidadesAndar.some(u => u.id === unidadeId);
+  const unidade = dadosUnidades.find(u => u.id === unidadeId);
+  if (!unidade || !unidade.andares.length) {
+    ambSel.innerHTML = '<option value="">— nenhum ambiente cadastrado —</option>';
+    ambSel.disabled = true;
+    return;
+  }
+
+  ambSel.innerHTML = '<option value="">— selecione o ambiente —</option>';
+  ambSel.disabled = false;
+
+  unidade.andares.forEach(andar => {
+    if (!andar.ambientes.length) return;
+    const grp = document.createElement('optgroup');
+    grp.label = andar.nome;
+    andar.ambientes.forEach(amb => {
+      const opt = document.createElement('option');
+      opt.value = amb.id;
+      opt.textContent = amb.nome;
+      grp.appendChild(opt);
     });
-
-    // Coletar ambientes dos andares
-    let ambientesList = [];
-    andaresUnidade.forEach(andar => {
-      const idsAmbientes = andar.fields[ANDAR_AMBIENTES_FIELD] || [];
-      idsAmbientes.forEach(ambId => {
-        const amb = ambientes.find(a => a.id === ambId.id);
-        if (amb) {
-          ambientesList.push({
-            id: amb.id,
-            nome: cleanName(amb.fields[AMBIENTE_NOME_FIELD] || '—'),
-            andar: andar.fields[ANDAR_NOME_FIELD] || '—'
-          });
-        }
-      });
-    });
-
-    // Agrupar por andar
-    ambSelect.innerHTML = '<option value="">— selecione o ambiente —</option>';
-
-    if (ambientesList.length === 0) {
-      ambSelect.innerHTML = '<option value="" disabled>— nenhum ambiente cadastrado —</option>';
-      return;
-    }
-
-    // Agrupar por andar
-    const porAndar = {};
-    ambientesList.forEach(amb => {
-      if (!porAndar[amb.andar]) porAndar[amb.andar] = [];
-      porAndar[amb.andar].push(amb);
-    });
-
-    Object.keys(porAndar).forEach(andar => {
-      const optgroup = document.createElement('optgroup');
-      optgroup.label = andar;
-      porAndar[andar].forEach(amb => {
-        const opt = document.createElement('option');
-        opt.value = amb.id;
-        opt.textContent = amb.nome;
-        optgroup.appendChild(opt);
-      });
-      ambSelect.appendChild(optgroup);
-    });
+    ambSel.appendChild(grp);
   });
 });
 
+// ── LIMPEZA DE NOMES ──
 function cleanName(n) {
   return (n || '').replace(/^\[(interno|externo|estrutural|predial)\]\s*/i, '').trim();
 }
@@ -348,55 +310,45 @@ function cleanName(n) {
 // ── VALIDAÇÃO ──
 function validate() {
   let ok = true;
-  const fields = [
-    { id: 'f-desc', err: 'err-desc', check: v => v.trim().length > 2 },
-    { id: 'f-local', err: 'err-local', check: v => v !== '' },
-    { id: 'f-nome', err: 'err-nome', check: v => v.trim().length > 1 },
-  ];
-  fields.forEach(f => {
+  [{ id: 'f-desc', err: 'err-desc', fn: v => v.trim().length > 2 },
+   { id: 'f-local', err: 'err-local', fn: v => v !== '' },
+   { id: 'f-nome', err: 'err-nome', fn: v => v.trim().length > 1 }
+  ].forEach(f => {
     const el = document.getElementById(f.id);
     const errEl = document.getElementById(f.err);
-    if (!f.check(el.value)) {
-      el.classList.add('err');
-      errEl.style.display = 'block';
-      ok = false;
+    if (!f.fn(el.value)) {
+      el.classList.add('err'); errEl.style.display = 'block'; ok = false;
     } else {
-      el.classList.remove('err');
-      errEl.style.display = 'none';
+      el.classList.remove('err'); errEl.style.display = 'none';
     }
   });
   return ok;
 }
 
-// ── GERAR PROTOCOLO ──
+// ── PROTOCOLO ──
 function genProto() {
-  const now = new Date();
-  const d = now.toISOString().split('T')[0].replace(/-/g, '');
-  const t = now.toTimeString().slice(0, 5).replace(':', '');
+  const n = new Date();
+  const d = n.toISOString().split('T')[0].replace(/-/g, '');
+  const t = n.toTimeString().slice(0, 5).replace(':', '');
   return `CH-${d}-${t}`;
 }
 
-// ── ENVIAR CHAMADO ──
+// ── ENVIAR ──
 async function enviarChamado() {
   if (!validate()) return;
   const btn = document.getElementById('btn-enviar');
   btn.disabled = true;
   btn.innerHTML = '<div class="spinner"></div> Enviando...';
 
-  const proto = genProto();
-  const ambId = document.getElementById('f-amb').value;
-  
+  const proto  = genProto();
+  const ambId  = document.getElementById('f-amb').value;
   const fields = {
-    [CHAMADOS_NOME_FIELD]: document.getElementById('f-nome').value.trim(),
-    [CHAMADOS_AMBIENTE_FIELD]: ambId ? [ambId] : [], // ⬅️ Enviar Ambiente, não Unidade!
-    [CHAMADOS_DESCRICAO_FIELD]: document.getElementById('f-desc').value.trim(),
-    [CHAMADOS_URGENCIA_FIELD]: selectedUrg,
+    [F_CH_NOME]: document.getElementById('f-nome').value.trim(),
+    [F_CH_DESC]: document.getElementById('f-desc').value.trim(),
+    [F_CH_URG]:  selectedUrg,
+    [F_CH_OBS]:  proto,
   };
-
-  // Campos opcionais
-  if (document.getElementById('f-obs').value.trim()) {
-    fields[CHAMADOS_OBSERVACOES_FIELD] = document.getElementById('f-obs').value.trim();
-  }
+  if (ambId) fields[F_CH_AMB] = [ambId];
 
   try {
     const res = await fetch(AT(TBL_CHAMADOS), {
@@ -404,49 +356,45 @@ async function enviarChamado() {
       headers: HDRS,
       body: JSON.stringify({ records: [{ fields }], typecast: true })
     });
-
     if (!res.ok) {
       const j = await res.json();
       throw new Error(j.error?.message || 'Erro ' + res.status);
     }
-
     lastProto = proto;
     document.getElementById('s-proto').textContent = proto;
     document.getElementById('form-area').style.display = 'none';
     document.getElementById('success').style.display = 'block';
   } catch (e) {
-    alert('❌ Erro ao enviar: ' + e.message + '\n\nTente novamente ou entre em contato com a equipe.');
+    alert('Erro ao enviar: ' + e.message);
     btn.disabled = false;
     btn.innerHTML = '<i class="ti ti-send"></i> Enviar Chamado';
-    console.error('Erro completo:', e);
   }
 }
 
-// ── COPIAR PROTOCOLO ──
+// ── COPIAR ──
 function copyProto() {
-  navigator.clipboard.writeText(lastProto)
-    .then(() => {
-      const btn = document.querySelector('.btn-copy');
-      btn.innerHTML = '<i class="ti ti-check"></i> Copiado!';
-      setTimeout(() => { btn.innerHTML = '<i class="ti ti-copy"></i> Copiar Protocolo'; }, 2000);
-    })
-    .catch(() => {});
+  navigator.clipboard.writeText(lastProto).then(() => {
+    const btn = document.querySelector('.btn-copy');
+    btn.innerHTML = '<i class="ti ti-check"></i> Copiado!';
+    setTimeout(() => { btn.innerHTML = '<i class="ti ti-copy"></i> Copiar Protocolo'; }, 2000);
+  });
 }
 
-// ── NOVO FORMULÁRIO ──
+// ── NOVO FORM ──
 function novoForm() {
   document.getElementById('form-area').style.display = 'block';
   document.getElementById('success').style.display = 'none';
-  document.querySelectorAll('.fi, .ft').forEach(e => e.value = '');
+  document.querySelectorAll('.fi,.ft').forEach(e => e.value = '');
   document.getElementById('f-local').value = '';
   document.getElementById('f-amb').innerHTML = '<option value="">— selecione o local primeiro —</option>';
+  document.getElementById('f-amb').disabled = true;
   selUrg('Normal', document.querySelector('.urg-opt.u-normal'));
   const btn = document.getElementById('btn-enviar');
   btn.disabled = false;
   btn.innerHTML = '<i class="ti ti-send"></i> Enviar Chamado';
 }
 
-// ── INICIALIZAR ──
+// ── INICIAR ──
 loadData();
 </script>
 </body>
