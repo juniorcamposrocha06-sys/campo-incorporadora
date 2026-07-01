@@ -202,15 +202,24 @@ const ANDAR_UNIDADE_FIELD = 'fldsaELThlLSDp3bg';
 const ANDAR_AMBIENTES_FIELD = 'fldpudIqEfDyn6rUn';
 const AMBIENTE_NOME_FIELD = 'fld3HDrdaC0r4JZGZ';
 
+// ⚠️ IMPORTANTE: fldBog4zPEXyV6cxY é para AMBIENTES, não unidades!
 const CHAMADOS_NOME_FIELD = 'fldL7WPgIYU6SStqL';
-const CHAMADOS_UNIDADE_FIELD = 'fldBog4zPEXyV6cxY';
+const CHAMADOS_AMBIENTE_FIELD = 'fldBog4zPEXyV6cxY'; // ⬅️ Link para Ambientes
 const CHAMADOS_DESCRICAO_FIELD = 'fld8iYFondncRb894';
 const CHAMADOS_URGENCIA_FIELD = 'fldZIAHD1iMawqRYF';
-const CHAMADOS_PROTOCOLO_FIELD = 'fldeIb19xLleqv7sm';
+const CHAMADOS_OBSERVACOES_FIELD = 'fldeIb19xLleqv7sm';
 
 // TOKEN DO AIRTABLE
-// ⚠️ IMPORTANTE: Usar um token com permissões mínimas
-const TOKEN = 'patq9evuRQ1JnodrU.b196e0a772fe15a4d098de9ef405991a257d1a05368c72ff5950df6ffd763667';
+// ⚠️ IMPORTANTE: Criar um token com permissões MÍNIMAS:
+// - data:records:read
+// - data:records:write
+// - schema:bases:read
+// 
+// Gerar em: https://airtable.com/account/tokens
+// 
+// Depois, SUBSTITUA o token abaixo pelo seu token pessoal
+// NÃO commit tokens no Git! Use variáveis de ambiente em produção.
+const TOKEN = 'ADICIONE_SEU_TOKEN_AQUI'; // ⬅️ SUBSTITUA AQUI
 const HDRS = { 'Authorization': 'Bearer ' + TOKEN, 'Content-Type': 'application/json' };
 
 const AT = (tbl, qs='') => `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(tbl)}${qs}`;
@@ -376,22 +385,17 @@ async function enviarChamado() {
 
   const proto = genProto();
   const ambId = document.getElementById('f-amb').value;
-  const unidadeId = document.getElementById('f-local').value;
   
   const fields = {
     [CHAMADOS_NOME_FIELD]: document.getElementById('f-nome').value.trim(),
-    [CHAMADOS_UNIDADE_FIELD]: [unidadeId],
+    [CHAMADOS_AMBIENTE_FIELD]: ambId ? [ambId] : [], // ⬅️ Enviar Ambiente, não Unidade!
     [CHAMADOS_DESCRICAO_FIELD]: document.getElementById('f-desc').value.trim(),
     [CHAMADOS_URGENCIA_FIELD]: selectedUrg,
-    [CHAMADOS_PROTOCOLO_FIELD]: proto,
   };
 
   // Campos opcionais
-  if (ambId) {
-    fields['fldXXXXXXXXXXXXXX'] = [ambId]; // Campo de ambiente (ajustar ID se necessário)
-  }
   if (document.getElementById('f-obs').value.trim()) {
-    fields['fldeIb19xLleqv7sm'] = document.getElementById('f-obs').value.trim();
+    fields[CHAMADOS_OBSERVACOES_FIELD] = document.getElementById('f-obs').value.trim();
   }
 
   try {
