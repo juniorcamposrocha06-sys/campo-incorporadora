@@ -1,610 +1,449 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitar Chamado - Campo Incorporadora</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .header img {
-            height: 60px;
-            margin-bottom: 20px;
-        }
-        
-        h1 {
-            color: #094752;
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            color: #333;
-            font-weight: 500;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        
-        label .required {
-            color: #e74c3c;
-        }
-        
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-family: inherit;
-            font-size: 14px;
-        }
-        
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-        
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        input[type="tel"]:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: #094752;
-            box-shadow: 0 0 0 3px rgba(9,71,82,0.1);
-        }
-        
-        .urgency-selector {
-            display: flex;
-            gap: 12px;
-            margin-top: 8px;
-        }
-        
-        .urgency-btn {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid #ddd;
-            background: white;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-        
-        .urgency-btn.baixa {
-            color: #27ae60;
-        }
-        .urgency-btn.baixa.selected {
-            border-color: #27ae60;
-            background-color: #d5f4e6;
-        }
-        
-        .urgency-btn.normal {
-            color: #f39c12;
-        }
-        .urgency-btn.normal.selected {
-            border-color: #f39c12;
-            background-color: #fef5e7;
-        }
-        
-        .urgency-btn.alta {
-            color: #e67e22;
-        }
-        .urgency-btn.alta.selected {
-            border-color: #e67e22;
-            background-color: #fdebd0;
-        }
-        
-        .urgency-btn.urgente {
-            color: #e74c3c;
-        }
-        .urgency-btn.urgente.selected {
-            border-color: #e74c3c;
-            background-color: #fadbd8;
-        }
-        
-        .urgency-btn:hover {
-            border-color: #094752;
-        }
-        
-        .submit-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #094752;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        
-        .submit-btn:hover:not(:disabled) {
-            background-color: #063341;
-        }
-        
-        .submit-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        
-        .submit-btn:active:not(:disabled) {
-            transform: scale(0.98);
-        }
-        
-        .success-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            text-align: center;
-            z-index: 1000;
-            max-width: 400px;
-        }
-        
-        .success-popup.active {
-            display: block;
-        }
-        
-        .success-popup h2 {
-            color: #27ae60;
-            margin-bottom: 15px;
-        }
-        
-        .protocol-number {
-            font-size: 24px;
-            font-weight: bold;
-            color: #094752;
-            padding: 15px;
-            background-color: #f0f0f0;
-            border-radius: 4px;
-            margin: 15px 0;
-            word-break: break-all;
-        }
-        
-        .copy-btn {
-            background-color: #23B368;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-        
-        .copy-btn:hover {
-            background-color: #1a9655;
-        }
-        
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 999;
-        }
-        
-        .overlay.active {
-            display: block;
-        }
-        
-        .error-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            z-index: 1000;
-            max-width: 400px;
-        }
-        
-        .error-popup.active {
-            display: block;
-        }
-        
-        .error-popup h2 {
-            color: #e74c3c;
-            margin-bottom: 15px;
-        }
-        
-        .error-popup p {
-            color: #666;
-            margin-bottom: 15px;
-        }
-        
-        .close-btn {
-            background-color: #094752;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-        }
-        
-        .close-btn:hover {
-            background-color: #063341;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abertura de Chamado · Campo Incorporadora</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f2f4f7;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:30px 16px 60px}
 
-        select:disabled {
-            background-color: #f5f5f5;
-            color: #999;
-        }
+/* HEADER */
+.header{width:100%;max-width:560px;background:#094752;border-radius:12px 12px 0 0;padding:28px 32px 22px;text-align:center}
+.header img{height:46px;display:block;margin:0 auto 14px}
+.header-fb{color:#fff;font-size:22px;font-weight:800;margin-bottom:14px;display:none}
+.header-title{color:#fff;font-size:17px;font-weight:600;margin-bottom:4px}
+.header-sub{color:#7fb8c4;font-size:13px}
 
-        .hidden-field {
-            display: none;
-        }
-    </style>
+/* FORM BOX */
+.form-box{width:100%;max-width:560px;background:#fff;border-radius:0 0 12px 12px;padding:28px 32px;box-shadow:0 8px 30px rgba(0,0,0,.10)}
+
+/* FIELDS */
+.fg{margin-bottom:16px}
+.fl{font-size:12px;font-weight:600;color:#374151;margin-bottom:5px;display:block}
+.fl span.req{color:#ef4444;margin-left:2px}
+.fi,.fs,.ft{width:100%;padding:10px 13px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;color:#111827;background:#fff;outline:none;transition:border-color .15s;font-family:inherit}
+.fi:focus,.fs:focus,.ft:focus{border-color:#23B368;box-shadow:0 0 0 3px rgba(35,179,104,.1)}
+.ft{resize:none;height:90px}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* URGENCY SELECTOR */
+.urg-opts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:4px}
+.urg-opt{padding:8px 4px;border:1.5px solid #e5e7eb;border-radius:8px;text-align:center;cursor:pointer;transition:all .15s}
+.urg-opt:hover{border-color:#23B368}
+.urg-opt.sel{border-color:currentColor;background:rgba(0,0,0,.04)}
+.urg-opt .icon{font-size:18px;display:block;margin-bottom:2px}
+.urg-opt .label{font-size:10px;font-weight:600}
+.urg-opt.u-baixa{color:#166534}.urg-opt.u-baixa.sel{border-color:#23B368;background:#f0fdf4}
+.urg-opt.u-normal{color:#92400e}.urg-opt.u-normal.sel{border-color:#f59e0b;background:#fffbeb}
+.urg-opt.u-alta{color:#c2410c}.urg-opt.u-alta.sel{border-color:#f97316;background:#fff7ed}
+.urg-opt.u-urgente{color:#b91c1c}.urg-opt.u-urgente.sel{border-color:#ef4444;background:#fef2f2}
+
+/* SUBMIT */
+.btn-submit{width:100%;padding:14px;background:#23B368;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px}
+.btn-submit:hover{background:#1a9057}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed}
+
+/* SUCCESS */
+#success{display:none;text-align:center;padding:20px 0}
+.success-icon{width:64px;height:64px;background:#f0fdf4;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.success-icon i{font-size:34px;color:#23B368}
+.success-title{font-size:18px;font-weight:700;color:#094752;margin-bottom:8px}
+.success-sub{font-size:13px;color:#6b7280;margin-bottom:18px}
+.proto-box{background:#f0f9fa;border:2px solid #d1e9ed;border-radius:10px;padding:16px 20px;margin-bottom:18px}
+.proto-label{font-size:11px;color:#6b7280;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.proto-num{font-family:monospace;font-size:22px;font-weight:800;color:#094752;letter-spacing:1px}
+.proto-hint{font-size:11px;color:#9ca3af;margin-top:4px}
+.btn-copy{padding:9px 18px;background:#094752;color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px;margin-bottom:10px}
+.btn-copy:hover{background:#063038}
+.btn-novo{padding:9px 18px;background:#fff;color:#094752;border:1.5px solid #094752;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px}
+.btn-novo:hover{background:#f0f9fa}
+
+/* ERROR */
+.field-err{font-size:11px;color:#ef4444;margin-top:4px;display:none}
+.fi.err,.fs.err{border-color:#ef4444}
+
+/* FOOTER */
+.page-footer{margin-top:20px;text-align:center;font-size:11px;color:#9ca3af}
+
+/* LOADING */
+.spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* LOADING STATUS */
+.loading-status{font-size:11px;color:#6b7280;margin-top:6px;display:none}
+.loading-status.show{display:block}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <img src="https://campoincorporadora.com.br/wp-content/uploads/2026/03/logo_white.svg" alt="Campo Incorporadora" onerror="this.style.display='none'" />
-            <h1>Solicitar Chamado</h1>
-            <p class="subtitle">Preencha o formulário para solicitar manutenção</p>
-        </div>
-        
-        <form id="chamadoForm">
-            <div class="form-group">
-                <label for="nome">Seu Nome <span class="required">*</span></label>
-                <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required />
-            </div>
-            
-            <div class="form-group">
-                <label for="local">Local de Atendimento <span class="required">*</span></label>
-                <select id="local" name="local" required>
-                    <option value="">-- Selecione uma unidade --</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="ambiente">Ambiente / Sala <span class="required">*</span></label>
-                <select id="ambiente" name="ambiente" required disabled>
-                    <option value="">-- Selecione um ambiente --</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="descricao">Descrição do Problema <span class="required">*</span></label>
-                <textarea id="descricao" name="descricao" placeholder="Descreva o problema de forma clara e detalhada" required></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label>Nível de Urgência <span class="required">*</span></label>
-                <div class="urgency-selector">
-                    <button type="button" class="urgency-btn baixa" data-urgencia="Baixa">🟢 Baixa</button>
-                    <button type="button" class="urgency-btn normal" data-urgencia="Normal">🟡 Normal</button>
-                    <button type="button" class="urgency-btn alta" data-urgencia="Alta">🟠 Alta</button>
-                    <button type="button" class="urgency-btn urgente" data-urgencia="Urgência">🔴 Urgente</button>
-                </div>
-                <input type="hidden" id="urgencia" name="urgencia" value="" required />
-            </div>
-            
-            <button type="submit" class="submit-btn">Enviar Solicitação</button>
-        </form>
-    </div>
-    
-    <div class="overlay" id="overlay"></div>
-    
-    <div class="success-popup" id="successPopup">
-        <h2>✓ Chamado Criado com Sucesso!</h2>
-        <p>Seu protocolo é:</p>
-        <div class="protocol-number" id="protocolNumber"></div>
-        <p style="color: #666; font-size: 13px;">Guarde este número para acompanhar sua solicitação.</p>
-        <button class="copy-btn" onclick="copyProtocol()">Copiar Protocolo</button>
-        <button class="close-btn" onclick="closePopup()">Fechar</button>
-    </div>
-    
-    <div class="error-popup" id="errorPopup">
-        <h2>✗ Erro ao Enviar</h2>
-        <p id="errorMessage"></p>
-        <button class="close-btn" onclick="closeErrorPopup()">Tentar Novamente</button>
+
+<div class="header">
+  <img src="https://campoincorporadora.com.br/wp-content/uploads/2026/03/logo_white.svg"
+    alt="Campo Incorporadora"
+    onerror="this.style.display='none';document.getElementById('hfb').style.display='block'">
+  <div class="header-fb" id="hfb">Campo Incorporadora</div>
+  <div class="header-title">Abertura de Chamado</div>
+  <div class="header-sub">Solicite um serviço ou reporte uma ocorrência</div>
+</div>
+
+<div class="form-box">
+
+  <!-- FORM -->
+  <div id="form-area">
+
+    <div class="fg">
+      <label class="fl">Descrição do problema / solicitação <span class="req">*</span></label>
+      <input class="fi" id="f-desc" placeholder="Descreva o problema ou o que precisa ser feito...">
+      <div class="field-err" id="err-desc">Por favor, descreva o chamado.</div>
     </div>
 
-    <script>
-        // Token do Airtable com permissões mínimas
-        const AIRTABLE_TOKEN = 'pat8GZr4SYM6RHLVd/3c78f2f6ae1fc3bb4fda5f2f1e9c8b7a6d5e4f3';
-        const BASE_ID = 'app6FRO94lCtpAfXW';
-        
-        // IDs das tabelas
-        const UNIDADES_TABLE = 'tblQIiulLhGvSlc5j';
-        const ANDARES_TABLE = 'tblnaqWSeDDKYQhcW';
-        const AMBIENTES_TABLE = 'tbljTc0rmF8RiOJkr';
-        const CHAMADOS_TABLE = 'tblNNI1ODUUncxPM1';
-        
-        // IDs dos campos na tabela Unidades
-        const UNIDADE_NOME_FIELD = 'fldSpPHD00EHNgUM4';
-        
-        // IDs dos campos na tabela Andares
-        const ANDAR_NOME_FIELD = 'fldguFiqTGr240sYn';
-        const ANDAR_UNIDADE_FIELD = 'fldsaELThlLSDp3bg';
-        const ANDAR_AMBIENTES_FIELD = 'fldpudIqEfDyn6rUn';
-        
-        // IDs dos campos na tabela Ambientes
-        const AMBIENTE_NOME_FIELD = 'fld3HDrdaC0r4JZGZ';
-        const AMBIENTE_ANDAR_FIELD = 'fldkiHPbhBfM0CFod';
-        
-        // IDs dos campos na tabela Chamados
-        const CHAMADOS_NOME_FIELD = 'fldL7WPgIYU6SStqL';
-        const CHAMADOS_UNIDADE_FIELD = 'fldBog4zPEXyV6cxY';
-        const CHAMADOS_AMBIENTE_FIELD = 'fldcR1fX2rIaLhCsy'; // Precisamos descobrir qual é
-        const CHAMADOS_DESCRICAO_FIELD = 'fld8iYFondncRb894';
-        const CHAMADOS_URGENCIA_FIELD = 'fldZIAHD1iMawqRYF';
-        const CHAMADOS_PROTOCOLO_FIELD = 'fldeIb19xLleqv7sm'; // Campo para armazenar protocolo
-        
-        let unidades = [];
-        let andares = [];
-        let ambientes = [];
-        let selectedUrgencia = '';
-        
-        // Carregar todas as tabelas ao iniciar
-        async function loadData() {
-            try {
-                // Carregar Unidades
-                const unidadesRes = await fetch(
-                    `https://api.airtable.com/v0/${BASE_ID}/${UNIDADES_TABLE}`,
-                    {
-                        headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}` }
-                    }
-                );
-                unidades = (await unidadesRes.json()).records || [];
-                
-                // Carregar Andares
-                const andaresRes = await fetch(
-                    `https://api.airtable.com/v0/${BASE_ID}/${ANDARES_TABLE}`,
-                    {
-                        headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}` }
-                    }
-                );
-                andares = (await andaresRes.json()).records || [];
-                
-                // Carregar Ambientes
-                const ambientesRes = await fetch(
-                    `https://api.airtable.com/v0/${BASE_ID}/${AMBIENTES_TABLE}`,
-                    {
-                        headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}` }
-                    }
-                );
-                ambientes = (await ambientesRes.json()).records || [];
-                
-                // Preencher dropdown de unidades
-                const localSelect = document.getElementById('local');
-                localSelect.innerHTML = '<option value="">-- Selecione uma unidade --</option>';
-                
-                unidades.forEach(record => {
-                    const option = document.createElement('option');
-                    option.value = record.id;
-                    option.textContent = record.fields[UNIDADE_NOME_FIELD] || 'Sem nome';
-                    localSelect.appendChild(option);
-                });
-                
-            } catch (error) {
-                console.error('Erro ao carregar dados:', error);
-            }
+    <div class="fr">
+      <div class="fg">
+        <label class="fl">Local de atendimento <span class="req">*</span></label>
+        <select class="fs" id="f-local">
+          <option value="">— carregando —</option>
+        </select>
+        <div class="field-err" id="err-local">Selecione o local.</div>
+        <div class="loading-status" id="status-local"></div>
+      </div>
+      <div class="fg">
+        <label class="fl">Ambiente / Sala</label>
+        <select class="fs" id="f-amb">
+          <option value="">— selecione o local primeiro —</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="fg">
+      <label class="fl">Nível de urgência <span class="req">*</span></label>
+      <div class="urg-opts">
+        <div class="urg-opt u-baixa" onclick="selUrg('Baixa',this)">
+          <span class="icon">🟢</span><span class="label">Baixa</span>
+        </div>
+        <div class="urg-opt u-normal sel" onclick="selUrg('Normal',this)">
+          <span class="icon">🟡</span><span class="label">Normal</span>
+        </div>
+        <div class="urg-opt u-alta" onclick="selUrg('Alta',this)">
+          <span class="icon">🟠</span><span class="label">Alta</span>
+        </div>
+        <div class="urg-opt u-urgente" onclick="selUrg('Urgência',this)">
+          <span class="icon">🔴</span><span class="label">Urgente</span>
+        </div>
+      </div>
+      <input type="hidden" id="f-urg" value="Normal">
+    </div>
+
+    <div class="fr">
+      <div class="fg">
+        <label class="fl">Tipo</label>
+        <select class="fs" id="f-tipo">
+          <option>Corretiva</option>
+          <option>Preventiva</option>
+          <option>Melhoria</option>
+          <option>Urgência</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="fl">Seu nome <span class="req">*</span></label>
+        <input class="fi" id="f-nome" placeholder="Ex: Maria Silva">
+        <div class="field-err" id="err-nome">Informe seu nome.</div>
+      </div>
+    </div>
+
+    <div class="fg">
+      <label class="fl">Observações adicionais</label>
+      <textarea class="ft" id="f-obs" placeholder="Detalhes extras, fotos (descreva), horários disponíveis..."></textarea>
+    </div>
+
+    <button class="btn-submit" id="btn-enviar" onclick="enviarChamado()">
+      <i class="ti ti-send"></i> Enviar Chamado
+    </button>
+
+    <div style="text-align:center;margin-top:14px;font-size:11px;color:#9ca3af">
+      Após o envio você receberá um número de protocolo para acompanhar o chamado
+    </div>
+  </div>
+
+  <!-- SUCESSO -->
+  <div id="success">
+    <div class="success-icon"><i class="ti ti-circle-check"></i></div>
+    <div class="success-title">Chamado enviado com sucesso!</div>
+    <div class="success-sub">Sua solicitação foi registrada. Use o protocolo abaixo para acompanhar o andamento.</div>
+    <div class="proto-box">
+      <div class="proto-label">Número do Protocolo</div>
+      <div class="proto-num" id="s-proto">—</div>
+      <div class="proto-hint">Guarde este código para consultar o status do seu chamado</div>
+    </div>
+    <div style="margin-bottom:8px">
+      <button class="btn-copy" onclick="copyProto()"><i class="ti ti-copy"></i> Copiar Protocolo</button>
+    </div>
+    <button class="btn-novo" onclick="novoForm()"><i class="ti ti-plus"></i> Abrir Novo Chamado</button>
+  </div>
+
+</div>
+
+<div class="page-footer">
+  Campo Incorporadora &copy; 2026 · Sistema de Gestão Integrada · Primavera do Leste — MT
+</div>
+
+<script>
+// ══ CONFIG AIRTABLE ══
+const BASE_ID = 'app6FRO94lCtpAfXW';
+const TBL_CHAMADOS = 'tblNNI1ODUUncxPM1';
+const TBL_AMBIENTES = 'tbljTc0rmF8RiOJkr';
+const TBL_ANDARES = 'tblnaqWSeDDKYQhcW';
+const TBL_UNIDADES = 'tblQIiulLhGvSlc5j';
+
+// IDs dos campos
+const UNIDADE_NOME_FIELD = 'fldSpPHD00EHNgUM4';
+const ANDAR_NOME_FIELD = 'fldguFiqTGr240sYn';
+const ANDAR_UNIDADE_FIELD = 'fldsaELThlLSDp3bg';
+const ANDAR_AMBIENTES_FIELD = 'fldpudIqEfDyn6rUn';
+const AMBIENTE_NOME_FIELD = 'fld3HDrdaC0r4JZGZ';
+
+const CHAMADOS_NOME_FIELD = 'fldL7WPgIYU6SStqL';
+const CHAMADOS_UNIDADE_FIELD = 'fldBog4zPEXyV6cxY';
+const CHAMADOS_DESCRICAO_FIELD = 'fld8iYFondncRb894';
+const CHAMADOS_URGENCIA_FIELD = 'fldZIAHD1iMawqRYF';
+const CHAMADOS_PROTOCOLO_FIELD = 'fldeIb19xLleqv7sm';
+
+// TOKEN DO AIRTABLE
+// ⚠️ IMPORTANTE: Usar um token com permissões mínimas
+const TOKEN = 'patq9evuRQ1JnodrU.b196e0a772fe15a4d098de9ef405991a257d1a05368c72ff5950df6ffd763667';
+const HDRS = { 'Authorization': 'Bearer ' + TOKEN, 'Content-Type': 'application/json' };
+
+const AT = (tbl, qs='') => `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(tbl)}${qs}`;
+
+// CACHE
+let unidades = [];
+let andares = [];
+let ambientes = [];
+let ambCache = {};
+let selectedUrg = 'Normal';
+let lastProto = '';
+
+// ── URGÊNCIA ──
+function selUrg(val, el) {
+  selectedUrg = val;
+  document.querySelectorAll('.urg-opt').forEach(o => o.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('f-urg').value = val;
+}
+
+// ── CARREGAR DADOS DO AIRTABLE ──
+async function loadData() {
+  try {
+    // Carregar Unidades
+    const uRes = await fetch(AT(TBL_UNIDADES), { headers: HDRS });
+    if (!uRes.ok) throw new Error('Erro ao carregar unidades');
+    unidades = (await uRes.json()).records || [];
+
+    // Carregar Andares
+    const aRes = await fetch(AT(TBL_ANDARES, '?pageSize=100'), { headers: HDRS });
+    if (!aRes.ok) throw new Error('Erro ao carregar andares');
+    andares = (await aRes.json()).records || [];
+
+    // Carregar Ambientes
+    let all = [], offset = '';
+    do {
+      const r = await fetch(AT(TBL_AMBIENTES, '?pageSize=100' + (offset ? '&offset=' + offset : '')), { headers: HDRS });
+      if (!r.ok) throw new Error('Erro ao carregar ambientes');
+      const j = await r.json();
+      all = [...all, ...(j.records || [])];
+      offset = j.offset || '';
+    } while (offset);
+    ambientes = all;
+
+    // Preencher select de unidades
+    const localSelect = document.getElementById('f-local');
+    localSelect.innerHTML = '<option value="">— selecione —</option>' +
+      unidades.map(u => `<option value="${u.id}">${u.fields[UNIDADE_NOME_FIELD] || '—'}</option>`).join('');
+
+    document.getElementById('status-local').classList.remove('show');
+    document.getElementById('status-local').textContent = `✅ ${unidades.length} unidade(s) carregada(s)`;
+
+  } catch (e) {
+    console.error('Erro ao carregar dados:', e);
+    document.getElementById('status-local').classList.add('show');
+    document.getElementById('status-local').textContent = '⚠️ Erro ao carregar dados. Recarregue a página.';
+  }
+}
+
+// ── ATUALIZAR AMBIENTES QUANDO UNIDADE MUDA ──
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('f-local').addEventListener('change', function() {
+    const unidadeId = this.value;
+    const ambSelect = document.getElementById('f-amb');
+
+    if (!unidadeId) {
+      ambSelect.innerHTML = '<option value="">— selecione o local primeiro —</option>';
+      return;
+    }
+
+    // Encontrar andares da unidade
+    const andaresUnidade = andares.filter(andar => {
+      const unidadesAndar = andar.fields[ANDAR_UNIDADE_FIELD] || [];
+      return unidadesAndar.some(u => u.id === unidadeId);
+    });
+
+    // Coletar ambientes dos andares
+    let ambientesList = [];
+    andaresUnidade.forEach(andar => {
+      const idsAmbientes = andar.fields[ANDAR_AMBIENTES_FIELD] || [];
+      idsAmbientes.forEach(ambId => {
+        const amb = ambientes.find(a => a.id === ambId.id);
+        if (amb) {
+          ambientesList.push({
+            id: amb.id,
+            nome: cleanName(amb.fields[AMBIENTE_NOME_FIELD] || '—'),
+            andar: andar.fields[ANDAR_NOME_FIELD] || '—'
+          });
         }
-        
-        // Atualizar dropdown de ambientes quando unidade é selecionada
-        document.getElementById('local').addEventListener('change', function() {
-            const unidadeId = this.value;
-            const ambienteSelect = document.getElementById('ambiente');
-            
-            if (!unidadeId) {
-                ambienteSelect.disabled = true;
-                ambienteSelect.innerHTML = '<option value="">-- Selecione um ambiente --</option>';
-                return;
-            }
-            
-            // Encontrar andares da unidade selecionada
-            const andaresUnidade = andares.filter(andar => {
-                const unidadesAndar = andar.fields[ANDAR_UNIDADE_FIELD] || [];
-                return unidadesAndar.some(u => u.id === unidadeId);
-            });
-            
-            // Coletar todos os ambientes desses andares
-            const ambientesFiltrados = [];
-            andaresUnidade.forEach(andar => {
-                const idsAmbientes = andar.fields[ANDAR_AMBIENTES_FIELD] || [];
-                idsAmbientes.forEach(ambId => {
-                    const amb = ambientes.find(a => a.id === ambId.id);
-                    if (amb) ambientesFiltrados.push(amb);
-                });
-            });
-            
-            // Atualizar select
-            ambienteSelect.innerHTML = '<option value="">-- Selecione um ambiente --</option>';
-            ambienteSelect.disabled = false;
-            
-            if (ambientesFiltrados.length === 0) {
-                const option = document.createElement('option');
-                option.value = '';
-                option.textContent = '-- nenhum ambiente cadastrado --';
-                option.disabled = true;
-                ambienteSelect.appendChild(option);
-                return;
-            }
-            
-            // Agrupar ambientes por andar e adicionar ao select
-            andaresUnidade.forEach(andar => {
-                const nomeAndar = andar.fields[ANDAR_NOME_FIELD] || 'Sem nome';
-                const idsAmbientes = andar.fields[ANDAR_AMBIENTES_FIELD] || [];
-                
-                const optgroup = document.createElement('optgroup');
-                optgroup.label = nomeAndar;
-                
-                idsAmbientes.forEach(ambId => {
-                    const amb = ambientes.find(a => a.id === ambId.id);
-                    if (amb) {
-                        const option = document.createElement('option');
-                        option.value = amb.id;
-                        let nomeAmbiente = amb.fields[AMBIENTE_NOME_FIELD] || 'Sem nome';
-                        // Remover prefixos como [Interno], [Externo], [Estrutural]
-                        nomeAmbiente = nomeAmbiente.replace(/^\[.*?\]\s*/, '');
-                        option.textContent = nomeAmbiente;
-                        optgroup.appendChild(option);
-                    }
-                });
-                
-                if (optgroup.children.length > 0) {
-                    ambienteSelect.appendChild(optgroup);
-                }
-            });
-        });
-        
-        // Seletor de urgência
-        document.querySelectorAll('.urgency-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelectorAll('.urgency-btn').forEach(b => b.classList.remove('selected'));
-                this.classList.add('selected');
-                selectedUrgencia = this.dataset.urgencia;
-                document.getElementById('urgencia').value = selectedUrgencia;
-            });
-        });
-        
-        // Gerar número de protocolo
-        function generateProtocol() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            
-            return `CH-${year}${month}${day}-${hours}${minutes}`;
-        }
-        
-        // Enviar formulário
-        document.getElementById('chamadoForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.querySelector('.submit-btn');
-            submitBtn.disabled = true;
-            
-            try {
-                const protocol = generateProtocol();
-                const nome = document.getElementById('nome').value;
-                const unidadeId = document.getElementById('local').value;
-                const ambienteId = document.getElementById('ambiente').value;
-                const descricao = document.getElementById('descricao').value;
-                const urgencia = document.getElementById('urgencia').value;
-                
-                // Criar registro no Airtable
-                const response = await fetch(
-                    `https://api.airtable.com/v0/${BASE_ID}/${CHAMADOS_TABLE}`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${AIRTABLE_TOKEN}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            records: [{
-                                fields: {
-                                    [CHAMADOS_NOME_FIELD]: nome,
-                                    [CHAMADOS_UNIDADE_FIELD]: [unidadeId],
-                                    [CHAMADOS_DESCRICAO_FIELD]: descricao,
-                                    [CHAMADOS_URGENCIA_FIELD]: urgencia,
-                                    [CHAMADOS_PROTOCOLO_FIELD]: protocol
-                                }
-                            }]
-                        })
-                    }
-                );
-                
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error?.message || 'Erro ao enviar');
-                }
-                
-                // Sucesso!
-                document.getElementById('protocolNumber').textContent = protocol;
-                document.getElementById('overlay').classList.add('active');
-                document.getElementById('successPopup').classList.add('active');
-                document.getElementById('chamadoForm').reset();
-                document.getElementById('urgencia').value = '';
-                document.querySelectorAll('.urgency-btn').forEach(b => b.classList.remove('selected'));
-                document.getElementById('ambiente').disabled = true;
-                
-            } catch (error) {
-                console.error('Erro:', error);
-                document.getElementById('errorMessage').textContent = error.message || 'Erro ao enviar. Tente novamente.';
-                document.getElementById('overlay').classList.add('active');
-                document.getElementById('errorPopup').classList.add('active');
-            } finally {
-                submitBtn.disabled = false;
-            }
-        });
-        
-        function copyProtocol() {
-            const protocol = document.getElementById('protocolNumber').textContent;
-            navigator.clipboard.writeText(protocol);
-            alert('Protocolo copiado para a área de transferência!');
-        }
-        
-        function closePopup() {
-            document.getElementById('overlay').classList.remove('active');
-            document.getElementById('successPopup').classList.remove('active');
-        }
-        
-        function closeErrorPopup() {
-            document.getElementById('overlay').classList.remove('active');
-            document.getElementById('errorPopup').classList.remove('active');
-        }
-        
-        // Carregar dados ao iniciar
-        loadData();
-    </script>
+      });
+    });
+
+    // Agrupar por andar
+    ambSelect.innerHTML = '<option value="">— selecione o ambiente —</option>';
+
+    if (ambientesList.length === 0) {
+      ambSelect.innerHTML = '<option value="" disabled>— nenhum ambiente cadastrado —</option>';
+      return;
+    }
+
+    // Agrupar por andar
+    const porAndar = {};
+    ambientesList.forEach(amb => {
+      if (!porAndar[amb.andar]) porAndar[amb.andar] = [];
+      porAndar[amb.andar].push(amb);
+    });
+
+    Object.keys(porAndar).forEach(andar => {
+      const optgroup = document.createElement('optgroup');
+      optgroup.label = andar;
+      porAndar[andar].forEach(amb => {
+        const opt = document.createElement('option');
+        opt.value = amb.id;
+        opt.textContent = amb.nome;
+        optgroup.appendChild(opt);
+      });
+      ambSelect.appendChild(optgroup);
+    });
+  });
+});
+
+function cleanName(n) {
+  return (n || '').replace(/^\[(interno|externo|estrutural|predial)\]\s*/i, '').trim();
+}
+
+// ── VALIDAÇÃO ──
+function validate() {
+  let ok = true;
+  const fields = [
+    { id: 'f-desc', err: 'err-desc', check: v => v.trim().length > 2 },
+    { id: 'f-local', err: 'err-local', check: v => v !== '' },
+    { id: 'f-nome', err: 'err-nome', check: v => v.trim().length > 1 },
+  ];
+  fields.forEach(f => {
+    const el = document.getElementById(f.id);
+    const errEl = document.getElementById(f.err);
+    if (!f.check(el.value)) {
+      el.classList.add('err');
+      errEl.style.display = 'block';
+      ok = false;
+    } else {
+      el.classList.remove('err');
+      errEl.style.display = 'none';
+    }
+  });
+  return ok;
+}
+
+// ── GERAR PROTOCOLO ──
+function genProto() {
+  const now = new Date();
+  const d = now.toISOString().split('T')[0].replace(/-/g, '');
+  const t = now.toTimeString().slice(0, 5).replace(':', '');
+  return `CH-${d}-${t}`;
+}
+
+// ── ENVIAR CHAMADO ──
+async function enviarChamado() {
+  if (!validate()) return;
+  const btn = document.getElementById('btn-enviar');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div> Enviando...';
+
+  const proto = genProto();
+  const ambId = document.getElementById('f-amb').value;
+  const unidadeId = document.getElementById('f-local').value;
+  
+  const fields = {
+    [CHAMADOS_NOME_FIELD]: document.getElementById('f-nome').value.trim(),
+    [CHAMADOS_UNIDADE_FIELD]: [unidadeId],
+    [CHAMADOS_DESCRICAO_FIELD]: document.getElementById('f-desc').value.trim(),
+    [CHAMADOS_URGENCIA_FIELD]: selectedUrg,
+    [CHAMADOS_PROTOCOLO_FIELD]: proto,
+  };
+
+  // Campos opcionais
+  if (ambId) {
+    fields['fldXXXXXXXXXXXXXX'] = [ambId]; // Campo de ambiente (ajustar ID se necessário)
+  }
+  if (document.getElementById('f-obs').value.trim()) {
+    fields['fldeIb19xLleqv7sm'] = document.getElementById('f-obs').value.trim();
+  }
+
+  try {
+    const res = await fetch(AT(TBL_CHAMADOS), {
+      method: 'POST',
+      headers: HDRS,
+      body: JSON.stringify({ records: [{ fields }], typecast: true })
+    });
+
+    if (!res.ok) {
+      const j = await res.json();
+      throw new Error(j.error?.message || 'Erro ' + res.status);
+    }
+
+    lastProto = proto;
+    document.getElementById('s-proto').textContent = proto;
+    document.getElementById('form-area').style.display = 'none';
+    document.getElementById('success').style.display = 'block';
+  } catch (e) {
+    alert('❌ Erro ao enviar: ' + e.message + '\n\nTente novamente ou entre em contato com a equipe.');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ti ti-send"></i> Enviar Chamado';
+    console.error('Erro completo:', e);
+  }
+}
+
+// ── COPIAR PROTOCOLO ──
+function copyProto() {
+  navigator.clipboard.writeText(lastProto)
+    .then(() => {
+      const btn = document.querySelector('.btn-copy');
+      btn.innerHTML = '<i class="ti ti-check"></i> Copiado!';
+      setTimeout(() => { btn.innerHTML = '<i class="ti ti-copy"></i> Copiar Protocolo'; }, 2000);
+    })
+    .catch(() => {});
+}
+
+// ── NOVO FORMULÁRIO ──
+function novoForm() {
+  document.getElementById('form-area').style.display = 'block';
+  document.getElementById('success').style.display = 'none';
+  document.querySelectorAll('.fi, .ft').forEach(e => e.value = '');
+  document.getElementById('f-local').value = '';
+  document.getElementById('f-amb').innerHTML = '<option value="">— selecione o local primeiro —</option>';
+  selUrg('Normal', document.querySelector('.urg-opt.u-normal'));
+  const btn = document.getElementById('btn-enviar');
+  btn.disabled = false;
+  btn.innerHTML = '<i class="ti ti-send"></i> Enviar Chamado';
+}
+
+// ── INICIALIZAR ──
+loadData();
+</script>
 </body>
 </html>
