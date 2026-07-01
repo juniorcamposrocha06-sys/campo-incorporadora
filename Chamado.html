@@ -237,11 +237,12 @@ async function loadData() {
     // Montar mapa de andares por ID
     const andMap = {};
     recAndares.forEach(r => {
+      // campos de link retornam array de strings (IDs) com returnFieldsByFieldId=true
       const ambIds = r.fields[F_AND_AMBS] || [];
       andMap[r.id] = {
         id: r.id,
         nome: r.fields[F_AND_NOME] || '—',
-        ambientes: ambIds.map(a => ambMap[a.id]).filter(Boolean)
+        ambientes: ambIds.map(id => ambMap[typeof id === 'object' ? id.id : id]).filter(Boolean)
       };
     });
 
@@ -251,7 +252,7 @@ async function loadData() {
       return {
         id: r.id,
         nome: r.fields[F_UNI_NOME] || '—',
-        andares: andIds.map(a => andMap[a.id]).filter(Boolean)
+        andares: andIds.map(id => andMap[typeof id === 'object' ? id.id : id]).filter(Boolean)
       };
     }).sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
 
