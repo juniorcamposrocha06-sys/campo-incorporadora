@@ -206,7 +206,7 @@ function selUrg(val, el) {
 async function fetchAll(tbl) {
   let records = [], offset = '';
   do {
-    const url = AT(tbl) + '?pageSize=100' + (offset ? '&offset=' + offset : '');
+    const url = AT(tbl) + '?pageSize=100&returnFieldsByFieldId=true' + (offset ? '&offset=' + offset : '');
     const res = await fetch(url, { headers: HDRS });
     if (!res.ok) throw new Error('Erro HTTP ' + res.status + ' em ' + tbl);
     const json = await res.json();
@@ -230,27 +230,27 @@ async function loadData() {
     recAmbientes.forEach(r => {
       ambMap[r.id] = {
         id: r.id,
-        nome: cleanName(r.cellValuesByFieldId[F_AMB_NOME] || '—')
+        nome: cleanName(r.fields[F_AMB_NOME] || '—')
       };
     });
 
     // Montar mapa de andares por ID
     const andMap = {};
     recAndares.forEach(r => {
-      const ambIds = r.cellValuesByFieldId[F_AND_AMBS] || [];
+      const ambIds = r.fields[F_AND_AMBS] || [];
       andMap[r.id] = {
         id: r.id,
-        nome: r.cellValuesByFieldId[F_AND_NOME] || '—',
+        nome: r.fields[F_AND_NOME] || '—',
         ambientes: ambIds.map(a => ambMap[a.id]).filter(Boolean)
       };
     });
 
     // Montar lista de unidades com andares e ambientes
     dadosUnidades = recUnidades.map(r => {
-      const andIds = r.cellValuesByFieldId[F_UNI_ANDAR] || [];
+      const andIds = r.fields[F_UNI_ANDAR] || [];
       return {
         id: r.id,
-        nome: r.cellValuesByFieldId[F_UNI_NOME] || '—',
+        nome: r.fields[F_UNI_NOME] || '—',
         andares: andIds.map(a => andMap[a.id]).filter(Boolean)
       };
     }).sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
